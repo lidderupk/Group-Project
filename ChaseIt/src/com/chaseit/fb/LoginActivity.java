@@ -13,7 +13,6 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 
-import com.chaseit.fb.R;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;
@@ -79,7 +78,10 @@ public class LoginActivity extends Activity {
 				} else {
 					Log.d(ChaseItApplication.TAG,
 							"User logged in through Facebook!");
-					showUserDetailsActivity();
+					// showUserDetailsActivity();
+					Intent in = new Intent(LoginActivity.this,
+							NewsFeedTestActivity.class);
+					startActivity(in);
 				}
 			}
 		});

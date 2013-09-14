@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <ImageView
+        android:id="@+id/ivHuntImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="16dp"
+        android:scaleX="0.5"
+        android:src="@drawable/sample_project_hunt" />
+
+    <TextView
+        android:id="@+id/tvHuntDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvHuntName"
+        android:layout_below="@+id/tvHuntName"
+        android:layout_marginTop="14dp"
+        android:text="@string/hunt_details_example" />
+
+    <TextView
+        android:id="@+id/tvHuntName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/ivHuntImage"
+        android:layout_toRightOf="@+id/ivHuntImage"
+        android:text="@string/hunt_name_example"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+</RelativeLayout>

@@ -6,17 +6,17 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    
+
     <uses-sdk
         android:minSdkVersion="10"
         android:targetSdkVersion="17" />
 
     <application
+        android:name=".ChaseItApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme"
-        android:name=".ChaseItApplication" >
+        android:theme="@style/AppTheme" >
         <activity
             android:name=".LoginActivity"
             android:label="@string/app_name"
@@ -27,13 +27,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity 
-            android:name=".UserDetailsActivity" 
-            android:label="@string/app_name"/>
-        <activity android:name="com.facebook.LoginActivity"
-                  android:label="@string/app_name" />
-        <meta-data android:name="com.facebook.sdk.ApplicationId" 
-            android:value="@string/app_id"/>
+        <activity
+            android:name=".UserDetailsActivity"
+            android:label="@string/app_name" />
+        <activity
+            android:name="com.facebook.LoginActivity"
+            android:label="@string/app_name" />
+        <activity
+            android:name="com.chaseit.fb.NewsFeedTestActivity"
+            android:label="@string/title_activity_news_feed_test" >
+        </activity>
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/app_id" />
     </application>
 
 </manifest>
