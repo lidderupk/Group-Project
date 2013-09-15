@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Facebook Profile</string>
+    <string name="app_name">Chase It</string>
     <string name="app_id">169473563243077</string>
     <string name="action_settings">Settings</string>
     <string name="login">Log In</string>

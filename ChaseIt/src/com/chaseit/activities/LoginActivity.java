@@ -1,4 +1,4 @@
-package com.chaseit.fb;
+package com.chaseit.activities;
 
 import java.util.Arrays;
 import java.util.List;
@@ -13,6 +13,8 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 
+import com.chaseit.ChaseItApplication;
+import com.chaseit.R;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;

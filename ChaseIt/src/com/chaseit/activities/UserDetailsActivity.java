@@ -1,7 +1,4 @@
-package com.chaseit.fb;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+package com.chaseit.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,7 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.chaseit.fb.R;
+import com.chaseit.ChaseItApplication;
+import com.chaseit.R;
+import com.chaseit.models.CIUser;
 import com.facebook.FacebookRequestError;
 import com.facebook.Request;
 import com.facebook.Response;
@@ -28,7 +27,6 @@ public class UserDetailsActivity extends Activity {
 	private TextView userLocationView;
 	private TextView userGenderView;
 	private TextView userDateOfBirthView;
-	private TextView userRelationshipView;
 	private Button logoutButton;
 
 	@Override
@@ -42,7 +40,6 @@ public class UserDetailsActivity extends Activity {
 		userLocationView = (TextView) findViewById(R.id.userLocation);
 		userGenderView = (TextView) findViewById(R.id.userGender);
 		userDateOfBirthView = (TextView) findViewById(R.id.userDateOfBirth);
-		userRelationshipView = (TextView) findViewById(R.id.userRelationship);
 
 		logoutButton = (Button) findViewById(R.id.logoutButton);
 		logoutButton.setOnClickListener(new View.OnClickListener() {
@@ -81,44 +78,24 @@ public class UserDetailsActivity extends Activity {
 					@Override
 					public void onCompleted(GraphUser user, Response response) {
 						if (user != null) {
-							// Create a JSON object to hold the profile info
-							JSONObject userProfile = new JSONObject();
-							try {
-								// Populate the JSON object
-								userProfile.put("facebookId", user.getId());
-								userProfile.put("name", user.getName());
-								if (user.getLocation().getProperty("name") != null) {
-									userProfile.put("location", (String) user
-											.getLocation().getProperty("name"));
-								}
-								if (user.getProperty("gender") != null) {
-									userProfile.put("gender",
-											(String) user.getProperty("gender"));
-								}
-								if (user.getBirthday() != null) {
-									userProfile.put("birthday",
-											user.getBirthday());
-								}
-								if (user.getProperty("relationship_status") != null) {
-									userProfile
-											.put("relationship_status",
-													(String) user
-															.getProperty("relationship_status"));
-								}
-
-								// Save the user profile info in a user property
-								ParseUser currentUser = ParseUser
-										.getCurrentUser();
-								currentUser.put("profile", userProfile);
-								currentUser.saveInBackground();
-
-								// Show the user info
-								updateViewsWithProfileInfo();
-							} catch (JSONException e) {
-								Log.d(ChaseItApplication.TAG,
-										"Error parsing returned user data.");
+							// Populate the JSON object
+							CIUser.setFacebookid(user.getId());
+							CIUser.setName(user.getName());
+							if (user.getLocation().getProperty("name") != null) {
+								CIUser.setLocation((String) user.getLocation().getProperty("name"));
+							}
+							if (user.getProperty("gender") != null) {
+								CIUser.setGender((String) user.getProperty("gender"));
+							}
+							if (user.getBirthday() != null) {
+								CIUser.setBirthday(user.getBirthday());
 							}
 
+							// Save the user profile info in a user property
+							CIUser.save();
+
+							// Show the user info
+							updateViewsWithProfileInfo();
 						} else if (response.getError() != null) {
 							if ((response.getError().getCategory() == FacebookRequestError.Category.AUTHENTICATION_RETRY)
 									|| (response.getError().getCategory() == FacebookRequestError.Category.AUTHENTICATION_REOPEN_SESSION)) {
@@ -139,51 +116,32 @@ public class UserDetailsActivity extends Activity {
 	}
 
 	private void updateViewsWithProfileInfo() {
-		ParseUser currentUser = ParseUser.getCurrentUser();
-		if (currentUser.get("profile") != null) {
-			JSONObject userProfile = currentUser.getJSONObject("profile");
-			try {
-				if (userProfile.getString("facebookId") != null) {
-					String facebookId = userProfile.get("facebookId")
-							.toString();
-					userProfilePictureView.setProfileId(facebookId);
-				} else {
-					// Show the default, blank user profile picture
-					userProfilePictureView.setProfileId(null);
-				}
-				if (userProfile.getString("name") != null) {
-					userNameView.setText(userProfile.getString("name"));
-				} else {
-					userNameView.setText("");
-				}
-				if (userProfile.getString("location") != null) {
-					userLocationView.setText(userProfile.getString("location"));
-				} else {
-					userLocationView.setText("");
-				}
-				if (userProfile.getString("gender") != null) {
-					userGenderView.setText(userProfile.getString("gender"));
-				} else {
-					userGenderView.setText("");
-				}
-				if (userProfile.getString("birthday") != null) {
-					userDateOfBirthView.setText(userProfile
-							.getString("birthday"));
-				} else {
-					userDateOfBirthView.setText("");
-				}
-				if (userProfile.getString("relationship_status") != null) {
-					userRelationshipView.setText(userProfile
-							.getString("relationship_status"));
-				} else {
-					userRelationshipView.setText("");
-				}
-			} catch (JSONException e) {
-				Log.d(ChaseItApplication.TAG,
-						"Error parsing saved user data.");
+		if (CIUser.getFacebookid() != null) {
+				userProfilePictureView.setProfileId(CIUser.getFacebookid());
+			} else {
+				// Show the default, blank user profile picture
+				userProfilePictureView.setProfileId(null);
 			}
-
-		}
+			if (CIUser.getName() != null) {
+				userNameView.setText(CIUser.getName());
+			} else {
+				userNameView.setText("");
+			}
+			if (CIUser.getLocation() != null) {
+				userLocationView.setText(CIUser.getLocation());
+			} else {
+				userLocationView.setText("");
+			}
+			if (CIUser.getGender() != null) {
+				userGenderView.setText(CIUser.getGender());
+			} else {
+				userGenderView.setText("");
+			}
+			if (CIUser.getBirthday() != null) {
+				userDateOfBirthView.setText(CIUser.getBirthday());
+			} else {
+				userDateOfBirthView.setText("");
+			}
 	}
 
 	private void onLogoutButtonClicked() {
