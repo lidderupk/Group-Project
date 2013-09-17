@@ -16,7 +16,7 @@ public class Hunt extends ParseObject {
 	protected String name;
 	protected String details;
 	protected int difficulty;
-	protected int avgRating;
+	protected double avgRating;
 	protected int numRatings;
 	protected double totalDistance;
 	protected ParseUser creator;
@@ -77,14 +77,14 @@ public class Hunt extends ParseObject {
 	/**
 	 * @return the avgRating
 	 */
-	public int getAvgRating() {
-		return getInt("avgrating");
+	public double getAvgRating() {
+		return getDouble("avgrating");
 	}
 
 	/**
 	 * @param avgRating the avgRating to set
 	 */
-	public void setAvgRating(int avgRating) {
+	public void setAvgRating(double avgRating) {
 		put("avgrating", avgRating);
 	}
 

@@ -68,7 +68,7 @@ public class DummyHunt extends Hunt {
 	 * @see com.chaseit.models.Hunt#getAvgRating()
 	 */
 	@Override
-	public int getAvgRating() {
+	public double getAvgRating() {
 		// TODO Auto-generated method stub
 		return this.avgRating;
 	}
@@ -77,7 +77,7 @@ public class DummyHunt extends Hunt {
 	 * @see com.chaseit.models.Hunt#setAvgRating(int)
 	 */
 	@Override
-	public void setAvgRating(int avgRating) {
+	public void setAvgRating(double avgRating) {
 		// TODO Auto-generated method stub
 		this.avgRating = avgRating;
 	}

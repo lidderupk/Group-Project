@@ -17,19 +17,19 @@ public class UserHunt extends ParseObject{
 	}
 	
 	public void setUser(ParseUser user){
-		put("inprogressuser", user);
+		put("user", user);
 	}
 
 	public ParseUser getUser(){
-		return getParseUser("inprogressuser");
+		return getParseUser("user");
 	}
 
 	public void setHunt(Hunt hunt){
-		put("inprogresshunt", hunt);
+		put("hunt", hunt);
 	}
 
 	public Hunt getHunt(){
-		return (Hunt)getParseObject("inprogresshunt");
+		return (Hunt)getParseObject("hunt");
 	}
 
 	public void setLastLocation(Location location){
