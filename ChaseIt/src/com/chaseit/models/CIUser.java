@@ -78,8 +78,8 @@ public class CIUser {
 		ParseUser.getCurrentUser().put("birthday", birthday);
 	}
 	
-//	public static void save(){
-//		ParseUser.getCurrentUser().saveInBackground();
-//	}
+	public static ParseUser getCurrentUser(){
+		return ParseUser.getCurrentUser();
+	}
 	
 }
