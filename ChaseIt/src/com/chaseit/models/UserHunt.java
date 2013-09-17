@@ -4,8 +4,13 @@ import com.parse.ParseClassName;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
-@ParseClassName("UserHunts")
+@ParseClassName("UserHunt")
 public class UserHunt extends ParseObject{
+	
+	public enum HuntStatus {
+		IN_PROGRESS,
+		COMPLETED
+	};
 	
 	public UserHunt(){
 		//empty constructor
@@ -33,6 +38,14 @@ public class UserHunt extends ParseObject{
 
 	public Location getLastLocation(){
 		return (Location)getParseObject("lastlocation");
+	}
+
+	public void setHuntStatus(HuntStatus status){
+		put("huntstatus", status.toString());
+	}
+
+	public HuntStatus getHuntStatus(){
+		return HuntStatus.valueOf(getString("huntstatus"));
 	}
 
 }
