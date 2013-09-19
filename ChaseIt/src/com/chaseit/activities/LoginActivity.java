@@ -82,7 +82,7 @@ public class LoginActivity extends Activity {
 							"User logged in through Facebook!");
 					// showUserDetailsActivity();
 					Intent in = new Intent(LoginActivity.this,
-							NewsFeedTestActivity.class);
+							HomeScreenActivity.class);
 					startActivity(in);
 				}
 			}
@@ -91,7 +91,7 @@ public class LoginActivity extends Activity {
 
 	
 	private void showNewsfeedActivty() {
-		Intent intent = new Intent(this, NewsFeedTestActivity.class);
+		Intent intent = new Intent(this, HomeScreenActivity.class);
 		startActivity(intent);
 	}
 }

@@ -10,17 +10,19 @@ import android.support.v4.app.FragmentManager;
 //import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
+import android.widget.Toast;
 
 import com.chaseit.R;
+import com.chaseit.fragments.ContainerFragment;
 import com.chaseit.fragments.NewsFeedFragment;
 
-public class NewsFeedTestActivity extends FragmentActivity implements TabListener {
+public class HomeScreenActivity extends FragmentActivity implements TabListener {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) { 
 		super.onCreate(savedInstanceState);
 		setupNavigationTabs();
-		setContentView(R.layout.activity_news_feed_test);
+		setContentView(R.layout.activity_news_feed);
 //
 //		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 //		ft.replace(R.id.flNewsFeedFragment, new NewsFeedFragment());
@@ -29,7 +31,7 @@ public class NewsFeedTestActivity extends FragmentActivity implements TabListene
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.news_feed_test, menu);
+		getMenuInflater().inflate(R.menu.news_feed, menu);
 		return true;
 	}
 	
@@ -43,7 +45,7 @@ public class NewsFeedTestActivity extends FragmentActivity implements TabListene
     			.setTabListener(this);
     	
     	Tab tabProfile = actionBar.newTab().setText("Profile")
-    			.setTag("ProfileFragment")
+    			.setTag("ContainerFragment")
     			.setIcon(R.drawable.ic_test)
     			.setTabListener(this);
     	
@@ -69,11 +71,13 @@ public class NewsFeedTestActivity extends FragmentActivity implements TabListene
 		android.support.v4.app.FragmentTransaction fts = manager.beginTransaction();
 		if(tab.getTag() == "HomeTimelineFragment"){
 			fts.replace(R.id.flNewsFeedFragment, new NewsFeedFragment());
-			fts.commit();
+			
 		} else {
-			Intent i = new Intent(this, UserDetailsActivity.class);
-			startActivity(i);	
+			fts.replace(R.id.flNewsFeedFragment, new ContainerFragment());
+			Toast.makeText(getApplicationContext(), "working", Toast.LENGTH_SHORT).show();
 		}
+		
+		fts.commit();
 	}
 
 	@Override
