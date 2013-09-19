@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import com.chaseit.R;
 
-public class ContainerFragment extends Fragment {
+public class ProfileFragment extends Fragment {
 //
 //	private ProfilePictureView userProfilePictureView;
 //	private TextView userNameView;

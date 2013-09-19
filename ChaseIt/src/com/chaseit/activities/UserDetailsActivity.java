@@ -72,7 +72,7 @@
 //    			.setTabListener(this);
 //    	
 //    	Tab tabProfile = actionBar.newTab().setText("Profile")
-//    			.setTag("ContainerFragment")
+//    			.setTag("ProfileFragment")
 //    			.setIcon(R.drawable.ic_test)
 //    			.setTabListener(this);
 //    	

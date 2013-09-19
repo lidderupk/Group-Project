@@ -3,18 +3,17 @@ package com.chaseit.activities;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.ActionBar.TabListener;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-//import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
-import android.widget.Toast;
 
 import com.chaseit.R;
-import com.chaseit.fragments.ContainerFragment;
+import com.chaseit.fragments.MyHuntsFragment;
 import com.chaseit.fragments.NewsFeedFragment;
+import com.chaseit.fragments.RecentHuntsFragment;
+//import android.support.v4.app.FragmentManager;
 
 public class HomeScreenActivity extends FragmentActivity implements TabListener {
 
@@ -41,16 +40,21 @@ public class HomeScreenActivity extends FragmentActivity implements TabListener 
     	actionBar.setDisplayShowTitleEnabled(true);
     	Tab tabHome = actionBar.newTab().setText("Newsfeed")
     			.setTag("HomeTimelineFragment")
-    			.setIcon(R.drawable.ic_test)
+    			.setIcon(R.drawable.ic_logo)
     			.setTabListener(this);
     	
-    	Tab tabProfile = actionBar.newTab().setText("Profile")
-    			.setTag("ContainerFragment")
-    			.setIcon(R.drawable.ic_test)
+    	Tab tabRecent = actionBar.newTab().setText("Recent Hunts")
+    			.setTag("RecentFragment")
+    			.setIcon(R.drawable.ic_logo)
+    			.setTabListener(this);
+    	Tab tabMine = actionBar.newTab().setText("My Hunts")
+    			.setTag("MyHuntsFragment")
+    			.setIcon(R.drawable.ic_logo)
     			.setTabListener(this);
     	
     	actionBar.addTab(tabHome);
-    	actionBar.addTab(tabProfile);
+    	actionBar.addTab(tabMine);
+    	actionBar.addTab(tabRecent);
     	actionBar.selectTab(tabHome);
 	}
 
@@ -72,9 +76,10 @@ public class HomeScreenActivity extends FragmentActivity implements TabListener 
 		if(tab.getTag() == "HomeTimelineFragment"){
 			fts.replace(R.id.flNewsFeedFragment, new NewsFeedFragment());
 			
+		} else if (tab.getTag() == "RecentHuntsFragment") {
+			fts.replace(R.id.flNewsFeedFragment, new RecentHuntsFragment());
 		} else {
-			fts.replace(R.id.flNewsFeedFragment, new ContainerFragment());
-			Toast.makeText(getApplicationContext(), "working", Toast.LENGTH_SHORT).show();
+			fts.replace(R.id.flNewsFeedFragment, new MyHuntsFragment());
 		}
 		
 		fts.commit();
