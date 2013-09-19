@@ -44,7 +44,7 @@ public class LoginActivity extends Activity {
 		ParseUser currentUser = ParseUser.getCurrentUser();
 		if ((currentUser != null) && ParseFacebookUtils.isLinked(currentUser)) {
 			// Go to the user info activity
-			showUserDetailsActivity();
+			showNewsfeedActivty();
 		}
 	}
 
@@ -76,7 +76,7 @@ public class LoginActivity extends Activity {
 				} else if (user.isNew()) {
 					Log.d(ChaseItApplication.TAG,
 							"User signed up and logged in through Facebook!");
-					showUserDetailsActivity();
+					showNewsfeedActivty();
 				} else {
 					Log.d(ChaseItApplication.TAG,
 							"User logged in through Facebook!");
@@ -89,8 +89,9 @@ public class LoginActivity extends Activity {
 		});
 	}
 
-	private void showUserDetailsActivity() {
-		Intent intent = new Intent(this, UserDetailsActivity.class);
+	
+	private void showNewsfeedActivty() {
+		Intent intent = new Intent(this, NewsFeedTestActivity.class);
 		startActivity(intent);
 	}
 }
