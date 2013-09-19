@@ -1,4 +1,4 @@
-package com.chaseit.fb;
+package com.chaseit.fragments;
 
 import java.util.List;
 
@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.chaseit.adapters.HuntAdapter;
+import com.chaseit.R;
 import com.chaseit.models.Hunt;
 
 public class NewsFeedFragment extends Fragment {
@@ -23,8 +25,7 @@ public class NewsFeedFragment extends Fragment {
 
 	private void setupViews() {
 		FragmentActivity activity = getActivity();
-		List<Hunt> huntsArray = Hunt.createSampleHunts(activity
-				.getBaseContext());
+		List<Hunt> huntsArray = Hunt.createSampleHunts(activity.getBaseContext());
 		// Create the adapter to convert the array to views
 		HuntAdapter adapter = new HuntAdapter(activity, huntsArray);
 		// Attach the adapter to a ListView

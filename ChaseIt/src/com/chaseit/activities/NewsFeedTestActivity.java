@@ -1,4 +1,7 @@
-package com.chaseit.fb;
+package com.chaseit.activities;
+
+import com.chaseit.R;
+import com.chaseit.fragments.NewsFeedFragment;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;

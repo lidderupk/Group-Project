@@ -1,4 +1,4 @@
-package com.chaseit.fb;
+package com.chaseit.adapters;
 
 import java.util.List;
 
@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.chaseit.R;
 import com.chaseit.models.Hunt;
 
 public class HuntAdapter extends ArrayAdapter<Hunt> {
@@ -33,7 +34,7 @@ public class HuntAdapter extends ArrayAdapter<Hunt> {
 				.findViewById(R.id.tvHuntDetails);
 
 		tvHuntName.setText(hunt.getName());
-		tvHuntDetails.setText(hunt.getDesc());
+		tvHuntDetails.setText(hunt.getDetails());
 
 		return view;
 	}

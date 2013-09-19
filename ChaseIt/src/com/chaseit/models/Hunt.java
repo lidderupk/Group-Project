@@ -1,95 +1,188 @@
 package com.chaseit.models;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
 
-import com.chaseit.fb.R;
+import com.chaseit.R;
+import com.parse.ParseClassName;
+import com.parse.ParseFile;
+import com.parse.ParseObject;
+import com.parse.ParseUser;
 
-public class Hunt implements Serializable {
+@ParseClassName("Hunt")
+public class Hunt extends ParseObject {
+	protected String name;
+	protected String details;
+	protected int difficulty;
+	protected double avgRating;
+	protected int numRatings;
+	protected double totalDistance;
+	protected ParseUser creator;
+	protected Location startLocation;
+	protected ParseFile huntPicture;
+	
+	public Hunt(){
+		//empty constructor
+	}
+	
+//	public static Hunt getNewHunt(){
+//		Hunt h = new Hunt();
+//		return ParseObject.createWithoutData(Hunt.class, h.getObjectId());
+//	}
+	
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return getString("name");
+	}
 
 	/**
-	 * 
+	 * @param name the name to set
 	 */
-	private static final long serialVersionUID = -7325191126592989417L;
-
-	private Long uid;
-	private String name;
-	private String desc;
-	private String details;
-	private int score;
-
-	public Long getUid() {
-		return uid;
-	}
-
-	public void setUid(Long uid) {
-		this.uid = uid;
-	}
-
-	public String getName() {
-		return name;
-	}
-
 	public void setName(String name) {
-		this.name = name;
+		put("name", name);
 	}
 
-	public String getDesc() {
-		return desc;
-	}
-
-	public void setDesc(String desc) {
-		this.desc = desc;
-	}
-
+	/**
+	 * @return the details
+	 */
 	public String getDetails() {
-		return details;
+		return getString("details");
 	}
 
+	/**
+	 * @param details the details to set
+	 */
 	public void setDetails(String details) {
-		this.details = details;
+		put("details", details);
 	}
 
-	public int getScore() {
-		return score;
+	/**
+	 * @return the difficulty
+	 */
+	public int getDifficulty() {
+		return getInt("difficulty");
 	}
 
-	public void setScore(int score) {
-		this.score = score;
+	/**
+	 * @param difficulty the difficulty to set
+	 */
+	public void setDifficulty(int difficulty) {
+		put("difficulty", difficulty);
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	/**
+	 * @return the avgRating
+	 */
+	public double getAvgRating() {
+		return getDouble("avgrating");
+	}
+
+	/**
+	 * @param avgRating the avgRating to set
+	 */
+	public void setAvgRating(double avgRating) {
+		put("avgrating", avgRating);
+	}
+
+	/**
+	 * @return the numRatings
+	 */
+	public int getNumRatings() {
+		return getInt("numratings");
+	}
+
+	/**
+	 * @param numRatings the numRatings to set
+	 */
+	public void setNumRatings(int numRatings) {
+		put("numratings", numRatings);
+	}
+
+	/**
+	 * @return the totalDistance
+	 */
+	public double getTotalDistance() {
+		return getDouble("totaldistance");
+	}
+
+	/**
+	 * @param totalDistance the totalDistance to set
+	 */
+	public void setTotalDistance(double totalDistance) {
+		put("totaldistance", totalDistance);
+	}
+
+	/**
+	 * @return the creator
+	 */
+	public ParseUser getCreator() {
+		return (ParseUser)getParseObject("creator");
+	}
+
+	/**
+	 * @param creator the creator to set
+	 */
+	public void setCreator(ParseUser creator) {
+		put("creator", creator);
+	}
+
+	/**
+	 * @return the startLocation
+	 */
+	public Location getStartLocation() {
+		return (Location)getParseObject("startlocation");
+	}
+
+	/**
+	 * @param startLocation the startLocation to set
+	 */
+	public void setStartLocation(Location startLocation) {
+		put("startlocation", startLocation);
+	}
+
+	/**
+	 * @return the huntPicture
+	 */
+	public ParseFile getHuntPicture() {
+		return getParseFile("huntpicture");
+	}
+
+	/**
+	 * @param huntPicture the huntPicture to set
+	 */
+	public void setHuntPicture(ParseFile huntPicture) {
+		put("huntpicture", huntPicture);
 	}
 
 	public static List<Hunt> createSampleHunts(Context c) {
 		List<Hunt> huntList = new ArrayList<Hunt>();
-		Hunt hunt = new Hunt();
+		Hunt hunt = new DummyHunt();
 		hunt.setName(c.getResources().getString(R.string.hunt_name_example));
-		hunt.setDesc(c.getResources().getString(R.string.hunt_details_example));
+		hunt.setDetails(c.getResources().getString(R.string.hunt_details_example));
 		huntList.add(hunt);
 
-		hunt = new Hunt();
+		hunt = new DummyHunt();
 		hunt.setName(c.getResources().getString(R.string.hunt_name_example));
-		hunt.setDesc(c.getResources().getString(R.string.hunt_details_example));
+		hunt.setDetails(c.getResources().getString(R.string.hunt_details_example));
 		huntList.add(hunt);
 
-		hunt = new Hunt();
+		hunt = new DummyHunt();
 		hunt.setName(c.getResources().getString(R.string.hunt_name_example));
-		hunt.setDesc(c.getResources().getString(R.string.hunt_details_example));
+		hunt.setDetails(c.getResources().getString(R.string.hunt_details_example));
 		huntList.add(hunt);
 
-		hunt = new Hunt();
+		hunt = new DummyHunt();
 		hunt.setName(c.getResources().getString(R.string.hunt_name_example));
-		hunt.setDesc(c.getResources().getString(R.string.hunt_details_example));
+		hunt.setDetails(c.getResources().getString(R.string.hunt_details_example));
 		huntList.add(hunt);
 
-		hunt = new Hunt();
+		hunt = new DummyHunt();
 		hunt.setName(c.getResources().getString(R.string.hunt_name_example));
-		hunt.setDesc(c.getResources().getString(R.string.hunt_details_example));
+		hunt.setDetails(c.getResources().getString(R.string.hunt_details_example));
 		huntList.add(hunt);
 
 		return huntList;
