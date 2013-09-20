@@ -1,13 +1,13 @@
 package com.chaseit.models;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import android.content.Context;
 
 import com.chaseit.R;
 import com.parse.ParseClassName;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
@@ -16,12 +16,12 @@ public class Hunt extends ParseObject {
 	protected String name;
 	protected String details;
 	protected int difficulty;
-	protected int avgRating;
+	protected double avgRating;
 	protected int numRatings;
 	protected double totalDistance;
 	protected ParseUser creator;
 	protected Location startLocation;
-	protected Date created;
+	protected ParseFile huntPicture;
 	
 	public Hunt(){
 		//empty constructor
@@ -77,14 +77,14 @@ public class Hunt extends ParseObject {
 	/**
 	 * @return the avgRating
 	 */
-	public int getAvgRating() {
-		return getInt("avgrating");
+	public double getAvgRating() {
+		return getDouble("avgrating");
 	}
 
 	/**
 	 * @param avgRating the avgRating to set
 	 */
-	public void setAvgRating(int avgRating) {
+	public void setAvgRating(double avgRating) {
 		put("avgrating", avgRating);
 	}
 
@@ -144,22 +144,19 @@ public class Hunt extends ParseObject {
 		put("startlocation", startLocation);
 	}
 
-
 	/**
-	 * @return the created
+	 * @return the huntPicture
 	 */
-	public Date getCreated() {
-		return getDate("created");
+	public ParseFile getHuntPicture() {
+		return getParseFile("huntpicture");
 	}
 
-
 	/**
-	 * @param created the created to set
+	 * @param huntPicture the huntPicture to set
 	 */
-	public void setCreated(Date created) {
-		put("created", created);
+	public void setHuntPicture(ParseFile huntPicture) {
+		put("huntpicture", huntPicture);
 	}
-
 
 	public static List<Hunt> createSampleHunts(Context c) {
 		List<Hunt> huntList = new ArrayList<Hunt>();

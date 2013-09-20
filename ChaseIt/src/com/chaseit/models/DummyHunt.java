@@ -1,8 +1,7 @@
 package com.chaseit.models;
 
-import java.util.Date;
-
 import com.parse.ParseClassName;
+import com.parse.ParseFile;
 import com.parse.ParseUser;
 
 @ParseClassName("DummyHunt")
@@ -69,7 +68,7 @@ public class DummyHunt extends Hunt {
 	 * @see com.chaseit.models.Hunt#getAvgRating()
 	 */
 	@Override
-	public int getAvgRating() {
+	public double getAvgRating() {
 		// TODO Auto-generated method stub
 		return this.avgRating;
 	}
@@ -78,7 +77,7 @@ public class DummyHunt extends Hunt {
 	 * @see com.chaseit.models.Hunt#setAvgRating(int)
 	 */
 	@Override
-	public void setAvgRating(int avgRating) {
+	public void setAvgRating(double avgRating) {
 		// TODO Auto-generated method stub
 		this.avgRating = avgRating;
 	}
@@ -154,23 +153,16 @@ public class DummyHunt extends Hunt {
 		// TODO Auto-generated method stub
 		this.startLocation = startLocation;
 	}
-
-	/* (non-Javadoc)
-	 * @see com.chaseit.models.Hunt#getCreated()
-	 */
+	
 	@Override
-	public Date getCreated() {
-		// TODO Auto-generated method stub
-		return this.created;
+	public ParseFile getHuntPicture(){
+		return this.huntPicture;
+	}
+	
+	@Override
+	public void setHuntPicture(ParseFile huntPicture) {
+		this.huntPicture = huntPicture;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.chaseit.models.Hunt#setCreated(java.util.Date)
-	 */
-	@Override
-	public void setCreated(Date created) {
-		// TODO Auto-generated method stub
-		this.created = created;
-	}
 
 }

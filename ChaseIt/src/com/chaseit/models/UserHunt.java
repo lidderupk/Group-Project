@@ -4,27 +4,32 @@ import com.parse.ParseClassName;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
-@ParseClassName("UserHunts")
+@ParseClassName("UserHunt")
 public class UserHunt extends ParseObject{
+	
+	public enum HuntStatus {
+		IN_PROGRESS,
+		COMPLETED
+	};
 	
 	public UserHunt(){
 		//empty constructor
 	}
 	
 	public void setUser(ParseUser user){
-		put("inprogressuser", user);
+		put("user", user);
 	}
 
 	public ParseUser getUser(){
-		return getParseUser("inprogressuser");
+		return getParseUser("user");
 	}
 
 	public void setHunt(Hunt hunt){
-		put("inprogresshunt", hunt);
+		put("hunt", hunt);
 	}
 
 	public Hunt getHunt(){
-		return (Hunt)getParseObject("inprogresshunt");
+		return (Hunt)getParseObject("hunt");
 	}
 
 	public void setLastLocation(Location location){
@@ -33,6 +38,14 @@ public class UserHunt extends ParseObject{
 
 	public Location getLastLocation(){
 		return (Location)getParseObject("lastlocation");
+	}
+
+	public void setHuntStatus(HuntStatus status){
+		put("huntstatus", status.toString());
+	}
+
+	public HuntStatus getHuntStatus(){
+		return HuntStatus.valueOf(getString("huntstatus"));
 	}
 
 }

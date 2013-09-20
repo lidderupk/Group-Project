@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.chaseit.ChaseItApplication;
+import com.chaseit.ParseHelper;
 import com.chaseit.R;
 import com.chaseit.models.CIUser;
 import com.facebook.FacebookRequestError;
@@ -92,7 +93,7 @@ public class UserDetailsActivity extends Activity {
 							}
 
 							// Save the user profile info in a user property
-							CIUser.save();
+							ParseHelper.saveUser(CIUser.getCurrentUser(), null);
 
 							// Show the user info
 							updateViewsWithProfileInfo();

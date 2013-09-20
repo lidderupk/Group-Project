@@ -1,6 +1,5 @@
 package com.chaseit.models;
 
-import com.parse.ParseRelation;
 import com.parse.ParseUser;
 
 public class CIUser {	
@@ -78,17 +77,9 @@ public class CIUser {
 	public static void setBirthday(String birthday) {
 		ParseUser.getCurrentUser().put("birthday", birthday);
 	}
-
-	/**
-	 * @param completed the completed to set
-	 */
-	public static void setCompleted(Hunt completed) {
-		ParseRelation<Hunt> relation = ParseUser.getCurrentUser().getRelation("completed");
-		relation.add(completed);
-	}
 	
-	public static void save(){
-		ParseUser.getCurrentUser().saveInBackground();
+	public static ParseUser getCurrentUser(){
+		return ParseUser.getCurrentUser();
 	}
 	
 }
