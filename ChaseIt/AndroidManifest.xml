@@ -4,12 +4,16 @@
     android:versionCode="1"
     android:versionName="1.0" >
 
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <uses-sdk
-        android:minSdkVersion="10"
-        android:targetSdkVersion="17" />
+        android:minSdkVersion="12"
+        android:targetSdkVersion="17" />  
 
     <application
         android:name="com.chaseit.ChaseItApplication"
@@ -18,7 +22,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.chaseit.activities.LoginActivity"
+            android:name="com.chaseit.activities.NewsFeedTestActivity"
             android:label="@string/app_name"
             android:launchMode="singleTop" >
             <intent-filter>
@@ -33,14 +37,19 @@
         <activity
             android:name="com.facebook.LoginActivity"
             android:label="@string/app_name" />
-        <activity
-		    android:name="com.chaseit.activities.NewsFeedTestActivity"
+        <!-- <activity
+            android:name="com.chaseit.activities.NewsFeedTestActivity"
             android:label="@string/title_activity_news_feed_test" >
-        </activity>
+        </activity> -->
 
         <meta-data
-            android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/app_id" />
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyCs-ovDRM5FebnyAp73_woIjIrlKUzq3KA" />
+
+        <activity
+            android:name="com.chaseit.activities.MapsTestActivity"
+            android:label="@string/title_activity_maps_test" >
+        </activity>
     </application>
 
 </manifest>
