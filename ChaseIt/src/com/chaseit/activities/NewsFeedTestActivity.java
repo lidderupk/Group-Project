@@ -31,15 +31,18 @@ public class NewsFeedTestActivity extends FragmentActivity {
 
 	@Override
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
-
+		Intent in;
 		switch (item.getItemId()) {
 		case R.id.maps:
-			Intent in = new Intent(getBaseContext(), MapsTestActivity.class);
+			in = new Intent(getBaseContext(), MapsTestActivity.class);
+			startActivity(in);
+			return true;
+		case R.id.huntDetails:
+			in = new Intent(getBaseContext(), HuntDetailsTestActivity.class);
 			startActivity(in);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 	}
-
 }
