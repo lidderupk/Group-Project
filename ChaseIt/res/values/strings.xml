@@ -14,5 +14,6 @@
     <string name="title_activity_news_feed_test">NewsFeedTestActivity</string>
     <string name="hunt_name_example">Around the Town Hunt</string>
     <string name="hunt_details_example">This is a fun hunt around San Francisco. It includes a gas station, a Chinese take out restaurant, the best Pizza place in town and ends at a young and hip place !</string>
+    <string name="menu_create_hunt">Create Hunt</string>
     
 </resources>
