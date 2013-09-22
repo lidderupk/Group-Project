@@ -2,14 +2,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HuntDetailsTestActivity" >
+    tools:context=".HuntPlayTestActivity" >
 
     <FrameLayout
-         android:id="@+id/flHuntDetails"
+         android:id="@+id/flHuntPlay"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        tools:layout="@layout/fragment_huntdetails" />
+        tools:layout="@layout/fragment_hunt_play" />
 
 </RelativeLayout>

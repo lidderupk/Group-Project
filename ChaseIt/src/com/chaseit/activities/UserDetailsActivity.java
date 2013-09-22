@@ -139,7 +139,7 @@ public class UserDetailsActivity extends Activity {
 				userGenderView.setText("");
 			}
 			if (CIUser.getBirthday() != null) {
-				userDateOfBirthView.setText(CIUser.getBirthday());
+				userDateOfBirthView.setText("11");
 			} else {
 				userDateOfBirthView.setText("");
 			}

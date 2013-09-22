@@ -75,6 +75,14 @@ public class ParseHelper {
 		query.findInBackground(callback);
 	}
 
+	public static void getLocationByHuntAndIndex(Hunt hunt, int index, FindCallback<Location> callback){
+		if(callback == null) return;
+		ParseQuery<Location> query = ParseQuery.getQuery(Location.class);
+		query.whereEqualTo("parenthunt", hunt);
+		query.whereEqualTo("index", index);
+		query.findInBackground(callback);
+	}
+
 	//information create/update
 	public static void saveUser(ParseUser user, SaveCallback callback){
 		if(callback == null){
