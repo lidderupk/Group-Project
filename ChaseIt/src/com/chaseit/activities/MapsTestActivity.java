@@ -15,8 +15,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapsTestActivity extends Activity {
-
-	// Google Map
 	private GoogleMap googleMap;
 
 	@Override

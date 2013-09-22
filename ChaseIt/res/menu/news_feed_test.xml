@@ -23,6 +23,13 @@
         android:orderInCategory="100"
         android:showAsAction="never"
         android:title="hunt Play"/>
+    
+    <item
+        android:id="@+id/huntMapLineMenu"
+        android:icon="@drawable/ic_content_select_all"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="hunt map with lines"/>
 
         <item
         android:id="@+id/create_chase"

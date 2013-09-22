@@ -47,5 +47,7 @@
     <string name="map_view_placeholder">Map view to create locations</string>
     <string name="title_activity_add_chase_location">AddChaseLocation</string>
     <string name="add_btn_label">Add</string>
+    <string name="title_activity_hunt_map_with_markers">Hunt map with markers</string>
+    <string name="title_activity_hunt_show_image">HuntShowImageActivity</string>
 
 </resources>

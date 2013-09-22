@@ -8,7 +8,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
-
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
@@ -82,6 +81,14 @@
             android:name="com.chaseit.activities.AddChaseLocation"
             android:theme="@android:style/Theme.Holo.Light.Dialog"
             android:label="@string/title_activity_add_chase_location" >
+        </activity>
+        <activity
+            android:name="com.chaseit.activities.HuntMapWithMarkersTestActivity"
+            android:label="@string/title_activity_hunt_map_with_markers" >
+        </activity>
+        <activity
+            android:name="com.chaseit.activities.HuntShowImageActivity"
+            android:label="@string/title_activity_hunt_show_image" >
         </activity>
     </application>
 

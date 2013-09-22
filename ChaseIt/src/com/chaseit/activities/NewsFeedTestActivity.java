@@ -42,7 +42,12 @@ public class NewsFeedTestActivity extends FragmentActivity {
 			startActivity(in);
 			return true;
 		case R.id.huntPlayMenu:
-			in = new Intent(getBaseContext(), HuntPlayTestActivity.class);  
+			in = new Intent(getBaseContext(), HuntPlayTestActivity.class);
+			startActivity(in);
+			return true;
+		case R.id.huntMapLineMenu:
+			in = new Intent(getBaseContext(),
+					HuntMapWithMarkersTestActivity.class);
 			startActivity(in);
 			return true;
 			
