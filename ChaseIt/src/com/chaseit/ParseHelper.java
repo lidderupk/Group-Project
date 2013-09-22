@@ -9,6 +9,7 @@ import com.chaseit.models.UserHunt;
 import com.chaseit.models.UserHunt.HuntStatus;
 import com.parse.DeleteCallback;
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseQuery;
@@ -37,7 +38,14 @@ public class ParseHelper {
 		query.orderByDescending("numratings");
 		query.findInBackground(callback);
 	}
-	
+
+	public static void getHuntByObjectId(String objectId, GetCallback<Hunt> callback){
+		if(callback == null) return;
+		ParseQuery<Hunt> query = ParseQuery.getQuery(Hunt.class);
+		query.whereEqualTo("objectId", objectId);
+		query.getFirstInBackground(callback);
+	}
+
 	public static void getAllHuntsByProximity(ParseGeoPoint currentLocation, FindCallback<Hunt> callback){
 		if(callback == null) return;
 		ParseQuery<Hunt> query = ParseQuery.getQuery(Hunt.class);

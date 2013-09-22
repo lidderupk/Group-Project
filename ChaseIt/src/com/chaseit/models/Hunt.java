@@ -1,6 +1,5 @@
 package com.chaseit.models;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,9 +13,7 @@ import com.parse.ParseObject;
 import com.parse.ParseUser;
 
 @ParseClassName("Hunt")
-public class Hunt extends ParseObject implements Serializable {
-	private static final long serialVersionUID = -1780208055961213210L;
-	
+public class Hunt extends ParseObject {
 	protected String name;
 	protected String details;
 	protected int difficulty;

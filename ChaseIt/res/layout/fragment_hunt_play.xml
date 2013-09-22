@@ -21,14 +21,14 @@
         android:weightSum="1" >
 
         <ImageView
-            android:id="@+id/imageView1"
+            android:id="@+id/ivMap"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_weight="0.5"
             android:src="@drawable/pizza_hint" />
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/tvAddLocationHeader"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_weight="0.5"

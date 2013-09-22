@@ -10,6 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.location.Address;
 import android.location.Geocoder;
@@ -151,7 +152,7 @@ public class CreateChaseActivity extends FragmentActivity implements AddPictureL
 		alert.show();				
 	}
 
-	private void afterChaseCreated(Hunt chase, ParseFile photo) {
+	private void afterChaseCreated(final Hunt chase, final ParseFile photo) {
 		if(chase != null && photo != null){
 			//add the image to 
 			HuntImage chaseImage = new HuntImage();
@@ -162,15 +163,25 @@ public class CreateChaseActivity extends FragmentActivity implements AddPictureL
 				@Override
 				public void done(ParseException e) {
 					if(e == null){
-						//go back to previous activity for now.
-						finish();
+						Intent in = new Intent(getBaseContext(), CreateChaseLocationsActivity.class);
+						in.putExtra("chaseId", chase.getObjectId());
+						in.putExtra("chaseName", chase.getName());
+						startActivity(in);
 					} else {
 						e.printStackTrace();
 					}
 				}
 			});
 		} else {
-			finish();
+			if(chase != null){
+				Intent in = new Intent(getBaseContext(), CreateChaseLocationsActivity.class);
+				in.putExtra("chaseId", chase.getObjectId());
+				in.putExtra("chaseName", chase.getName());
+				startActivity(in);			
+			} else {
+				Toast.makeText(getBaseContext(), "Unable to create chase", Toast.LENGTH_SHORT).show();
+				finish();
+			}
 		}
 	}
 

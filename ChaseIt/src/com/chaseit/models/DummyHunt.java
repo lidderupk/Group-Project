@@ -7,8 +7,6 @@ import com.parse.ParseUser;
 
 @ParseClassName("DummyHunt")
 public class DummyHunt extends Hunt {
-	private static final long serialVersionUID = -6200554501579244417L;
-
 	public DummyHunt(){
 		//empty constructor
 	}
