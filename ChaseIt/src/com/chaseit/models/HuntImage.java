@@ -4,7 +4,7 @@ import com.parse.ParseClassName;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 
-@ParseClassName("Hunt")
+@ParseClassName("HuntImage")
 public class HuntImage extends ParseObject {
 	
 	public HuntImage(){
