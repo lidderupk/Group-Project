@@ -41,14 +41,13 @@ public class HuntDetailsFragment extends Fragment {
 	}
 
 	private void setupViews(View view) {
-		double latEiffelTower = 37.788055;
-		double lngEiffelTower = -122.407919;
+
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder
 				.append("http://maps.google.com/maps/api/staticmap?markers=");
-		stringBuilder.append(latEiffelTower);
+		stringBuilder.append(Constants.latUnionSquare);
 		stringBuilder.append(",");
-		stringBuilder.append(lngEiffelTower);
+		stringBuilder.append(Constants.lngUnionSquare);
 		stringBuilder.append("&zoom=16&size=520x520&sensor=false");
 		String[] stringURL = new String[1];
 		stringURL[0] = stringBuilder.toString();

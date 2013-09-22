@@ -17,6 +17,7 @@
     <string name="title_activity_maps_test">MapsTestActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_placeholder">PlaceholderActivity</string>
-    <string name="title_activity_hunt_details">HuntDetailsActivity</string>
+    <string name="title_activity_hunt_details">Hunt Details</string>
+    <string name="title_activity_hunt_play">Hunt in Progress</string>
 
 </resources>

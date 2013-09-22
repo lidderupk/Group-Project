@@ -65,7 +65,7 @@
     <ImageView
         android:id="@+id/ivHuntsDetailsMap"
         android:layout_width="fill_parent"
-        android:layout_height="200dp"
+        android:layout_height="190dp"
         android:adjustViewBounds="true"
         android:layout_alignParentLeft="true"
         android:scaleType="centerCrop"
@@ -90,8 +90,8 @@
 
     <Button
         android:id="@+id/btnHuntDetailsLaunch"
-        android:layout_width="0dp"
-        android:layout_height="30dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/ivHuntsDetailsMap"

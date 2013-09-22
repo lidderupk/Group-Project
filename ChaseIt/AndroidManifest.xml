@@ -60,6 +60,10 @@
             android:name="com.chaseit.activities.HuntDetailsTestActivity"
             android:label="@string/title_activity_hunt_details" >
         </activity>
+        <activity
+            android:name="com.chaseit.activities.HuntPlayTestActivity"
+            android:label="@string/title_activity_hunt_play" >
+        </activity>
     </application>
 
 </manifest>
