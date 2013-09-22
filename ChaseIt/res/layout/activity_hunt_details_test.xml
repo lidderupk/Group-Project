@@ -4,9 +4,8 @@
     android:layout_height="match_parent"
     tools:context=".HuntDetailsTestActivity" >
 
-    <fragment
-        android:id="@+id/fHuntDetails"
-        android:name="com.chaseit.fragments.HuntDetailsFragment"
+    <FrameLayout
+         android:id="@+id/flHuntDetails"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"

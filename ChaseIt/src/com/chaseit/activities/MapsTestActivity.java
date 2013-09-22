@@ -27,7 +27,6 @@ public class MapsTestActivity extends Activity {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	/**
