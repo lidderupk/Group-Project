@@ -16,7 +16,6 @@
     <string name="hunt_details_example">This is a fun hunt around San Francisco. It includes a gas station, a Chinese take out restaurant, the best Pizza place in town and ends at a young and hip place !</string>
     <string name="title_activity_maps_test">MapsTestActivity</string>
     <string name="hello_world">Hello world!</string>
-<<<<<<< HEAD
     <string name="title_activity_create_chase">Make a Chase</string>
     <string name="add_headline_hint">Add a headline</string>
     <string name="add_details_hint">Add some details</string>
@@ -32,11 +31,8 @@
     <string name="dialog_header">Header</string>
     <string name="dialog_title_text">Add a picture</string>
     <string name="add_image_description">Add Image</string>
-    
-=======
     <string name="title_activity_placeholder">PlaceholderActivity</string>
     <string name="title_activity_hunt_details">Hunt Details</string>
     <string name="title_activity_hunt_play">Hunt in Progress</string>
->>>>>>> 6cbb7ad4d76cd8698d6807ef0e399078194e0a21
 
 </resources>
