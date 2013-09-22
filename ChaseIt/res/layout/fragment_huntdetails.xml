@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <ImageView
+        android:id="@+id/ivHuntDetailsBanner"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/pizza" />
+
+    <TextView
+        android:id="@+id/tvHuntDetailsTitle"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/ivHuntDetailsBanner"
+        android:text="Pizza Hunt"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/tvHuntDetailsCreatorHandle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/tvHuntDetailsTitle"
+        android:text="Upkar Lidder"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <RatingBar
+        android:id="@+id/rbHuntDetailsRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:isIndicator="true"
+        android:layout_below="@+id/ivHuntDetailsBanner" />
+
+    <TextView
+        android:id="@+id/tvHuntDetailsLocationName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/rbHuntDetailsRating"        
+        android:text="San Francisco"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/tvHuntDetailsDescription"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/tvHuntDetailsLocationName"
+        android:text="This is a sample hunt. The participant will visit five different pizza locations around San Francisco !. Ideal for pizza lovers. Local beers are also suggested. Enjoy !"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    
+    <!-- <com.loopj.android.image.SmartImageView android:id="@+id/siHuntsDetailsMap"
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:layout_alignParentLeft="true"
+        android:layo ut_below="@+id/tvHuntDetailsDescription"/>-->
+    
+    <ImageView
+        android:id="@+id/ivHuntsDetailsMap"
+        android:layout_width="fill_parent"
+        android:layout_height="190dp"
+        android:adjustViewBounds="true"
+        android:layout_alignParentLeft="true"
+        android:scaleType="centerCrop"
+        android:layout_below="@+id/tvHuntDetailsDescription"
+        />
+    
+   <!--   <View android:id="@+id/strut"
+        android:layout_width="0dp"
+        android:layout_height="0dp" 
+        android:layout_below="@+id/ivHuntsDetailsMap"
+        android:layout_centerHorizontal="true"/>
+
+   <Button
+        android:id="@+id/btnHuntDetailsAdd"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_alignRight="@id/strut"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/ivHuntsDetailsMap"
+        android:text="Add" /> -->
+
+    <Button
+        android:id="@+id/btnHuntDetailsLaunch"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/ivHuntsDetailsMap"
+        android:text="Launch" />
+
+</RelativeLayout>
