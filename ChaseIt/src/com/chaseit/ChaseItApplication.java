@@ -4,7 +4,6 @@ import android.app.Application;
 
 import com.chaseit.models.DummyHunt;
 import com.chaseit.models.Hunt;
-import com.chaseit.models.HuntImage;
 import com.chaseit.models.Location;
 import com.chaseit.models.UserHunt;
 import com.parse.Parse;
@@ -25,7 +24,7 @@ public class ChaseItApplication extends Application {
 		ParseObject.registerSubclass(Location.class);
 		ParseObject.registerSubclass(Hunt.class);
 		ParseObject.registerSubclass(DummyHunt.class);
-		ParseObject.registerSubclass(HuntImage.class);
+//		ParseObject.registerSubclass(HuntImage.class);
 		ParseObject.registerSubclass(UserHunt.class);
 		//init app
 		Parse.initialize(this, "uH7SFyWs6YTPjIFrejvVNLXL4Zpq9RrFHjeuna2M", "DuRlsH6bLO1RrSuKZBTIeGzkRYJWvwfT6qd1txGB");

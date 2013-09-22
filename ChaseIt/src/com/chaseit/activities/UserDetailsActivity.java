@@ -1,12 +1,8 @@
 package com.chaseit.activities;
 
-import android.app.ActionBar;
-import android.app.ActionBar.Tab;
-import android.app.ActionBar.TabListener;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -19,11 +15,11 @@ import com.chaseit.models.CIUser;
 import com.facebook.FacebookRequestError;
 import com.facebook.Request;
 import com.facebook.Response;
-import com.facebook.Session;
 import com.facebook.model.GraphUser;
 import com.facebook.widget.ProfilePictureView;
 import com.parse.ParseFacebookUtils;
 import com.parse.ParseUser;
+
 
 public class UserDetailsActivity extends Activity {
 
@@ -55,7 +51,7 @@ public class UserDetailsActivity extends Activity {
 		});
 
 		// Fetch Facebook user info if the session is active
-		Session session = ParseFacebookUtils.getSession();
+		com.facebook.Session session = ParseFacebookUtils.getSession();
 		if (session != null && session.isOpened()) {
 			makeMeRequest();
 		}
