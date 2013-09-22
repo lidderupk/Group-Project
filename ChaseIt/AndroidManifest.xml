@@ -57,8 +57,18 @@
             android:label="@string/title_activity_maps_test" >
         </activity>
         <activity
+<<<<<<< HEAD
             android:name="com.chaseit.activities.CreateChaseActivity"
             android:label="@string/title_activity_create_chase" >
+=======
+            android:name="com.chaseit.activities.PlaceholderActivity"
+        </activity>
+        <activity
+            android:label="@string/title_activity_hunt_details" >
+        <activity
+            android:name="com.chaseit.activities.HuntPlayTestActivity"
+            android:label="@string/title_activity_hunt_play" >
+>>>>>>> 6cbb7ad4d76cd8698d6807ef0e399078194e0a21
         </activity>
     </application>
 
