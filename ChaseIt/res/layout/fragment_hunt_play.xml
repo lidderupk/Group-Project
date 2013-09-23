@@ -1,50 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="1" >
 
-    <fragment
+    <FrameLayout
         android:id="@+id/huntMap"
-        android:name="com.google.android.gms.maps.MapFragment"
         android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" />
+
+    <View
+        android:id="@+id/helper"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_weight=".7" />
+        android:layout_below="@+id/huntMap"
+        android:layout_centerHorizontal="true" />
 
-    <LinearLayout
-        android:id="@+id/hintPlayLinearLayout"
-        android:layout_width="fill_parent"
+    <ImageView
+        android:id="@+id/ivHuntImageClue"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight=".1"
-        android:orientation="horizontal"
-        android:weightSum="1" >
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@id/helper"
+        android:layout_alignTop="@id/helper"
+        android:layout_above="@+id/btHuntSubmitDone"
+        android:src="@drawable/pizza_hint" />
 
-        <ImageView
-            android:id="@+id/imageView1"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_weight="0.5"
-            android:src="@drawable/pizza_hint" />
+    <TextView
+        android:id="@+id/tvHuntMessageClue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"	
+        android:layout_toRightOf="@+id/helper"
+        android:layout_above="@+id/btHuntSubmitDone"
+        android:layout_alignTop="@id/helper"
+        android:text="This is placeholder for message clue for next location."
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_weight="0.5"
-            android:text="This is placeholder for message clue for next location."
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:gravity="center_vertical"
-             />
-       
-    </LinearLayout>
-    
-    <Button 
+    <Button
         android:id="@+id/btHuntSubmitDone"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight=".2"
-        android:text="I Am Here !"
-        />
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="I Am Here !" />
 
-</LinearLayout>
+</RelativeLayout>

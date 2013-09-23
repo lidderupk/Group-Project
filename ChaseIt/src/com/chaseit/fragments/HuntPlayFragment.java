@@ -1,6 +1,11 @@
 //package com.chaseit.fragments;
 //
 //import android.app.Fragment;
+
+//import android.app.FragmentTransaction;
+//import android.content.Intent;
+//import android.graphics.Bitmap;
+//import android.graphics.drawable.BitmapDrawable;
 //import android.os.Bundle;
 //import android.util.Log;
 //import android.view.LayoutInflater;
@@ -9,12 +14,24 @@
 //
 //import com.chaseit.R;
 //import com.chaseit.util.Constants;
+
+//import android.view.View.OnClickListener;
+//import android.view.ViewGroup;
+//import android.widget.ImageView;
+//
+//import com.chaseit.R;
+//import com.chaseit.activities.HuntShowImageActivity;
+//import com.chaseit.util.Constants;
+//import com.chaseit.util.FragmentFactory;
+
 //
 //public class HuntPlayFragment extends Fragment {
 //
 //	private static final String tag = "Debug - com.chaseit.fragments.HuntPlayFragment";
 //	private String huntId;
-////	private GoogleMap gMap;
+//	private GoogleMap gMap;
+//	private ImageView ivHuntImageClue;
+
 //
 //	@Override
 //	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -30,12 +47,39 @@
 //		Bundle extras = getArguments();
 //		huntId = extras.getString(Constants.HUNT_ID);
 //		Log.d(tag, "huntID: " + huntId);
-////		LatLng latLongForHunt = getLatLongForHunt(huntId);
+
+//		LatLng latLongForHunt = getLatLongForHunt(huntId);
+//
+//		FragmentTransaction ft = getFragmentManager().beginTransaction();
+//		ft.replace(R.id.huntMap,
+//				FragmentFactory.getHuntMapWithMarkersFragment(huntId));
+//		ft.commit();
 //
 //		setupViews(getView(), latLongForHunt);
 //	}
 //
 //	private void setupViews(View view, LatLng latLongForHunt) {
+//		ivHuntImageClue = (ImageView) view.findViewById(R.id.ivHuntImageClue);
+//		ivHuntImageClue.setOnClickListener(getHuntImageClueClickListener());
+//		setupMaps(latLongForHunt);
+//	}
+//
+//	private OnClickListener getHuntImageClueClickListener() {
+//		return new OnClickListener() {
+//
+//			@Override
+//			public void onClick(View v) {
+//				Bitmap bitmap = ((BitmapDrawable) ivHuntImageClue.getDrawable())
+//						.getBitmap();
+//				Intent in = new Intent(HuntPlayFragment.this.getActivity()
+//						.getBaseContext(), HuntShowImageActivity.class);
+//				in.putExtra(Constants.IMAGE_EXTRA, bitmap);
+//				startActivity(in);
+//			}
+//		};
+//	}
+//
+//	private void setupMaps(LatLng latLongForHunt) {
 //		try {
 //			// Loading map
 //			initilizeMap();

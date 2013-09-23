@@ -21,8 +21,7 @@ public class AddPictureDialogFragment extends DialogFragment {
         public void onGalleryClick(DialogFragment dialog);
     }
 
-   
-    private AddPictureDialogListener mListener;
+    protected AddPictureDialogListener mListener;
     
     public AddPictureDialogFragment(){
     	super();
@@ -69,7 +68,8 @@ public class AddPictureDialogFragment extends DialogFragment {
             // Instantiate the AddPictureDialogListener so we can send events to the host
             //mListener = (AddPictureDialogListener) activity;
         	FragmentManager manager = ((FragmentActivity)activity).getSupportFragmentManager();
-        	mListener = (AddPictureDialogListener) manager.findFragmentById(R.id.fAddPicture);
+        	//mListener = (AddPictureDialogListener) manager.findFragmentById(R.id.fAddPicture);
+        	mListener = (AddPictureDialogListener) manager.findFragmentByTag("PictureFragment");
         	
         } catch (ClassCastException e) {
             // The activity doesn't implement the interface, throw exception

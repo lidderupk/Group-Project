@@ -102,14 +102,14 @@ public class HomeScreenActivity extends ActionBarActivity implements TabListener
 
             /** Called when a drawer has settled in a completely closed state. */
             public void onDrawerClosed(View view) {
-                getActionBar().setTitle(mTitle);
-                invalidateOptionsMenu();
+                getSupportActionBar().setTitle(mTitle);
+//                invalidateOptionsMenu();
             }
 
             /** Called when a drawer has settled in a completely open state. */
             public void onDrawerOpened(View drawerView) {
-                getActionBar().setTitle(mDrawerTitle);
-                invalidateOptionsMenu();
+                getSupportActionBar().setTitle(mDrawerTitle);
+//              invalidateOptionsMenu();
             }
         };
         

@@ -31,6 +31,7 @@
 
     <fragment
         android:id="@+id/fAddPicture"
+        android:tag="PictureFragment"
         android:name="com.chaseit.fragments.AddPictureFragment"
         android:layout_width="75dp"
         android:layout_height="75dp"
