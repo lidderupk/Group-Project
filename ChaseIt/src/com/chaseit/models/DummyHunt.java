@@ -2,11 +2,11 @@ package com.chaseit.models;
 
 import com.parse.ParseClassName;
 import com.parse.ParseFile;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
 
 @ParseClassName("DummyHunt")
 public class DummyHunt extends Hunt {
-
 	public DummyHunt(){
 		//empty constructor
 	}
@@ -140,7 +140,7 @@ public class DummyHunt extends Hunt {
 	 * @see com.chaseit.models.Hunt#getStartLocation()
 	 */
 	@Override
-	public Location getStartLocation() {
+	public ParseGeoPoint getStartLocation() {
 		// TODO Auto-generated method stub
 		return this.startLocation;
 	}
@@ -149,7 +149,7 @@ public class DummyHunt extends Hunt {
 	 * @see com.chaseit.models.Hunt#setStartLocation(com.chaseit.models.Location)
 	 */
 	@Override
-	public void setStartLocation(Location startLocation) {
+	public void setStartLocation(ParseGeoPoint startLocation) {
 		// TODO Auto-generated method stub
 		this.startLocation = startLocation;
 	}

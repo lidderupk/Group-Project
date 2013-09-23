@@ -1,0 +1,64 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".CreateChaseActivity" >
+
+    <EditText
+        android:id="@+id/etAddDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/sDifficulty"
+        android:layout_below="@+id/sDifficulty"
+        android:layout_marginTop="14dp"
+        android:ems="10"
+        android:hint="@string/add_details_hint"
+        android:inputType="textMultiLine" />
+
+    <Button
+        android:id="@+id/btnCreate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/etAddDetails"
+        android:layout_marginBottom="16dp"
+        android:text="@string/create_button_label" />
+
+    <fragment
+        android:id="@+id/fAddPicture"
+        android:tag="PictureFragment"
+        android:name="com.chaseit.fragments.AddPictureFragment"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        tools:layout="@layout/fragment_add_picture" />
+
+    <EditText
+        android:id="@+id/etAddHeadline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/fAddPicture"
+        android:layout_toRightOf="@+id/fAddPicture"
+        android:ems="10"
+        android:hint="@string/add_headline_hint" >
+
+        <requestFocus />
+    </EditText>
+
+    <Spinner
+        android:id="@+id/sDifficulty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:layout_alignLeft="@+id/etAddHeadline"
+        android:layout_below="@+id/etAddHeadline"
+        android:entries="@array/difficulty_list"
+        android:prompt="@string/difficulty_prompt" />
+
+</RelativeLayout>

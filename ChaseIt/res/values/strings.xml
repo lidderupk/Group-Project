@@ -18,7 +18,38 @@
    
     <string name="title_activity_maps_test">MapsTestActivity</string>
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_create_chase">Make a Chase</string>
+    <string name="add_headline_hint">Add a headline</string>
+    <string name="add_details_hint">Add some details</string>
+    <string name="difficulty_prompt">Choose difficulty</string>
+
+    <string-array name="difficulty_list">
+        <item>Easy</item>
+        <item>Medium</item>
+        <item>Hard</item>
+    </string-array>
+
+    <string name="dialog_image_desc_take_picture">Take Picture</string>
+    <string name="dialog_image_desc_select_picture">Select Picture</string>
+    <string name="create_button_label">Create</string>
+    <string name="dialog_header">Header</string>
+    <string name="dialog_title_text">Add a picture</string>
+    <string name="add_image_description">Add Image</string>
     <string name="title_activity_placeholder">PlaceholderActivity</string>
-    <string name="title_activity_hunt_details">HuntDetailsActivity</string>
+    <string name="title_activity_hunt_details">Hunt Details</string>
+    <string name="title_activity_hunt_play">Hunt in Progress</string>
+    <string name="add_location_title">Add Location</string>
+    <string name="latitude_label">Latitude</string>
+    <string name="empty">" "</string>
+    <string name="longitude_label">Longitude</string>
+    <string name="place">Place</string>
+    <string name="add_hint_hint">Add a hint ...</string>
+    <string name="add_location_title">Add location to chase</string>
+    <string name="title_activity_create_chase_locations">CreateChaseLocationsActivity</string>
+    <string name="map_view_placeholder">Map view to create locations</string>
+    <string name="title_activity_add_chase_location">AddChaseLocation</string>
+    <string name="add_btn_label">Add</string>
+    <string name="title_activity_hunt_map_with_markers">Hunt map with markers</string>
+    <string name="title_activity_hunt_show_image">HuntShowImageActivity</string>
 
 </resources>

@@ -7,6 +7,11 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -52,12 +57,37 @@
             android:label="@string/title_activity_maps_test" >
         </activity>
         <activity
+            android:name="com.chaseit.activities.CreateChaseActivity"
+            android:label="@string/title_activity_create_chase" >
+        </activity>
+        <activity
             android:name="com.chaseit.activities.PlaceholderActivity"
             android:label="@string/title_activity_placeholder" >
         </activity>
         <activity
             android:name="com.chaseit.activities.HuntDetailsTestActivity"
             android:label="@string/title_activity_hunt_details" >
+        </activity>
+        <activity
+            android:name="com.chaseit.activities.HuntPlayTestActivity"
+            android:label="@string/title_activity_hunt_play" >
+        </activity>
+        <activity
+            android:name="com.chaseit.activities.CreateChaseLocationsActivity"
+            android:label="@string/title_activity_create_chase_locations" >
+        </activity>
+        <activity
+            android:name="com.chaseit.activities.AddChaseLocation"
+            android:theme="@android:style/Theme.Holo.Light.Dialog"
+            android:label="@string/title_activity_add_chase_location" >
+        </activity>
+        <activity
+            android:name="com.chaseit.activities.HuntMapWithMarkersTestActivity"
+            android:label="@string/title_activity_hunt_map_with_markers" >
+        </activity>
+        <activity
+            android:name="com.chaseit.activities.HuntShowImageActivity"
+            android:label="@string/title_activity_hunt_show_image" >
         </activity>
     </application>
 

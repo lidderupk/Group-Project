@@ -37,10 +37,24 @@ public class NewsFeedTestActivity extends FragmentActivity {
 //			in = new Intent(getBaseContext(), MapsTestActivity.class);
 //			startActivity(in);
 //			return true;
-		case R.id.huntDetails:
-			in = new Intent(getBaseContext(), HuntDetailsTestActivity.class);
-			startActivity(in);
-			return true;
+//		case R.id.huntDetails:
+//			in = new Intent(getBaseContext(), HuntDetailsTestActivity.class);
+//			startActivity(in);
+//			return true;
+//		case R.id.huntPlayMenu:
+//			in = new Intent(getBaseContext(), HuntPlayTestActivity.class);
+//			startActivity(in);
+//			return true;
+//		case R.id.huntMapLineMenu:
+//			in = new Intent(getBaseContext(),
+//					HuntMapWithMarkersTestActivity.class);
+//			startActivity(in);
+//			return true;
+			
+		case R.id.create_chase:
+			Intent createChase = new Intent(getBaseContext(), CreateChaseActivity.class);
+			startActivityForResult(createChase, CreateChaseActivity.CREATE_CHASE_ACTIVITY_CODE);
+			
 		default:
 			return super.onOptionsItemSelected(item);
 		}

@@ -8,6 +8,7 @@ import android.content.Context;
 import com.chaseit.R;
 import com.parse.ParseClassName;
 import com.parse.ParseFile;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
@@ -20,18 +21,13 @@ public class Hunt extends ParseObject {
 	protected int numRatings;
 	protected double totalDistance;
 	protected ParseUser creator;
-	protected Location startLocation;
+	protected ParseGeoPoint startLocation;
 	protected ParseFile huntPicture;
 	
 	public Hunt(){
 		//empty constructor
 	}
-	
-//	public static Hunt getNewHunt(){
-//		Hunt h = new Hunt();
-//		return ParseObject.createWithoutData(Hunt.class, h.getObjectId());
-//	}
-	
+		
 	/**
 	 * @return the name
 	 */
@@ -133,14 +129,14 @@ public class Hunt extends ParseObject {
 	/**
 	 * @return the startLocation
 	 */
-	public Location getStartLocation() {
-		return (Location)getParseObject("startlocation");
+	public ParseGeoPoint getStartLocation() {
+		return (ParseGeoPoint)getParseGeoPoint("startlocation");
 	}
 
 	/**
 	 * @param startLocation the startLocation to set
 	 */
-	public void setStartLocation(Location startLocation) {
+	public void setStartLocation(ParseGeoPoint startLocation) {
 		put("startlocation", startLocation);
 	}
 
