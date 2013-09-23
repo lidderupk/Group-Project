@@ -36,5 +36,7 @@
     <string name="title_activity_placeholder">PlaceholderActivity</string>
     <string name="title_activity_hunt_details">Hunt Details</string>
     <string name="title_activity_hunt_play">Hunt in Progress</string>
-
+    <string name="drawer_open">Open Drawer</string>
+    <string name="drawer_close">Close Drawer</string>
+    
 </resources>
