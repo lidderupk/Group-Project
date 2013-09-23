@@ -152,35 +152,35 @@ public class CreateChaseActivity extends FragmentActivity implements AddPictureL
 	}
 
 	private void afterChaseCreated(final Hunt chase, final ParseFile photo) {
-//		if(chase != null && photo != null){
-//			HuntImage chaseImage = new HuntImage();
-//			chaseImage.setHunt(chase);
-//			chaseImage.setImage(photo);
-//			chaseImage.saveInBackground(new SaveCallback() {
+		if(chase != null && photo != null){
+			HuntImage chaseImage = new HuntImage();
+			chaseImage.setHunt(chase);
+			chaseImage.setImage(photo);
+			chaseImage.saveInBackground(new SaveCallback() {
 				
-//				@Override
-//				public void done(ParseException e) {
-//					if(e == null){
-//						Intent in = new Intent(getBaseContext(), CreateChaseLocationsActivity.class);
-//						in.putExtra("chaseId", chase.getObjectId());
-//						in.putExtra("chaseName", chase.getName());
-//						startActivity(in);
-//					} else {
-//						e.printStackTrace();
-//					}
-//				}
-//			});
-//		} else {
-//			if(chase != null){
-//				Intent in = new Intent(getBaseContext(), CreateChaseLocationsActivity.class);
-//				in.putExtra("chaseId", chase.getObjectId());
-//				in.putExtra("chaseName", chase.getName());
-//				startActivity(in);			
-//			} else {
-//				Toast.makeText(getBaseContext(), "Unable to create chase", Toast.LENGTH_SHORT).show();
-//				finish();
-//			}
-//		}
+				@Override
+				public void done(ParseException e) {
+					if(e == null){
+						Intent in = new Intent(getBaseContext(), CreateChaseLocationsActivity.class);
+						in.putExtra("chaseId", chase.getObjectId());
+						in.putExtra("chaseName", chase.getName());
+						startActivity(in);
+					} else {
+						e.printStackTrace();
+					}
+				}
+			});
+		} else {
+			if(chase != null){
+				Intent in = new Intent(getBaseContext(), CreateChaseLocationsActivity.class);
+				in.putExtra("chaseId", chase.getObjectId());
+				in.putExtra("chaseName", chase.getName());
+				startActivity(in);			
+			} else {
+				Toast.makeText(getBaseContext(), "Unable to create chase", Toast.LENGTH_SHORT).show();
+				finish();
+			}
+		}
 	}
 
 	@Override
