@@ -38,5 +38,11 @@
     <string name="title_activity_hunt_play">Hunt in Progress</string>
     <string name="drawer_open">Open Drawer</string>
     <string name="drawer_close">Close Drawer</string>
+        <string-array name="menu_drawer_array">
+        <item>Profile</item>
+        <item>Settings</item>
+        <item>Invite Friends</item>
+        <item>About</item>
+    </string-array>
     
 </resources>

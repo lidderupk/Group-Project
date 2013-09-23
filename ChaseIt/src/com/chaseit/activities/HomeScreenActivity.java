@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -14,7 +13,10 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.chaseit.R;
 import com.chaseit.fragments.MyHuntsFragment;
@@ -110,6 +112,11 @@ public class HomeScreenActivity extends ActionBarActivity implements TabListener
                 invalidateOptionsMenu();
             }
         };
+        
+        String[] menuArray =getResources().getStringArray(R.array.menu_drawer_array);
+		mDrawerList.setAdapter(new ArrayAdapter<String>(this,
+                R.layout.drawer_list_item, menuArray));
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
         // Set the drawer toggle as the DrawerListener
         mDrawerLayout.setDrawerListener(mDrawerToggle);
@@ -138,10 +145,23 @@ public class HomeScreenActivity extends ActionBarActivity implements TabListener
 		actionBar.selectTab(tabHome);
 	}
 
-	private void onProfileSelected(View v){
-		Intent i = new Intent(HomeScreenActivity.this, UserDetailsActivity.class);
-		startActivity(i);
-	}
+    private class DrawerItemClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            selectItem(position);
+        }
+    }
+    
+    private void selectItem(int position) {
+    	Toast.makeText(this, Integer.toString(position), Toast.LENGTH_SHORT).show();
+    	
+    	if (position == 0){
+    		Intent i = new Intent(HomeScreenActivity.this, UserDetailsActivity.class);
+    		startActivity(i);
+    	}
+        mDrawerList.setItemChecked(position, true);
+        mDrawerLayout.closeDrawer(mDrawerList);
+    }
 	
 	/* TabListener Methods */
 
