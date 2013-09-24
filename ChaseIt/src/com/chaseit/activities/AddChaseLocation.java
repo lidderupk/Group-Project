@@ -29,7 +29,7 @@ import com.parse.ParseGeoPoint;
 import com.parse.SaveCallback;
 
 public class AddChaseLocation extends FragmentActivity implements AddPictureListener {
-
+	public static final int ADD_CHASE_LOCATION_ACTIVITY_CODE = 100;
 	private EditText etChaseHint;
 	private EditText etPlace;
 	private TextView tvLatValue;
@@ -80,6 +80,7 @@ public class AddChaseLocation extends FragmentActivity implements AddPictureList
 		btnCancel.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				setResult(RESULT_CANCELED);
 				finish();
 			}
 		});
@@ -101,6 +102,7 @@ public class AddChaseLocation extends FragmentActivity implements AddPictureList
 					@Override
 					public void done(ParseException e) {
 						if(e == null){
+							setResult(RESULT_OK);
 							finish();
 						} else {
 							e.printStackTrace();
