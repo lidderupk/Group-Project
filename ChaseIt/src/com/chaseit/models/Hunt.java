@@ -23,7 +23,8 @@ public class Hunt extends ParseObject {
 	protected ParseUser creator;
 	protected ParseGeoPoint startLocation;
 	protected ParseFile huntPicture;
-
+	protected String locality;
+	
 	public Hunt() {
 		// empty constructor
 	}
@@ -161,6 +162,20 @@ public class Hunt extends ParseObject {
 	 */
 	public void setHuntPicture(ParseFile huntPicture) {
 		put("huntpicture", huntPicture);
+	}
+	
+	/**
+	 * @return the locality
+	 */
+	public String getLocality() {
+		return getString("locality");
+	}
+
+	/**
+	 * @param locality the locality to set
+	 */
+	public void setLocality(String locality) {
+		put("locality", locality);
 	}
 
 	public static List<Hunt> createSampleHunts(Context c) {

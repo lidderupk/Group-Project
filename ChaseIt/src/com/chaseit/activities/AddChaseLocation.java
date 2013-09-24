@@ -2,6 +2,8 @@ package com.chaseit.activities;
 
 import java.io.ByteArrayOutputStream;
 
+import org.apache.commons.lang3.StringUtils;
+
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -29,7 +31,7 @@ import com.parse.ParseGeoPoint;
 import com.parse.SaveCallback;
 
 public class AddChaseLocation extends FragmentActivity implements
-		AddPictureListener {
+AddPictureListener {
 	public static final int ADD_CHASE_LOCATION_ACTIVITY_CODE = 100;
 	private EditText etChaseHint;
 	private EditText etPlace;
@@ -44,6 +46,8 @@ public class AddChaseLocation extends FragmentActivity implements
 	private int locationIndex;
 	private Hunt chase;
 	private ParseGeoPoint point;
+
+	//private ProgressDialog pDialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +66,7 @@ public class AddChaseLocation extends FragmentActivity implements
 		friendlyName = i.getStringExtra("friendlyName");
 		point = new ParseGeoPoint(i.getDoubleExtra("latitude",
 				Constants.latUnionSquare), i.getDoubleExtra("longitude",
-				Constants.lngUnionSquare));
+						Constants.lngUnionSquare));
 
 		tvLatValue.setText(String.valueOf(point.getLatitude()));
 		tvLongValue.setText(String.valueOf(point.getLongitude()));
@@ -90,6 +94,12 @@ public class AddChaseLocation extends FragmentActivity implements
 		btnAdd.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+//				pDialog = new ProgressDialog(getBaseContext());
+//				pDialog.setMessage("Adding Location to Your Chase...");
+//				pDialog.setCancelable(false);
+//				pDialog.show();
+				String newFriendlyName = etPlace.getText().toString();
+				friendlyName = StringUtils.isNotBlank(newFriendlyName) ? newFriendlyName : friendlyName;
 				Location location = new Location();
 				location.setHint(etChaseHint.getText().toString());
 				location.setImage(photoHint);
@@ -103,8 +113,11 @@ public class AddChaseLocation extends FragmentActivity implements
 				location.saveInBackground(new SaveCallback() {
 					@Override
 					public void done(ParseException e) {
+//						pDialog.dismiss();
 						if (e == null) {
-							setResult(RESULT_OK);
+							Intent resultIntent = new Intent();
+							resultIntent.putExtra("friendlyName", friendlyName);
+							setResult(RESULT_OK, resultIntent);
 							finish();
 						} else {
 							e.printStackTrace();

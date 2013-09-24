@@ -1,21 +1,13 @@
 package com.chaseit.activities;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.util.Calendar;
-import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -35,15 +27,12 @@ import com.chaseit.models.Hunt;
 import com.chaseit.models.HuntImage;
 import com.parse.ParseException;
 import com.parse.ParseFile;
-import com.parse.ParseGeoPoint;
 import com.parse.SaveCallback;
 
 public class CreateChaseActivity extends FragmentActivity implements
-		AddPictureListener, LocationListener {
+		AddPictureListener {
 	public static int CREATE_CHASE_ACTIVITY_CODE = 10;
 
-	private LocationManager mLocationManager;
-	private Geocoder geocode;
 	private EditText etAddHeadline;
 	private EditText etAddDetails;
 	private Spinner sDifficulty;
@@ -52,9 +41,7 @@ public class CreateChaseActivity extends FragmentActivity implements
 	private Bitmap bitmapFile;
 	private String bitmapFileName;
 	private AlertDialog alert;
-
-	// dummy fill in for now
-	private ParseGeoPoint startPoint;
+//	private ProgressDialog pDialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -62,38 +49,19 @@ public class CreateChaseActivity extends FragmentActivity implements
 		setContentView(R.layout.activity_create_chase);
 		getLayoutElements();
 		setCreateHuntButtonListener();
-		setupLocationInformation();
 	}
 
-	private void setupLocationInformation() {
-		mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		geocode = new Geocoder(getBaseContext());
-
-		android.location.Location location = mLocationManager
-				.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-		if (location != null
-				&& location.getTime() > Calendar.getInstance()
-						.getTimeInMillis() - 2 * 60 * 1000) {
-			startPoint = new ParseGeoPoint(location.getLatitude(),
-					location.getLongitude());
-			try {
-				List<Address> addresses = geocode.getFromLocation(
-						location.getLatitude(), location.getLongitude(), 1);
-				if (addresses != null && !addresses.isEmpty()) {
-					Toast.makeText(getBaseContext(),
-							addresses.get(0).getLocality(), Toast.LENGTH_SHORT)
-							.show();
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if(requestCode == CreateChaseLocationsActivity.CREATE_CHASE_LOCATIONS_REQ_CODE){
+			//destroy this activity
+			setResult(resultCode);
+			finish();			
 		} else {
-			mLocationManager.requestLocationUpdates(
-					LocationManager.GPS_PROVIDER, 0, 0, this);
+			super.onActivityResult(requestCode, resultCode, data);
 		}
-
 	}
-
+	
 	private void getLayoutElements() {
 		etAddHeadline = (EditText) findViewById(R.id.etAddHeadline);
 		etAddDetails = (EditText) findViewById(R.id.etAddDetails);
@@ -119,10 +87,11 @@ public class CreateChaseActivity extends FragmentActivity implements
 					chase.setDifficulty(difficulty);
 					chase.setName(headline);
 					chase.setNumRatings(0);
-					// dummy start location
-					if (startPoint != null) {
-						chase.setStartLocation(startPoint);
-					}
+
+//					pDialog = new ProgressDialog(getBaseContext());
+//					pDialog.setMessage("Starting Location Selector...");
+//					pDialog.setCancelable(false);
+//					pDialog.show();
 
 					if (photoFile != null) {
 						photoFile.saveInBackground(new SaveCallback() {
@@ -172,12 +141,13 @@ public class CreateChaseActivity extends FragmentActivity implements
 
 				@Override
 				public void done(ParseException e) {
+//					pDialog.dismiss();
 					if (e == null) {
 						Intent in = new Intent(getBaseContext(),
 								CreateChaseLocationsActivity.class);
 						in.putExtra("chaseId", chase.getObjectId());
 						in.putExtra("chaseName", chase.getName());
-						startActivity(in);
+						startActivityForResult(in, CreateChaseLocationsActivity.CREATE_CHASE_LOCATIONS_REQ_CODE);
 					} else {
 						e.printStackTrace();
 					}
@@ -185,14 +155,17 @@ public class CreateChaseActivity extends FragmentActivity implements
 			});
 		} else {
 			if (chase != null) {
+//				pDialog.dismiss();
 				Intent in = new Intent(getBaseContext(),
 						CreateChaseLocationsActivity.class);
 				in.putExtra("chaseId", chase.getObjectId());
 				in.putExtra("chaseName", chase.getName());
-				startActivity(in);
+				startActivityForResult(in, CreateChaseLocationsActivity.CREATE_CHASE_LOCATIONS_REQ_CODE);
 			} else {
 				Toast.makeText(getBaseContext(), "Unable to create chase",
 						Toast.LENGTH_SHORT).show();
+				setResult(RESULT_CANCELED);
+//				pDialog.dismiss();
 				finish();
 			}
 		}
@@ -220,37 +193,4 @@ public class CreateChaseActivity extends FragmentActivity implements
 			bitmapFile = null;
 		}
 	}
-
-	@Override
-	public void onLocationChanged(android.location.Location location) {
-		if (location != null) {
-			startPoint = new ParseGeoPoint(location.getLatitude(),
-					location.getLongitude());
-			mLocationManager.removeUpdates(this);
-			try {
-				List<Address> addresses = geocode.getFromLocation(
-						location.getLatitude(), location.getLongitude(), 1);
-				if (addresses != null && !addresses.isEmpty()) {
-					Toast.makeText(getBaseContext(),
-							addresses.get(0).getLocality(), Toast.LENGTH_SHORT)
-							.show();
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-
-	@Override
-	public void onProviderDisabled(String provider) {
-	}
-
-	@Override
-	public void onProviderEnabled(String provider) {
-	}
-
-	@Override
-	public void onStatusChanged(String provider, int status, Bundle extras) {
-	}
-
 }

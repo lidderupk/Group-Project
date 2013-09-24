@@ -4,38 +4,61 @@
     android:layout_height="match_parent"
     tools:context=".CreateChaseLocationsActivity" >
 
-    <!--ImageView
-        android:id="@+id/ivMap"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:adjustViewBounds="true"
-        android:layout_alignParentLeft="true"
-        android:scaleType="centerCrop"
-        android:contentDescription="@string/map_view_placeholder"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"/-->
-        
     <fragment
         android:id="@+id/fCreateChaseMap"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:adjustViewBounds="true"
+        android:layout_above="@+id/llButtonBar"
         android:layout_alignParentLeft="true"
-        android:scaleType="centerCrop"
+        android:layout_below="@+id/btnSearch"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"/>
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop" />
 
-    <TextView
-        android:id="@+id/tvChaseName"
+    <EditText
+        android:id="@+id/etSearchName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btnSearch"
         android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/btnSearch"
+        android:hint="@string/add_location_help_text"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <ImageButton
+        android:id="@+id/btnSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:text="@string/empty"
-        android:background="#07000000"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:contentDescription="@string/search_btn_txt"
+        android:src="@drawable/abc_ic_search_api_holo_light" />
+
+    <LinearLayout
+        android:id="@+id/llButtonBar"
+        style="?android:attr/buttonBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:background="#00000000" >
+
+        <Button
+            android:id="@+id/btnDiscard"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/discard_btn_label" />
+
+        <Button
+            android:id="@+id/btnDone"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/done_btn_label" />
+    </LinearLayout>
 
 </RelativeLayout>

@@ -61,5 +61,8 @@
     <string name="add_btn_label">Add</string>
     <string name="title_activity_hunt_map_with_markers">Hunt map with markers</string>
     <string name="title_activity_hunt_show_image">HuntShowImageActivity</string>
-
+    <string name="add_location_help_text">Search or long press to start</string>
+    <string name="discard_btn_label">Discard</string>
+	<string name="done_btn_label">Done</string>
+	<string name="search_btn_txt">Search button</string> 	
 </resources>

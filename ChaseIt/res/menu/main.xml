@@ -8,43 +8,44 @@
         android:title="@string/menu_create_hunt"
         android:visible="true"/-->
 
-        <item
+        <!--item
         android:id="@+id/action_settings"
-        android:orderInCategory="100"
+        android:orderInCategory="600"
         android:showAsAction="never"
-        android:title="@string/action_settings"/>
-    <item
+        android:title="@string/action_settings"/-->
+
+        <item
         android:id="@+id/maps"
         android:icon="@drawable/ic_content_select_all"
-        android:orderInCategory="100"
+        android:orderInCategory="500"
         android:showAsAction="never"
         android:title="show maps"/>
     <item
         android:id="@+id/huntDetails"
         android:icon="@drawable/ic_content_select_all"
-        android:orderInCategory="100"
+        android:orderInCategory="400"
         android:showAsAction="never"
         android:title="hunt details"/>
     <item
         android:id="@+id/huntPlayMenu"
         android:icon="@drawable/ic_content_select_all"
-        android:orderInCategory="100"
+        android:orderInCategory="300"
         android:showAsAction="never"
         android:title="hunt Play"/>
     
     <item
         android:id="@+id/huntMapLineMenu"
         android:icon="@drawable/ic_content_select_all"
-        android:orderInCategory="100"
+        android:orderInCategory="200"
         android:showAsAction="never"
         android:title="hunt map with lines"/>
 
         <item
         android:id="@+id/create_chase"
-        android:orderInCategory="200"
+        android:orderInCategory="100"
+        android:icon="@android:drawable/ic_input_add"
         android:showAsAction="always"
-        android:title="show create"
-        android:icon="@drawable/sample_project_hunt"/>
+        android:title="@string/create_button_label"/>
     
     
 </menu>

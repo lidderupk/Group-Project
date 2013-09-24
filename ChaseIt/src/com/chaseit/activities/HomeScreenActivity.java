@@ -120,8 +120,7 @@ public class HomeScreenActivity extends ActionBarActivity implements
 		case R.id.create_chase:
 			Intent createChase = new Intent(getBaseContext(),
 					CreateChaseActivity.class);
-			startActivityForResult(createChase,
-					CreateChaseActivity.CREATE_CHASE_ACTIVITY_CODE);
+			startActivityForResult(createChase, CreateChaseActivity.CREATE_CHASE_ACTIVITY_CODE);
 
 		default:
 			return super.onOptionsItemSelected(item);
