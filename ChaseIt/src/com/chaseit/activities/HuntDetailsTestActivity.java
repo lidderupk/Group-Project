@@ -1,23 +1,24 @@
 package com.chaseit.activities;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.app.FragmentTransaction;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
 
 import com.chaseit.R;
 import com.chaseit.util.FragmentFactory;
 
-public class HuntDetailsTestActivity extends Activity {
+public class HuntDetailsTestActivity extends FragmentActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-//		setContentView(R.layout.activity_hunt_details_test);
-//
-//		FragmentTransaction ft = getFragmentManager().beginTransaction();
-//		ft.replace(R.id.flHuntDetails, FragmentFactory.getHuntDetailsFragment("1"));
-//		ft.commit();
+		setContentView(R.layout.activity_hunt_details_test);
+
+		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+		ft.replace(R.id.flHuntDetails,
+				FragmentFactory.getHuntDetailsFragment("1"));
+		ft.commit();
 	}
 
 	@Override

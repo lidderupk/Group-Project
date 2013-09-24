@@ -20,7 +20,6 @@ import com.facebook.widget.ProfilePictureView;
 import com.parse.ParseFacebookUtils;
 import com.parse.ParseUser;
 
-
 public class UserDetailsActivity extends Activity {
 
 	private ProfilePictureView userProfilePictureView;
@@ -83,10 +82,12 @@ public class UserDetailsActivity extends Activity {
 							CIUser.setFacebookid(user.getId());
 							CIUser.setName(user.getName());
 							if (user.getLocation().getProperty("name") != null) {
-								CIUser.setLocation((String) user.getLocation().getProperty("name"));
+								CIUser.setLocation((String) user.getLocation()
+										.getProperty("name"));
 							}
 							if (user.getProperty("gender") != null) {
-								CIUser.setGender((String) user.getProperty("gender"));
+								CIUser.setGender((String) user
+										.getProperty("gender"));
 							}
 							if (user.getBirthday() != null) {
 								CIUser.setBirthday(user.getBirthday());
@@ -118,31 +119,31 @@ public class UserDetailsActivity extends Activity {
 
 	private void updateViewsWithProfileInfo() {
 		if (CIUser.getFacebookid() != null) {
-				userProfilePictureView.setProfileId(CIUser.getFacebookid());
-			} else {
-				// Show the default, blank user profile picture
-				userProfilePictureView.setProfileId(null);
-			}
-			if (CIUser.getName() != null) {
-				userNameView.setText(CIUser.getName());
-			} else {
-				userNameView.setText("");
-			}
-			if (CIUser.getLocation() != null) {
-				userLocationView.setText(CIUser.getLocation());
-			} else {
-				userLocationView.setText("");
-			}
-			if (CIUser.getGender() != null) {
-				userGenderView.setText(CIUser.getGender());
-			} else {
-				userGenderView.setText("");
-			}
-			if (CIUser.getBirthday() != null) {
-				userDateOfBirthView.setText("11");
-			} else {
-				userDateOfBirthView.setText("");
-			}
+			userProfilePictureView.setProfileId(CIUser.getFacebookid());
+		} else {
+			// Show the default, blank user profile picture
+			userProfilePictureView.setProfileId(null);
+		}
+		if (CIUser.getName() != null) {
+			userNameView.setText(CIUser.getName());
+		} else {
+			userNameView.setText("");
+		}
+		if (CIUser.getLocation() != null) {
+			userLocationView.setText(CIUser.getLocation());
+		} else {
+			userLocationView.setText("");
+		}
+		if (CIUser.getGender() != null) {
+			userGenderView.setText(CIUser.getGender());
+		} else {
+			userGenderView.setText("");
+		}
+		if (CIUser.getBirthday() != null) {
+			userDateOfBirthView.setText("11");
+		} else {
+			userDateOfBirthView.setText("");
+		}
 	}
 
 	private void onLogoutButtonClicked() {

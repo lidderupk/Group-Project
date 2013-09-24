@@ -7,11 +7,13 @@ import com.parse.ParseUser;
 
 @ParseClassName("DummyHunt")
 public class DummyHunt extends Hunt {
-	public DummyHunt(){
-		//empty constructor
+	public DummyHunt() {
+		// empty constructor
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.chaseit.models.Hunt#getName()
 	 */
 	@Override
@@ -19,7 +21,9 @@ public class DummyHunt extends Hunt {
 		return this.name;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.chaseit.models.Hunt#setName(java.lang.String)
 	 */
 	@Override
@@ -28,7 +32,9 @@ public class DummyHunt extends Hunt {
 		this.name = name;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.chaseit.models.Hunt#getDetails()
 	 */
 	@Override
@@ -37,7 +43,9 @@ public class DummyHunt extends Hunt {
 		return this.details;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.chaseit.models.Hunt#setDetails(java.lang.String)
 	 */
 	@Override
@@ -46,7 +54,9 @@ public class DummyHunt extends Hunt {
 		this.details = details;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.chaseit.models.Hunt#getDifficulty()
 	 */
 	@Override
@@ -55,7 +65,9 @@ public class DummyHunt extends Hunt {
 		return this.difficulty;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.chaseit.models.Hunt#setDifficulty(int)
 	 */
 	@Override
@@ -64,7 +76,9 @@ public class DummyHunt extends Hunt {
 		this.difficulty = difficulty;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.chaseit.models.Hunt#getAvgRating()
 	 */
 	@Override
@@ -73,7 +87,9 @@ public class DummyHunt extends Hunt {
 		return this.avgRating;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.chaseit.models.Hunt#setAvgRating(int)
 	 */
 	@Override
@@ -82,7 +98,9 @@ public class DummyHunt extends Hunt {
 		this.avgRating = avgRating;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.chaseit.models.Hunt#getNumRatings()
 	 */
 	@Override
@@ -91,7 +109,9 @@ public class DummyHunt extends Hunt {
 		return this.numRatings;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.chaseit.models.Hunt#setNumRatings(int)
 	 */
 	@Override
@@ -100,7 +120,9 @@ public class DummyHunt extends Hunt {
 		this.numRatings = numRatings;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.chaseit.models.Hunt#getTotalDistance()
 	 */
 	@Override
@@ -109,7 +131,9 @@ public class DummyHunt extends Hunt {
 		return this.totalDistance;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.chaseit.models.Hunt#setTotalDistance(double)
 	 */
 	@Override
@@ -118,7 +142,9 @@ public class DummyHunt extends Hunt {
 		this.totalDistance = totalDistance;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.chaseit.models.Hunt#getCreator()
 	 */
 	@Override
@@ -127,7 +153,9 @@ public class DummyHunt extends Hunt {
 		return this.creator;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.chaseit.models.Hunt#setCreator(com.chaseit.models.User)
 	 */
 	@Override
@@ -136,7 +164,9 @@ public class DummyHunt extends Hunt {
 		this.creator = creator;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.chaseit.models.Hunt#getStartLocation()
 	 */
 	@Override
@@ -145,24 +175,26 @@ public class DummyHunt extends Hunt {
 		return this.startLocation;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.chaseit.models.Hunt#setStartLocation(com.chaseit.models.Location)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.chaseit.models.Hunt#setStartLocation(com.chaseit.models.Location)
 	 */
 	@Override
 	public void setStartLocation(ParseGeoPoint startLocation) {
 		// TODO Auto-generated method stub
 		this.startLocation = startLocation;
 	}
-	
+
 	@Override
-	public ParseFile getHuntPicture(){
+	public ParseFile getHuntPicture() {
 		return this.huntPicture;
 	}
-	
+
 	@Override
 	public void setHuntPicture(ParseFile huntPicture) {
 		this.huntPicture = huntPicture;
 	}
-
 
 }

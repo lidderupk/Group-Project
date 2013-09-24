@@ -89,7 +89,6 @@ public class LoginActivity extends Activity {
 		});
 	}
 
-	
 	private void showNewsfeedActivty() {
 		Intent intent = new Intent(this, HomeScreenActivity.class);
 		startActivity(intent);

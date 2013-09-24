@@ -1,11 +1,11 @@
 package com.chaseit.fragments;
 
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,11 +19,10 @@ import com.chaseit.util.Constants;
 import com.chaseit.util.FragmentFactory;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-
 
 public class HuntPlayFragment extends Fragment {
 
@@ -31,7 +30,6 @@ public class HuntPlayFragment extends Fragment {
 	private String huntId;
 	private GoogleMap gMap;
 	private ImageView ivHuntImageClue;
-
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,7 +48,8 @@ public class HuntPlayFragment extends Fragment {
 
 		LatLng latLongForHunt = getLatLongForHunt(huntId);
 
-		FragmentTransaction ft = getFragmentManager().beginTransaction();
+		FragmentTransaction ft = getActivity().getSupportFragmentManager()
+				.beginTransaction();
 		ft.replace(R.id.huntMap,
 				FragmentFactory.getHuntMapWithMarkersFragment(huntId));
 		ft.commit();
@@ -118,8 +117,9 @@ public class HuntPlayFragment extends Fragment {
 	 * */
 	private void initilizeMap() {
 		if (gMap == null) {
-			gMap = ((MapFragment) getFragmentManager().findFragmentById(
-					R.id.huntMap)).getMap();
+			gMap = ((SupportMapFragment) getActivity()
+					.getSupportFragmentManager().findFragmentById(R.id.huntMap))
+					.getMap();
 
 			// check if map is created successfully or not
 			if (gMap == null) {

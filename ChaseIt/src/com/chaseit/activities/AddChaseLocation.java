@@ -28,7 +28,8 @@ import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.SaveCallback;
 
-public class AddChaseLocation extends FragmentActivity implements AddPictureListener {
+public class AddChaseLocation extends FragmentActivity implements
+		AddPictureListener {
 	public static final int ADD_CHASE_LOCATION_ACTIVITY_CODE = 100;
 	private EditText etChaseHint;
 	private EditText etPlace;
@@ -39,44 +40,45 @@ public class AddChaseLocation extends FragmentActivity implements AddPictureList
 
 	private String friendlyName;
 	private ParseFile photoHint;
-	
+
 	private int locationIndex;
 	private Hunt chase;
 	private ParseGeoPoint point;
-	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.activity_add_chase_location);		
-        etChaseHint = (EditText)findViewById(R.id.etChaseHint);
-        etPlace = (EditText)findViewById(R.id.etPlace);
-        tvLatValue = (TextView)findViewById(R.id.tvLatValue);
-        tvLongValue = (TextView)findViewById(R.id.tvLongValue);
-        btnCancel = (Button)findViewById(R.id.btnCancel);
-        btnAdd = (Button)findViewById(R.id.btnAdd);
-        Intent i = getIntent();
+		setContentView(R.layout.activity_add_chase_location);
+		etChaseHint = (EditText) findViewById(R.id.etChaseHint);
+		etPlace = (EditText) findViewById(R.id.etPlace);
+		tvLatValue = (TextView) findViewById(R.id.tvLatValue);
+		tvLongValue = (TextView) findViewById(R.id.tvLongValue);
+		btnCancel = (Button) findViewById(R.id.btnCancel);
+		btnAdd = (Button) findViewById(R.id.btnAdd);
+		Intent i = getIntent();
 		String chaseId = i.getStringExtra("chaseId");
 		locationIndex = i.getIntExtra("locationIndex", 0);
 		friendlyName = i.getStringExtra("friendlyName");
-		point = new ParseGeoPoint(i.getDoubleExtra("latitude", Constants.latUnionSquare), i.getDoubleExtra("longitude", Constants.lngUnionSquare));
-		
+		point = new ParseGeoPoint(i.getDoubleExtra("latitude",
+				Constants.latUnionSquare), i.getDoubleExtra("longitude",
+				Constants.lngUnionSquare));
+
 		tvLatValue.setText(String.valueOf(point.getLatitude()));
 		tvLongValue.setText(String.valueOf(point.getLongitude()));
 		etPlace.setText(friendlyName);
-		
+
 		ParseHelper.getHuntByObjectId(chaseId, new GetCallback<Hunt>() {
 			@Override
 			public void done(Hunt object, ParseException e) {
-				if(e == null){
+				if (e == null) {
 					chase = object;
 				} else {
 					e.printStackTrace();
 				}
 			}
 		});
-		
+
 		btnCancel.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -84,7 +86,7 @@ public class AddChaseLocation extends FragmentActivity implements AddPictureList
 				finish();
 			}
 		});
-		
+
 		btnAdd.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -95,13 +97,13 @@ public class AddChaseLocation extends FragmentActivity implements AddPictureList
 				location.setLocation(point);
 				location.setLocationName(friendlyName);
 				location.setParentHunt(chase);
-				if(photoHint != null){
+				if (photoHint != null) {
 					photoHint.saveInBackground();
 				}
 				location.saveInBackground(new SaveCallback() {
 					@Override
 					public void done(ParseException e) {
-						if(e == null){
+						if (e == null) {
 							setResult(RESULT_OK);
 							finish();
 						} else {
@@ -122,13 +124,14 @@ public class AddChaseLocation extends FragmentActivity implements AddPictureList
 
 	@Override
 	public void onPictureAdded(Fragment fragment) {
-		Bitmap bmp = ((AddPictureFragment)fragment).getPhotoBitmap();
-		if(bmp != null){
+		Bitmap bmp = ((AddPictureFragment) fragment).getPhotoBitmap();
+		if (bmp != null) {
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
 			bmp.compress(Bitmap.CompressFormat.JPEG, 100, bos);
 			byte[] scaledData = bos.toByteArray();
-			photoHint = new ParseFile(((AddPictureFragment)fragment).getPhotoName(), scaledData);
-		}		
+			photoHint = new ParseFile(
+					((AddPictureFragment) fragment).getPhotoName(), scaledData);
+		}
 	}
 
 }

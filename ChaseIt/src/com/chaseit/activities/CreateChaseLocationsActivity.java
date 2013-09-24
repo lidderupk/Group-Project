@@ -36,7 +36,7 @@ import com.parse.GetCallback;
 import com.parse.ParseException;
 
 public class CreateChaseLocationsActivity extends FragmentActivity {
-	//private ImageView ivMap;
+	// private ImageView ivMap;
 	private GoogleMap fCreateChaseMap;
 	private TextView tvChaseName;
 	private Hunt chase;
@@ -45,7 +45,6 @@ public class CreateChaseLocationsActivity extends FragmentActivity {
 	private String friendlyName;
 	private Geocoder geocode;
 
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -54,7 +53,7 @@ public class CreateChaseLocationsActivity extends FragmentActivity {
 		initilizeMap();
 		geocode = new Geocoder(getBaseContext(), Locale.getDefault());
 		mapPoints = new ArrayList<LatLng>();
-		tvChaseName = (TextView)findViewById(R.id.tvChaseName);
+		tvChaseName = (TextView) findViewById(R.id.tvChaseName);
 		tvChaseName.bringToFront();
 		Intent i = getIntent();
 		String chaseId = i.getStringExtra("chaseId");
@@ -62,79 +61,91 @@ public class CreateChaseLocationsActivity extends FragmentActivity {
 		ParseHelper.getHuntByObjectId(chaseId, new GetCallback<Hunt>() {
 			@Override
 			public void done(Hunt object, ParseException e) {
-				if(e == null){
+				if (e == null) {
 					chase = object;
 				} else {
 					e.printStackTrace();
 				}
 			}
 		});
-		
+
 		tvChaseName.setText(chaseName);
 		RequestParams rparams = new RequestParams();
-		rparams.put("markers", Constants.latUnionSquare + "," + Constants.lngUnionSquare);
+		rparams.put("markers", Constants.latUnionSquare + ","
+				+ Constants.lngUnionSquare);
 		rparams.put("zoom", "12");
 		rparams.put("sensor", "false");
 		rparams.put("size", "1024x786");
-		
-//		GoogleMapsConnector.getGoogleMapsConnector().getStaticMapAsync(rparams, new BinaryHttpResponseHandler(){
-//			@Override
-//            public void onSuccess(byte[] fileData) {
-//                Log.d("DEBUG", "Got the image data...");
-//                Bitmap map = BitmapFactory.decodeByteArray(fileData, 0, fileData.length);
-//                ivMap.setImageBitmap(map);
-//            }
-//
-//            @Override
-//            public void onFailure(Throwable e, byte[] binaryData) {
-//                Log.e("Album Adapter","Can't fetch the image");
-//            }
-//		});
-		
+
+		// GoogleMapsConnector.getGoogleMapsConnector().getStaticMapAsync(rparams,
+		// new BinaryHttpResponseHandler(){
+		// @Override
+		// public void onSuccess(byte[] fileData) {
+		// Log.d("DEBUG", "Got the image data...");
+		// Bitmap map = BitmapFactory.decodeByteArray(fileData, 0,
+		// fileData.length);
+		// ivMap.setImageBitmap(map);
+		// }
+		//
+		// @Override
+		// public void onFailure(Throwable e, byte[] binaryData) {
+		// Log.e("Album Adapter","Can't fetch the image");
+		// }
+		// });
+
 		fCreateChaseMap.setOnMapLongClickListener(new OnMapLongClickListener() {
 
 			@Override
 			public void onMapLongClick(LatLng point) {
-				//mapPoints.add(point);
+				// mapPoints.add(point);
 				currentPoint = new LatLng(point.latitude, point.longitude);
 				friendlyName = "Unknown";
 				try {
-					List<Address> address = geocode.getFromLocation(point.latitude, point.longitude, 1);
-					if(address != null && address.size() == 1){
-						friendlyName = address.get(0).getSubLocality() + ", " + address.get(0).getLocality();
+					List<Address> address = geocode.getFromLocation(
+							point.latitude, point.longitude, 1);
+					if (address != null && address.size() == 1) {
+						friendlyName = address.get(0).getSubLocality() + ", "
+								+ address.get(0).getLocality();
 					}
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				Intent addLocation = new Intent(getBaseContext(), AddChaseLocation.class);
+				Intent addLocation = new Intent(getBaseContext(),
+						AddChaseLocation.class);
 				addLocation.putExtra("chaseId", chase.getObjectId());
 				addLocation.putExtra("latitude", point.latitude);
 				addLocation.putExtra("longitude", point.longitude);
 				addLocation.putExtra("friendlyName", friendlyName);
 				addLocation.putExtra("locationIndex", mapPoints.size());
-				startActivityForResult(addLocation, AddChaseLocation.ADD_CHASE_LOCATION_ACTIVITY_CODE);
+				startActivityForResult(addLocation,
+						AddChaseLocation.ADD_CHASE_LOCATION_ACTIVITY_CODE);
 			}
-			
+
 		});
-		
+
 	}
-	
+
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == Activity.RESULT_OK) {
-			//add current point to the list of locations for this chase
+			// add current point to the list of locations for this chase
 			mapPoints.add(currentPoint);
 			fCreateChaseMap.addMarker(new MarkerOptions()
-								.position(currentPoint)
-								.title((mapPoints.size() + 1) + ". " + friendlyName)
-								.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+					.position(currentPoint)
+					.title((mapPoints.size() + 1) + ". " + friendlyName)
+					.icon(BitmapDescriptorFactory
+							.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
 			drawPolygon();
 		} else {
-			//center on the last position
-			if(mapPoints.size() > 0){
-				fCreateChaseMap.animateCamera(CameraUpdateFactory.newLatLng(mapPoints.get(mapPoints.size() - 1)));				
+			// center on the last position
+			if (mapPoints.size() > 0) {
+				fCreateChaseMap.animateCamera(CameraUpdateFactory
+						.newLatLng(mapPoints.get(mapPoints.size() - 1)));
 			} else {
-				fCreateChaseMap.animateCamera(CameraUpdateFactory.newCameraPosition(fCreateChaseMap.getCameraPosition()));
+				fCreateChaseMap
+						.animateCamera(CameraUpdateFactory
+								.newCameraPosition(fCreateChaseMap
+										.getCameraPosition()));
 				//
 			}
 
@@ -143,14 +154,15 @@ public class CreateChaseLocationsActivity extends FragmentActivity {
 
 	private void drawPolygon() {
 		PolylineOptions rectOptions = new PolylineOptions();
-		Builder builder  = new LatLngBounds.Builder();
-		for(LatLng point : mapPoints){
-			builder.include(point);			
+		Builder builder = new LatLngBounds.Builder();
+		for (LatLng point : mapPoints) {
+			builder.include(point);
 			rectOptions.add(point).width(5).color(Color.BLUE).geodesic(true);
 			fCreateChaseMap.addPolyline(rectOptions);
 		}
-		//move the camera to show the whole chase
-		fCreateChaseMap.animateCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 50));
+		// move the camera to show the whole chase
+		fCreateChaseMap.animateCamera(CameraUpdateFactory.newLatLngBounds(
+				builder.build(), 50));
 	}
 
 	@Override
@@ -160,13 +172,13 @@ public class CreateChaseLocationsActivity extends FragmentActivity {
 		return true;
 	}
 
-	
 	/**
 	 * function to load map. If map is not created it will create it for you
 	 * */
 	private void initilizeMap() {
 		if (fCreateChaseMap == null) {
-			fCreateChaseMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.fCreateChaseMap)).getMap();
+			fCreateChaseMap = ((SupportMapFragment) getSupportFragmentManager()
+					.findFragmentById(R.id.fCreateChaseMap)).getMap();
 			fCreateChaseMap.setMyLocationEnabled(true);
 			// check if map is created successfully or not
 			if (fCreateChaseMap == null) {

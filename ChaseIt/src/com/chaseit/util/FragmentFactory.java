@@ -25,7 +25,6 @@ public class FragmentFactory {
 		return huntPlayFragment;
 	}
 
-
 	public static MapWithConnectedMarkersFragment getHuntMapWithMarkersFragment(
 			String huntId) {
 		MapWithConnectedMarkersFragment huntMapWithMarkersFragment = new MapWithConnectedMarkersFragment();

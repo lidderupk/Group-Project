@@ -9,19 +9,20 @@ public class GoogleMapsConnector {
 
 	private AsyncHttpClient client;
 	private static GoogleMapsConnector instance;
-	
-	private GoogleMapsConnector(){
+
+	private GoogleMapsConnector() {
 		client = new AsyncHttpClient();
 	}
-	
-	public static synchronized GoogleMapsConnector getGoogleMapsConnector(){
-		if(instance == null){
+
+	public static synchronized GoogleMapsConnector getGoogleMapsConnector() {
+		if (instance == null) {
 			instance = new GoogleMapsConnector();
 		}
 		return instance;
 	}
-	
-	public void getStaticMapAsync(RequestParams rparams, BinaryHttpResponseHandler handler){
+
+	public void getStaticMapAsync(RequestParams rparams,
+			BinaryHttpResponseHandler handler) {
 		client.get(STATIC_MAP_BASE_URL, rparams, handler);
 	}
 }

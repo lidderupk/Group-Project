@@ -1,4 +1,3 @@
-
 package com.chaseit.models;
 
 import com.parse.ParseClassName;
@@ -7,24 +6,24 @@ import com.parse.ParseObject;
 
 @ParseClassName("Hunt")
 public class HuntImage extends ParseObject {
-	
-	public HuntImage(){
-		//empty constructor
+
+	public HuntImage() {
+		// empty constructor
 	}
-	
-	public void setHunt(Hunt hunt){
+
+	public void setHunt(Hunt hunt) {
 		put("hunt", hunt);
 	}
 
-	public Hunt getHunt(Hunt hunt){
-		return (Hunt)getParseObject("hunt");
+	public Hunt getHunt(Hunt hunt) {
+		return (Hunt) getParseObject("hunt");
 	}
-	
-	public void setImage(ParseFile image){
+
+	public void setImage(ParseFile image) {
 		put("image", image);
 	}
-	
-	public ParseFile getImage(){
+
+	public ParseFile getImage() {
 		return getParseFile("image");
 	}
 }

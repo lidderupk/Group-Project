@@ -28,24 +28,26 @@ public class NewsFeedFragment extends Fragment {
 
 	private void queryParse() {
 		ParseHelper.getAllHuntsByCreateDate(new FindCallback<Hunt>() {
-			
+
 			@Override
 			public void done(List<Hunt> objects, ParseException e) {
-				if(e == null){
-					for(Hunt hunts : objects){
-						HuntAdapter adapter = new HuntAdapter(getActivity(), objects);
+				if (e == null) {
+					for (Hunt hunts : objects) {
+						HuntAdapter adapter = new HuntAdapter(getActivity(),
+								objects);
 						// Attach the adapter to a ListView
-						ListView listView = (ListView) getView().findViewById(R.id.lvHuntList);
+						ListView listView = (ListView) getView().findViewById(
+								R.id.lvHuntList);
 						listView.setAdapter(adapter);
 					}
-					
+
 				} else {
 					e.printStackTrace();
 				}
-				
+
 			}
 		});
-		
+
 	}
 
 	@Override

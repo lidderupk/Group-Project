@@ -1,6 +1,7 @@
 package com.chaseit.activities;
-import android.app.Activity;
+
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.widget.Toast;
 
 import com.chaseit.R;
@@ -8,12 +9,12 @@ import com.chaseit.util.Constants;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapsTestActivity extends Activity {
+public class MapsTestActivity extends FragmentActivity {
 	private GoogleMap googleMap;
 
 	@Override
@@ -53,8 +54,8 @@ public class MapsTestActivity extends Activity {
 	 * */
 	private void initilizeMap() {
 		if (googleMap == null) {
-			googleMap = ((MapFragment) getFragmentManager().findFragmentById(
-					R.id.map)).getMap();
+			googleMap = ((SupportMapFragment) getSupportFragmentManager()
+					.findFragmentById(R.id.map)).getMap();
 
 			// check if map is created successfully or not
 			if (googleMap == null) {

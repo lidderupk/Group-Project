@@ -23,11 +23,11 @@ public class Hunt extends ParseObject {
 	protected ParseUser creator;
 	protected ParseGeoPoint startLocation;
 	protected ParseFile huntPicture;
-	
-	public Hunt(){
-		//empty constructor
+
+	public Hunt() {
+		// empty constructor
 	}
-		
+
 	/**
 	 * @return the name
 	 */
@@ -36,7 +36,8 @@ public class Hunt extends ParseObject {
 	}
 
 	/**
-	 * @param name the name to set
+	 * @param name
+	 *            the name to set
 	 */
 	public void setName(String name) {
 		put("name", name);
@@ -50,7 +51,8 @@ public class Hunt extends ParseObject {
 	}
 
 	/**
-	 * @param details the details to set
+	 * @param details
+	 *            the details to set
 	 */
 	public void setDetails(String details) {
 		put("details", details);
@@ -64,7 +66,8 @@ public class Hunt extends ParseObject {
 	}
 
 	/**
-	 * @param difficulty the difficulty to set
+	 * @param difficulty
+	 *            the difficulty to set
 	 */
 	public void setDifficulty(int difficulty) {
 		put("difficulty", difficulty);
@@ -78,7 +81,8 @@ public class Hunt extends ParseObject {
 	}
 
 	/**
-	 * @param avgRating the avgRating to set
+	 * @param avgRating
+	 *            the avgRating to set
 	 */
 	public void setAvgRating(double avgRating) {
 		put("avgrating", avgRating);
@@ -92,7 +96,8 @@ public class Hunt extends ParseObject {
 	}
 
 	/**
-	 * @param numRatings the numRatings to set
+	 * @param numRatings
+	 *            the numRatings to set
 	 */
 	public void setNumRatings(int numRatings) {
 		put("numratings", numRatings);
@@ -106,7 +111,8 @@ public class Hunt extends ParseObject {
 	}
 
 	/**
-	 * @param totalDistance the totalDistance to set
+	 * @param totalDistance
+	 *            the totalDistance to set
 	 */
 	public void setTotalDistance(double totalDistance) {
 		put("totaldistance", totalDistance);
@@ -116,11 +122,12 @@ public class Hunt extends ParseObject {
 	 * @return the creator
 	 */
 	public ParseUser getCreator() {
-		return (ParseUser)getParseObject("creator");
+		return (ParseUser) getParseObject("creator");
 	}
 
 	/**
-	 * @param creator the creator to set
+	 * @param creator
+	 *            the creator to set
 	 */
 	public void setCreator(ParseUser creator) {
 		put("creator", creator);
@@ -130,11 +137,12 @@ public class Hunt extends ParseObject {
 	 * @return the startLocation
 	 */
 	public ParseGeoPoint getStartLocation() {
-		return (ParseGeoPoint)getParseGeoPoint("startlocation");
+		return (ParseGeoPoint) getParseGeoPoint("startlocation");
 	}
 
 	/**
-	 * @param startLocation the startLocation to set
+	 * @param startLocation
+	 *            the startLocation to set
 	 */
 	public void setStartLocation(ParseGeoPoint startLocation) {
 		put("startlocation", startLocation);
@@ -148,7 +156,8 @@ public class Hunt extends ParseObject {
 	}
 
 	/**
-	 * @param huntPicture the huntPicture to set
+	 * @param huntPicture
+	 *            the huntPicture to set
 	 */
 	public void setHuntPicture(ParseFile huntPicture) {
 		put("huntpicture", huntPicture);
@@ -158,27 +167,32 @@ public class Hunt extends ParseObject {
 		List<Hunt> huntList = new ArrayList<Hunt>();
 		Hunt hunt = new DummyHunt();
 		hunt.setName(c.getResources().getString(R.string.hunt_name_example));
-		hunt.setDetails(c.getResources().getString(R.string.hunt_details_example));
+		hunt.setDetails(c.getResources().getString(
+				R.string.hunt_details_example));
 		huntList.add(hunt);
 
 		hunt = new DummyHunt();
 		hunt.setName(c.getResources().getString(R.string.hunt_name_example));
-		hunt.setDetails(c.getResources().getString(R.string.hunt_details_example));
+		hunt.setDetails(c.getResources().getString(
+				R.string.hunt_details_example));
 		huntList.add(hunt);
 
 		hunt = new DummyHunt();
 		hunt.setName(c.getResources().getString(R.string.hunt_name_example));
-		hunt.setDetails(c.getResources().getString(R.string.hunt_details_example));
+		hunt.setDetails(c.getResources().getString(
+				R.string.hunt_details_example));
 		huntList.add(hunt);
 
 		hunt = new DummyHunt();
 		hunt.setName(c.getResources().getString(R.string.hunt_name_example));
-		hunt.setDetails(c.getResources().getString(R.string.hunt_details_example));
+		hunt.setDetails(c.getResources().getString(
+				R.string.hunt_details_example));
 		huntList.add(hunt);
 
 		hunt = new DummyHunt();
 		hunt.setName(c.getResources().getString(R.string.hunt_name_example));
-		hunt.setDetails(c.getResources().getString(R.string.hunt_details_example));
+		hunt.setDetails(c.getResources().getString(
+				R.string.hunt_details_example));
 		huntList.add(hunt);
 
 		return huntList;
