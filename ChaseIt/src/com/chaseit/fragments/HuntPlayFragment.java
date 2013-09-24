@@ -1,7 +1,6 @@
 package com.chaseit.fragments;
 
 import android.app.Fragment;
-
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -10,11 +9,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-
-import com.chaseit.R;
-import com.chaseit.util.Constants;
-
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -23,6 +17,12 @@ import com.chaseit.R;
 import com.chaseit.activities.HuntShowImageActivity;
 import com.chaseit.util.Constants;
 import com.chaseit.util.FragmentFactory;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 
 public class HuntPlayFragment extends Fragment {

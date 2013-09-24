@@ -32,6 +32,7 @@ import com.chaseit.fragments.AddPictureFragment;
 import com.chaseit.fragments.AddPictureFragment.AddPictureListener;
 import com.chaseit.models.CIUser;
 import com.chaseit.models.Hunt;
+import com.chaseit.models.HuntImage;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;

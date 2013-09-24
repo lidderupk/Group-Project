@@ -4,17 +4,15 @@ import java.util.List;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.chaseit.adapters.HuntAdapter;
 import com.chaseit.ParseHelper;
 import com.chaseit.R;
+import com.chaseit.adapters.HuntAdapter;
 import com.chaseit.models.Hunt;
-import com.chaseit.models.Location;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 

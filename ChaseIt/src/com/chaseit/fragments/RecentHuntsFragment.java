@@ -2,20 +2,19 @@ package com.chaseit.fragments;
 
 import java.util.List;
 
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ListView;
+
 import com.chaseit.ParseHelper;
 import com.chaseit.R;
 import com.chaseit.adapters.HuntAdapter;
 import com.chaseit.models.Hunt;
 import com.parse.FindCallback;
 import com.parse.ParseException;
-
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListView;
 
 public class RecentHuntsFragment extends Fragment {
 	@Override

@@ -1,9 +1,8 @@
 package com.chaseit.activities;
 
 import android.app.Activity;
-import android.app.FragmentTransaction;
-
 import android.os.Bundle;
+import android.app.FragmentTransaction;
 import android.view.Menu;
 
 import com.chaseit.R;
@@ -14,12 +13,11 @@ public class HuntDetailsTestActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_hunt_details_test);
-
-		FragmentTransaction ft = getFragmentManager().beginTransaction();
-		ft.replace(R.id.flHuntDetails,
-				FragmentFactory.getHuntDetailsFragment("1"));
-		ft.commit();
+//		setContentView(R.layout.activity_hunt_details_test);
+//
+//		FragmentTransaction ft = getFragmentManager().beginTransaction();
+//		ft.replace(R.id.flHuntDetails, FragmentFactory.getHuntDetailsFragment("1"));
+//		ft.commit();
 	}
 
 	@Override

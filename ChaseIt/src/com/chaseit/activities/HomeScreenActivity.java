@@ -67,10 +67,10 @@ public class HomeScreenActivity extends ActionBarActivity implements TabListener
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		// If the nav drawer is open, hide action items related to the content view
         boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-        menu.findItem(R.id.create_hunt).setVisible(!drawerOpen);
+        menu.findItem(R.id.create_chase).setVisible(!drawerOpen);
         return super.onPrepareOptionsMenu(menu);
 	}
-
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// TODO Auto-generated method stub
@@ -81,8 +81,37 @@ public class HomeScreenActivity extends ActionBarActivity implements TabListener
         return true;
       }
       // Handle your other action bar items...
+		Intent in;
+		switch (item.getItemId()) {
+		case R.id.maps:
+			in = new Intent(getBaseContext(), MapsTestActivity.class);
+			startActivity(in);
+			return true;
 
-      return super.onOptionsItemSelected(item);
+		case R.id.huntDetails:
+			in = new Intent(getBaseContext(), HuntDetailsTestActivity.class);
+			startActivity(in);
+			return true;
+		
+		case R.id.huntPlayMenu:
+			in = new Intent(getBaseContext(), HuntPlayTestActivity.class);
+			startActivity(in);
+			return true;
+		
+		case R.id.huntMapLineMenu:
+			in = new Intent(getBaseContext(),
+					HuntMapWithMarkersTestActivity.class);
+
+			startActivity(in);
+			return true;
+			
+		case R.id.create_chase:
+			Intent createChase = new Intent(getBaseContext(), CreateChaseActivity.class);
+			startActivityForResult(createChase, CreateChaseActivity.CREATE_CHASE_ACTIVITY_CODE);
+			
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 
 	/* Private Methods */

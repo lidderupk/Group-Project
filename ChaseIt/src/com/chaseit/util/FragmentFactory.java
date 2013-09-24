@@ -3,6 +3,8 @@ package com.chaseit.util;
 import android.os.Bundle;
 
 import com.chaseit.fragments.HuntDetailsFragment;
+import com.chaseit.fragments.HuntPlayFragment;
+import com.chaseit.fragments.MapWithConnectedMarkersFragment;
 
 public class FragmentFactory {
 	public static HuntDetailsFragment getHuntDetailsFragment(String huntId) {
