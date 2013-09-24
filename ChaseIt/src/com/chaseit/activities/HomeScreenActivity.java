@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBar.Tab;
 import android.support.v7.app.ActionBar.TabListener;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,9 +27,14 @@ import com.chaseit.activities.test.MapsTestActivity;
 import com.chaseit.fragments.MyHuntsFragment;
 import com.chaseit.fragments.NewsFeedFragment;
 import com.chaseit.fragments.RecentHuntsFragment;
+import com.chaseit.fragments.interfaces.NewsFragmentInterface;
+import com.chaseit.models.Hunt;
+import com.chaseit.util.Constants;
 
 public class HomeScreenActivity extends ActionBarActivity implements
-		TabListener {
+		TabListener, NewsFragmentInterface {
+
+	private static final String tag = "Debug - com.chaseit.activities.HomeScreenActivity";
 
 	// Views related to Navigation Drawer
 	private DrawerLayout mDrawerLayout;
@@ -223,5 +229,13 @@ public class HomeScreenActivity extends ActionBarActivity implements
 
 	@Override
 	public void onTabUnselected(Tab arg0, FragmentTransaction arg1) {
+	}
+
+	@Override
+	public void huntClicked(Hunt hunt) {
+		Log.d(tag, "hunt clicked. Activity notified !");
+		Intent in = new Intent(getBaseContext(), HuntDetailsTestActivity.class);
+		in.putExtra(Constants.HUNT_ID, hunt.getObjectId());
+		startActivity(in);
 	}
 }

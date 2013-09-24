@@ -13,15 +13,32 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
+import android.widget.TextView;
 
+import com.chaseit.ParseHelper;
 import com.chaseit.R;
+import com.chaseit.models.Hunt;
 import com.chaseit.util.Constants;
+import com.chaseit.util.Helper;
+import com.google.android.gms.maps.model.LatLng;
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseGeoPoint;
 
 public class HuntDetailsFragment extends Fragment {
 
 	private static final String tag = "Debug - com.chaseit.fragments.HuntDetailsFragment";
 	private String huntId;
+	private TextView tvHuntDetailsTitle;
+	private TextView tvHuntDetailsCreatorHandle;
+	private RatingBar rbHuntDetailsRating;
+	private TextView tvHuntDetailsLocationName;
+	private TextView tvHuntDetailsDescription;
+	private ImageView ivHuntsDetailsMap;
+	private Button btnHuntDetailsLaunch;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,17 +54,68 @@ public class HuntDetailsFragment extends Fragment {
 		Bundle extras = getArguments();
 		huntId = extras.getString(Constants.HUNT_ID);
 		Log.d(tag, "huntID: " + huntId);
-		setupViews(getView());
+		ParseHelper.getHuntByObjectId(huntId, new GetCallback<Hunt>() {
+
+			private Hunt hunt;
+
+			@Override
+			public void done(Hunt object, ParseException e) {
+				if (e == null) {
+
+					hunt = object;
+					setupViews(getView(), hunt);
+				} else {
+					Log.d(tag, e.getMessage());
+				}
+			}
+		});
 	}
 
-	private void setupViews(View view) {
+	private void setupViews(View view, Hunt hunt) {
 
+		tvHuntDetailsTitle = (TextView) view
+				.findViewById(R.id.tvHuntDetailsTitle);
+		tvHuntDetailsCreatorHandle = (TextView) view
+				.findViewById(R.id.tvHuntDetailsCreatorHandle);
+		rbHuntDetailsRating = (RatingBar) view
+				.findViewById(R.id.rbHuntDetailsRating);
+		tvHuntDetailsLocationName = (TextView) view
+				.findViewById(R.id.tvHuntDetailsLocationName);
+		tvHuntDetailsDescription = (TextView) view
+				.findViewById(R.id.tvHuntDetailsDescription);
+		ivHuntsDetailsMap = (ImageView) view
+				.findViewById(R.id.ivHuntsDetailsMap);
+		btnHuntDetailsLaunch = (Button) view
+				.findViewById(R.id.btnHuntDetailsLaunch);
+
+		if (Helper.nonEmpty(hunt.getName()))
+			tvHuntDetailsTitle.setText(hunt.getName());
+
+		// if (Helper.nonEmpty(hunt.getCreator().getUsername()))
+		// tvHuntDetailsCreatorHandle.setText(hunt.getCreator().getUsername());
+
+		rbHuntDetailsRating.setRating(Math.round(hunt.getAvgRating()));
+
+		// get hunt location
+		// if(Helper.nonEmpty(hunt.get)))
+		// tvHuntDetailsCreatorHandle.setText(hunt.getCreator().getUsername());
+		if (Helper.nonEmpty(hunt.getDetails()))
+			tvHuntDetailsDescription.setText(hunt.getDetails());
+
+		ParseGeoPoint startLocation = hunt.getStartLocation();
+		if (startLocation != null) {
+			getMap(new LatLng(startLocation.getLatitude(),
+					startLocation.getLongitude()), view);
+		}
+	}
+
+	private void getMap(LatLng point, View view) {
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder
 				.append("http://maps.google.com/maps/api/staticmap?markers=");
-		stringBuilder.append(Constants.latUnionSquare);
+		stringBuilder.append(point.latitude);
 		stringBuilder.append(",");
-		stringBuilder.append(Constants.lngUnionSquare);
+		stringBuilder.append(point.longitude);
 		stringBuilder.append("&zoom=16&size=520x520&sensor=false");
 		String[] stringURL = new String[1];
 		stringURL[0] = stringBuilder.toString();
