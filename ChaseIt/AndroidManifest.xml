@@ -52,7 +52,7 @@
             android:value="AIzaSyCs-ovDRM5FebnyAp73_woIjIrlKUzq3KA" />
 
         <activity
-            android:name="com.chaseit.activities.MapsTestActivity"
+            android:name="com.chaseit.activities.test.MapsTestActivity"
             android:label="@string/title_activity_maps_test" >
         </activity>
         <activity
@@ -64,11 +64,11 @@
             android:label="@string/title_activity_placeholder" >
         </activity>
         <activity
-            android:name="com.chaseit.activities.HuntDetailsTestActivity"
+            android:name="com.chaseit.activities.test.HuntDetailsTestActivity"
             android:label="@string/title_activity_hunt_details" >
         </activity>
         <activity
-            android:name="com.chaseit.activities.HuntPlayTestActivity"
+            android:name="com.chaseit.activities.test.HuntPlayTestActivity"
             android:label="@string/title_activity_hunt_play" >
         </activity>
         <activity
@@ -81,7 +81,7 @@
             android:label="@string/title_activity_add_chase_location" >
         </activity>
         <activity
-            android:name="com.chaseit.activities.HuntMapWithMarkersTestActivity"
+            android:name="com.chaseit.activities.test.HuntMapWithMarkersTestActivity"
             android:label="@string/title_activity_hunt_map_with_markers" >
         </activity>
         <activity

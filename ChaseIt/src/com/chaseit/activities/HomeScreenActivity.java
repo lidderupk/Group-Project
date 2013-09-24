@@ -19,6 +19,10 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.chaseit.R;
+import com.chaseit.activities.test.HuntDetailsTestActivity;
+import com.chaseit.activities.test.HuntMapWithMarkersTestActivity;
+import com.chaseit.activities.test.HuntPlayTestActivity;
+import com.chaseit.activities.test.MapsTestActivity;
 import com.chaseit.fragments.MyHuntsFragment;
 import com.chaseit.fragments.NewsFeedFragment;
 import com.chaseit.fragments.RecentHuntsFragment;
