@@ -76,8 +76,13 @@ public class NewsFeedFragment extends Fragment {
 				/*
 				 * notify the parent interface to start the next activity
 				 */
-				HomeScreenActivity activity = (HomeScreenActivity) getActivity();
-				activity.huntClicked(hunt);
+				HomeScreenActivity homeScreenActivity;
+				try {
+					homeScreenActivity = (HomeScreenActivity) getActivity();
+					homeScreenActivity.huntClicked(hunt);
+				} catch (ClassCastException castException) {
+					Log.e(tag, castException.getMessage()	);
+				}
 			}
 		};
 	}

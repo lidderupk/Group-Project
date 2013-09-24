@@ -91,7 +91,7 @@ public class HuntDetailsFragment extends Fragment {
 		if (Helper.nonEmpty(hunt.getName()))
 			tvHuntDetailsTitle.setText(hunt.getName());
 
-		// if (Helper.nonEmpty(hunt.getCreator().getUsername()))
+		// if (Helper.nonEmpty(hunt.getCreator());
 		// tvHuntDetailsCreatorHandle.setText(hunt.getCreator().getUsername());
 
 		rbHuntDetailsRating.setRating(Math.round(hunt.getAvgRating()));
