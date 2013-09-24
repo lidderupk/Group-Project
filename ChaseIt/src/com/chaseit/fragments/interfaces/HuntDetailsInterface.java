@@ -2,6 +2,6 @@ package com.chaseit.fragments.interfaces;
 
 import com.chaseit.models.Hunt;
 
-public interface NewsFragmentInterface {
+public interface HuntDetailsInterface {
 	public void huntClicked(Hunt hunt);
 }

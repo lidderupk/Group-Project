@@ -1,5 +1,6 @@
 package com.chaseit.activities.test;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
@@ -7,10 +8,13 @@ import android.util.Log;
 import android.view.Menu;
 
 import com.chaseit.R;
+import com.chaseit.fragments.interfaces.HuntStartInterface;
 import com.chaseit.util.Constants;
 import com.chaseit.util.FragmentFactory;
+import com.chaseit.util.Helper;
 
-public class HuntDetailsTestActivity extends FragmentActivity {
+public class HuntDetailsTestActivity extends FragmentActivity implements
+		HuntStartInterface {
 
 	private static final String tag = "Debug - com.chaseit.activities.test.HuntDetailsTestActivity";
 
@@ -21,7 +25,7 @@ public class HuntDetailsTestActivity extends FragmentActivity {
 
 		String huntId = getIntent().getStringExtra(Constants.HUNT_ID);
 
-		if (huntId == null || huntId.length() < 1) {
+		if (!Helper.isNotEmpty(huntId)) {
 			Log.e(tag, "huntId is missing !.");
 			return;
 		}
@@ -37,5 +41,13 @@ public class HuntDetailsTestActivity extends FragmentActivity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.hunt_details, menu);
 		return true;
+	}
+
+	@Override
+	public void startHunt(String huntId) {
+		Log.d(tag, "hunt clicked. Activity notified !");
+		Intent in = new Intent(getBaseContext(), HuntPlayTestActivity.class);
+		in.putExtra(Constants.HUNT_ID, huntId);
+		startActivity(in);
 	}
 }

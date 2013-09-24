@@ -9,9 +9,11 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -20,6 +22,7 @@ import android.widget.TextView;
 
 import com.chaseit.ParseHelper;
 import com.chaseit.R;
+import com.chaseit.fragments.interfaces.HuntStartInterface;
 import com.chaseit.models.Hunt;
 import com.chaseit.util.Constants;
 import com.chaseit.util.Helper;
@@ -88,7 +91,7 @@ public class HuntDetailsFragment extends Fragment {
 		btnHuntDetailsLaunch = (Button) view
 				.findViewById(R.id.btnHuntDetailsLaunch);
 
-		if (Helper.nonEmpty(hunt.getName()))
+		if (Helper.isNotEmpty(hunt.getName()))
 			tvHuntDetailsTitle.setText(hunt.getName());
 
 		// if (Helper.nonEmpty(hunt.getCreator());
@@ -99,7 +102,7 @@ public class HuntDetailsFragment extends Fragment {
 		// get hunt location
 		// if(Helper.nonEmpty(hunt.get)))
 		// tvHuntDetailsCreatorHandle.setText(hunt.getCreator().getUsername());
-		if (Helper.nonEmpty(hunt.getDetails()))
+		if (Helper.isNotEmpty(hunt.getDetails()))
 			tvHuntDetailsDescription.setText(hunt.getDetails());
 
 		ParseGeoPoint startLocation = hunt.getStartLocation();
@@ -107,6 +110,21 @@ public class HuntDetailsFragment extends Fragment {
 			getMap(new LatLng(startLocation.getLatitude(),
 					startLocation.getLongitude()), view);
 		}
+
+		btnHuntDetailsLaunch.setOnClickListener(getHuntStartClickListener());
+	}
+
+	private OnClickListener getHuntStartClickListener() {
+		return new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				FragmentActivity activity = getActivity();
+				if (activity instanceof HuntStartInterface)
+					((HuntStartInterface) activity).startHunt(huntId);
+
+				Log.d(tag, "I am here clicked");
+			}
+		};
 	}
 
 	private void getMap(LatLng point, View view) {

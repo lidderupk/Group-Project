@@ -5,16 +5,19 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.chaseit.R;
 import com.chaseit.activities.HuntShowImageActivity;
+import com.chaseit.fragments.interfaces.HuntPlayInterface;
 import com.chaseit.util.Constants;
 import com.chaseit.util.FragmentFactory;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -61,7 +64,11 @@ public class HuntPlayFragment extends Fragment {
 		ivHuntImageClue = (ImageView) view.findViewById(R.id.ivHuntImageClue);
 		ivHuntImageClue.setOnClickListener(getHuntImageClueClickListener());
 		setupMaps(latLongForHunt);
+
+		Button btnHuntStart = (Button) view
+				.findViewById(R.id.btnHuntProgressCheck);
 	}
+
 
 	private OnClickListener getHuntImageClueClickListener() {
 		return new OnClickListener() {

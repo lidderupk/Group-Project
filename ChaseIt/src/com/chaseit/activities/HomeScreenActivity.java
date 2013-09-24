@@ -27,12 +27,12 @@ import com.chaseit.activities.test.MapsTestActivity;
 import com.chaseit.fragments.MyHuntsFragment;
 import com.chaseit.fragments.NewsFeedFragment;
 import com.chaseit.fragments.RecentHuntsFragment;
-import com.chaseit.fragments.interfaces.NewsFragmentInterface;
+import com.chaseit.fragments.interfaces.HuntDetailsInterface;
 import com.chaseit.models.Hunt;
 import com.chaseit.util.Constants;
 
 public class HomeScreenActivity extends ActionBarActivity implements
-		TabListener, NewsFragmentInterface {
+		TabListener, HuntDetailsInterface {
 
 	private static final String tag = "Debug - com.chaseit.activities.HomeScreenActivity";
 
@@ -102,6 +102,7 @@ public class HomeScreenActivity extends ActionBarActivity implements
 
 		case R.id.huntDetails:
 			in = new Intent(getBaseContext(), HuntDetailsTestActivity.class);
+			in.putExtra(Constants.HUNT_ID, "Q6OO7dFnGp");
 			startActivity(in);
 			return true;
 
@@ -120,7 +121,8 @@ public class HomeScreenActivity extends ActionBarActivity implements
 		case R.id.create_chase:
 			Intent createChase = new Intent(getBaseContext(),
 					CreateChaseActivity.class);
-			startActivityForResult(createChase, CreateChaseActivity.CREATE_CHASE_ACTIVITY_CODE);
+			startActivityForResult(createChase,
+					CreateChaseActivity.CREATE_CHASE_ACTIVITY_CODE);
 
 		default:
 			return super.onOptionsItemSelected(item);

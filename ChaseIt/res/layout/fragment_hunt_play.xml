@@ -26,7 +26,7 @@
         android:layout_alignParentLeft="true"
         android:layout_toLeftOf="@id/helper"
         android:layout_alignTop="@id/helper"
-        android:layout_above="@+id/btHuntSubmitDone"
+        android:layout_above="@+id/btnHuntProgressCheck"
         android:src="@drawable/pizza_hint" />
 
     <TextView
@@ -35,13 +35,13 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"	
         android:layout_toRightOf="@+id/helper"
-        android:layout_above="@+id/btHuntSubmitDone"
+        android:layout_above="@+id/btnHuntProgressCheck"
         android:layout_alignTop="@id/helper"
         android:text="This is placeholder for message clue for next location."
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <Button
-        android:id="@+id/btHuntSubmitDone"
+        android:id="@+id/btnHuntProgressCheck"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
