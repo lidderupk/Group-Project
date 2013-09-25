@@ -1,11 +1,7 @@
 package com.chaseit.models.wrappers;
 
-import java.io.File;
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
-
-import org.apache.commons.io.FileUtils;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.parse.ParseException;
@@ -44,23 +40,20 @@ public class ParseObjectWrapper implements Serializable {
 				values.put(key, parseUserObject);
 			} else if(classType == ParseFile.class) {
 				ParseFile pf = (ParseFile)object.get(key);
-				File f = null;
 				if(pf.isDataAvailable()){
 					String fileName = pf.getName();
-					f = new File(fileName);
 					try {
-						FileUtils.writeByteArrayToFile(f, pf.getData());
-					} catch (IOException e) {
-						e.printStackTrace();
+						values.put(key, pf.getData());
+						values.put(key+"fileName", fileName);
 					} catch (ParseException e) {
 						e.printStackTrace();
 					}
 				}
-				values.put(key, f);
 			} else if(classType == ParseGeoPoint.class) {
 				ParseGeoPoint point = (ParseGeoPoint)object.get(key);
-				LatLng l = new LatLng(point.getLatitude(), point.getLongitude()); 
-				values.put(key, l);
+				//LatLng l = new LatLng(point.getLatitude(), point.getLongitude()); 
+				values.put(key+".latitude", point.getLatitude());
+				values.put(key+".longitude", point.getLongitude());
 			}
 		}
 	}
@@ -105,17 +98,23 @@ public class ParseObjectWrapper implements Serializable {
 		}
 	}	
 
-	public File getFile(String key) {
+	public ParseFile getParseFile(String key) {
 		if(has(key)) {
-			return (File)values.get(key);
+			byte[] data = (byte[])values.get(key);
+			String fileName = (String)values.get(key+"fileName");
+			ParseFile pF = new ParseFile(fileName, data);
+			return pF;
+			
 		} else {
 			return null;
 		}
 	}
 
 	public LatLng getLocation(String key) {
-		if(has(key)) {
-			return (LatLng)values.get(key);
+		if(has(key+".latitude")) {
+			double lat = (Double)values.get(key+".latitude");
+			double lon = (Double)values.get(key+".longitude");
+			return new LatLng(lat, lon);
 		} else {
 			return null;
 		}

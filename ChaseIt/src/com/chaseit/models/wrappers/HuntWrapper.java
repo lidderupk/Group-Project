@@ -1,10 +1,10 @@
 package com.chaseit.models.wrappers;
 
-import java.io.File;
 import java.io.Serializable;
 
 import com.chaseit.models.Hunt;
 import com.google.android.gms.maps.model.LatLng;
+import com.parse.ParseFile;
 
 public class HuntWrapper implements Serializable{
 	private static final long serialVersionUID = 6043642531310587835L;
@@ -82,8 +82,8 @@ public class HuntWrapper implements Serializable{
 	/**
 	 * @return the huntPicture
 	 */
-	public File getHuntPicture() {
-		return wrapper.getFile("huntpicture");
+	public ParseFile getHuntPicture() {
+		return wrapper.getParseFile("huntpicture");
 	}
 
 	/**

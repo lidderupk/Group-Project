@@ -1,10 +1,10 @@
 package com.chaseit.models.wrappers;
 
-import java.io.File;
 import java.io.Serializable;
 
 import com.chaseit.models.Location;
 import com.google.android.gms.maps.model.LatLng;
+import com.parse.ParseFile;
 
 public class LocationWrapper implements Serializable{
 	private static final long serialVersionUID = -8674218181201709458L;
@@ -46,8 +46,8 @@ public class LocationWrapper implements Serializable{
 	/**
 	 * @return the image
 	 */
-	public File getImage() {
-		return wrapper.getFile("image");
+	public ParseFile getImage() {
+		return wrapper.getParseFile("image");
 	}
 
 	/**
