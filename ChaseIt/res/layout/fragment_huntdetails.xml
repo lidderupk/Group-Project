@@ -95,6 +95,6 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/ivHuntsDetailsMap"
-        android:text="Launch" />
+        android:text="Start" />
 
 </RelativeLayout>

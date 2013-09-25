@@ -3,6 +3,7 @@ package com.chaseit.fragments;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -19,14 +20,19 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.chaseit.ParseHelper;
 import com.chaseit.R;
 import com.chaseit.fragments.interfaces.HuntStartInterface;
+import com.chaseit.models.CIUser;
 import com.chaseit.models.Hunt;
+import com.chaseit.models.UserHunt;
+import com.chaseit.models.UserHunt.HuntStatus;
 import com.chaseit.util.Constants;
 import com.chaseit.util.Helper;
 import com.google.android.gms.maps.model.LatLng;
+import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
@@ -35,6 +41,7 @@ public class HuntDetailsFragment extends Fragment {
 
 	private static final String tag = "Debug - com.chaseit.fragments.HuntDetailsFragment";
 	private String huntId;
+	private Hunt hunt;
 	private TextView tvHuntDetailsTitle;
 	private TextView tvHuntDetailsCreatorHandle;
 	private RatingBar rbHuntDetailsRating;
@@ -42,6 +49,8 @@ public class HuntDetailsFragment extends Fragment {
 	private TextView tvHuntDetailsDescription;
 	private ImageView ivHuntsDetailsMap;
 	private Button btnHuntDetailsLaunch;
+
+	private boolean isHuntInProgress = false;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -59,8 +68,6 @@ public class HuntDetailsFragment extends Fragment {
 		Log.d(tag, "huntID: " + huntId);
 		ParseHelper.getHuntByObjectId(huntId, new GetCallback<Hunt>() {
 
-			private Hunt hunt;
-
 			@Override
 			public void done(Hunt object, ParseException e) {
 				if (e == null) {
@@ -72,6 +79,30 @@ public class HuntDetailsFragment extends Fragment {
 				}
 			}
 		});
+
+		ParseHelper.getHuntByObjectId(huntId, new GetCallback<Hunt>() {
+
+			@Override
+			public void done(Hunt hunt, ParseException e) {
+				ParseHelper.getHuntInProgressGivenHuntAndUser(hunt,
+						CIUser.getCurrentUser(), new FindCallback<UserHunt>() {
+
+							@Override
+							public void done(List<UserHunt> hunts,
+									ParseException e) {
+								if (e == null) {
+									if (hunts != null && hunts.size() > 0)
+										Log.d(tag,
+												"This hunt is already in progress !");
+									isHuntInProgress = true;
+									btnHuntDetailsLaunch.setText("Continue");
+								} else
+									Log.d(tag, e.getMessage());
+							}
+						});
+			}
+		});
+
 	}
 
 	private void setupViews(View view, Hunt hunt) {
@@ -118,11 +149,34 @@ public class HuntDetailsFragment extends Fragment {
 		return new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				Log.d(tag, "start or contiue clicked");
+
+				/*
+				 * hunt started, create a new user hunt and push to parse
+				 * 
+				 * first get the hunt from parse
+				 */
+
+				if (!isHuntInProgress) {
+
+					try {
+						UserHunt userHunt = new UserHunt();
+						userHunt.setHunt(hunt);
+						userHunt.setUser(CIUser.getCurrentUser());
+						userHunt.setHuntStatus(HuntStatus.IN_PROGRESS);
+						userHunt.save();
+
+					} catch (ParseException e1) {
+						Toast.makeText(getActivity().getBaseContext(),
+								"Hunt could not be started. Try again",
+								Toast.LENGTH_SHORT).show();
+						e1.printStackTrace();
+					}
+				}
+
 				FragmentActivity activity = getActivity();
 				if (activity instanceof HuntStartInterface)
 					((HuntStartInterface) activity).startHunt(huntId);
-
-				Log.d(tag, "I am here clicked");
 			}
 		};
 	}
