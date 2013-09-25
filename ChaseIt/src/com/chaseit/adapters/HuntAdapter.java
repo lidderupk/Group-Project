@@ -7,11 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chaseit.R;
 import com.chaseit.models.Hunt;
+import com.parse.GetDataCallback;
+import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseImageView;
 
 public class HuntAdapter extends ArrayAdapter<Hunt> {
 
@@ -28,13 +31,24 @@ public class HuntAdapter extends ArrayAdapter<Hunt> {
 			view = inflater.inflate(R.layout.item_hangout, null);
 		}
 
-		ImageView imHuntImage = (ImageView) view.findViewById(R.id.ivHuntImage);
+		ParseImageView imHuntImage = (ParseImageView) view.findViewById(R.id.ivHuntImage);
 		TextView tvHuntName = (TextView) view.findViewById(R.id.tvHuntName);
 		TextView tvHuntDetails = (TextView) view
 				.findViewById(R.id.tvHuntDetails);
 
 		tvHuntName.setText(hunt.getName());
 		tvHuntDetails.setText(hunt.getDetails());
+		ParseFile huntPic = hunt.getHuntPicture();
+		
+		if (huntPic != null) {
+			imHuntImage.setParseFile(huntPic);
+			imHuntImage.loadInBackground(new GetDataCallback() {
+				@Override
+				public void done(byte[] data, ParseException e) {
+					// nothing to do
+				}
+			});
+		}
 
 		return view;
 	}
