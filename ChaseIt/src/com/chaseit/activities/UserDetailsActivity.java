@@ -20,6 +20,7 @@ import com.facebook.widget.ProfilePictureView;
 import com.parse.ParseFacebookUtils;
 import com.parse.ParseUser;
 
+
 public class UserDetailsActivity extends Activity {
 
 	private ProfilePictureView userProfilePictureView;
