@@ -1,11 +1,12 @@
 package com.chaseit.fragments;
 
+import java.util.List;
+
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,9 +16,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.chaseit.ParseHelper;
 import com.chaseit.R;
 import com.chaseit.activities.HuntShowImageActivity;
-import com.chaseit.fragments.interfaces.HuntPlayInterface;
+import com.chaseit.models.Hunt;
+import com.chaseit.models.Location;
 import com.chaseit.util.Constants;
 import com.chaseit.util.FragmentFactory;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -26,6 +29,9 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.parse.FindCallback;
+import com.parse.GetCallback;
+import com.parse.ParseException;
 
 public class HuntPlayFragment extends Fragment {
 
@@ -49,6 +55,25 @@ public class HuntPlayFragment extends Fragment {
 		huntId = extras.getString(Constants.HUNT_ID);
 		Log.d(tag, "huntID: " + huntId);
 
+		ParseHelper.getHuntByObjectId(huntId, new GetCallback<Hunt>() {
+			@Override
+			public void done(Hunt hunt, ParseException e) {
+				if (e == null) {
+					ParseHelper.getLocationsforHunt(hunt,
+							new FindCallback<Location>() {
+								@Override
+								public void done(List<Location> objects,
+										ParseException e) {
+									Log.d(tag, "");
+								}
+							});
+				} else {
+					Log.d(tag, e.getMessage());
+				}
+
+			}
+		});
+
 		LatLng latLongForHunt = getLatLongForHunt(huntId);
 
 		FragmentTransaction ft = getActivity().getSupportFragmentManager()
@@ -68,7 +93,6 @@ public class HuntPlayFragment extends Fragment {
 		Button btnHuntStart = (Button) view
 				.findViewById(R.id.btnHuntProgressCheck);
 	}
-
 
 	private OnClickListener getHuntImageClueClickListener() {
 		return new OnClickListener() {

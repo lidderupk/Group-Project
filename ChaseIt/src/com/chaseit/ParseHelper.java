@@ -86,6 +86,35 @@ public class ParseHelper {
 		query.findInBackground(callback);
 	}
 
+	public static void getHuntsInProgressForUser(ParseUser user,
+			FindCallback<UserHunt> callback) {
+		if (callback == null)
+			return;
+		ParseQuery<UserHunt> query = ParseQuery.getQuery(UserHunt.class);
+		query.whereEqualTo("user", user);
+		query.whereEqualTo("status", HuntStatus.IN_PROGRESS.toString());
+		query.findInBackground(callback);
+	}
+
+	public static void getHuntInProgressGivenHunt(Hunt hunt,
+			FindCallback<UserHunt> callback) {
+		if (callback == null)
+			return;
+		ParseQuery<UserHunt> query = ParseQuery.getQuery(UserHunt.class);
+		query.whereEqualTo("hunt", hunt);
+		query.findInBackground(callback);
+	}
+
+	public static void getHuntInProgressGivenHuntAndUser(Hunt hunt,
+			ParseUser user, FindCallback<UserHunt> callback) {
+		if (callback == null)
+			return;
+		ParseQuery<UserHunt> query = ParseQuery.getQuery(UserHunt.class);
+		query.whereEqualTo("hunt", hunt);
+		query.whereEqualTo("user", user);
+		query.findInBackground(callback);
+	}
+
 	public static void getLocationsforHunt(Hunt hunt,
 			FindCallback<Location> callback) {
 		if (callback == null)
