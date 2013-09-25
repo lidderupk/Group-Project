@@ -26,6 +26,9 @@ public class ParseObjectWrapper implements Serializable {
 	}
 
 	public ParseObjectWrapper(ParseObject object) {
+		//insert the objectId since this is not part of the key set
+		values.put("objectId", object.getObjectId());
+		
 		for(String key : object.keySet()) {
 			@SuppressWarnings("rawtypes")
 			Class classType = object.get(key).getClass();
@@ -134,7 +137,7 @@ public class ParseObjectWrapper implements Serializable {
 			return null;
 		}
 	}
-
+	
 	public Boolean has(String key) {
 		return values.containsKey(key);
 	}

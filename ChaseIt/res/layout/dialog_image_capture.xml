@@ -8,7 +8,6 @@
         android:id="@+id/trDialogHeader"
         android:layout_width="match_parent"
         android:layout_height="12dp"
-        android:background="#3E99CC"
         android:focusable="false" >
 
         
@@ -21,6 +20,11 @@
         
     </TableRow>
 
+        <View
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:background="#3E99CC" />
+    
     <TableRow
         android:id="@+id/trSelectMethod"
         style="?android:attr/buttonBarStyle"
@@ -32,6 +36,7 @@
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:contentDescription="@string/dialog_image_desc_take_picture"
             android:src="@android:drawable/ic_menu_camera" />
 
