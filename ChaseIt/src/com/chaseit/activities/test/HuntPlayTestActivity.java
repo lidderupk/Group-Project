@@ -6,9 +6,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 
 import com.chaseit.R;
+import com.chaseit.models.wrappers.UserHuntWrapper;
 import com.chaseit.util.Constants;
 import com.chaseit.util.FragmentFactory;
-import com.chaseit.util.Helper;
 
 public class HuntPlayTestActivity extends FragmentActivity {
 
@@ -19,14 +19,16 @@ public class HuntPlayTestActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_hunt_play_test);
 
-		String huntId = getIntent().getStringExtra(Constants.HUNT_ID);
+		UserHuntWrapper uHuntWrapper = (UserHuntWrapper) getIntent()
+				.getSerializableExtra(Constants.USER_HUNT_WRAPPER_DATA_NAME);
 
-		if (!Helper.isNotEmpty(huntId)) {
+		if (uHuntWrapper != null) {
 			Log.e(tag, "huntId is missing !.");
 			return;
 		}
 		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-		ft.replace(R.id.flHuntPlay, FragmentFactory.getHuntPlayFragment(huntId));
+		ft.replace(R.id.flHuntPlay,
+				FragmentFactory.getHuntPlayFragment(uHuntWrapper));
 		ft.commit();
 	}
 }

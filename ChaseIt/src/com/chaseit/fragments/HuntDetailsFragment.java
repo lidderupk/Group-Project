@@ -29,6 +29,9 @@ import com.chaseit.models.CIUser;
 import com.chaseit.models.Hunt;
 import com.chaseit.models.UserHunt;
 import com.chaseit.models.UserHunt.HuntStatus;
+import com.chaseit.models.wrappers.HuntWrapper;
+import com.chaseit.models.wrappers.ParseObjectWrapper;
+import com.chaseit.models.wrappers.UserHuntWrapper;
 import com.chaseit.util.Constants;
 import com.chaseit.util.Helper;
 import com.google.android.gms.maps.model.LatLng;
@@ -40,7 +43,7 @@ import com.parse.ParseGeoPoint;
 public class HuntDetailsFragment extends Fragment {
 
 	private static final String tag = "Debug - com.chaseit.fragments.HuntDetailsFragment";
-	private String huntId;
+	private HuntWrapper hWrapper;
 	private Hunt hunt;
 	private TextView tvHuntDetailsTitle;
 	private TextView tvHuntDetailsCreatorHandle;
@@ -51,6 +54,7 @@ public class HuntDetailsFragment extends Fragment {
 	private Button btnHuntDetailsLaunch;
 
 	private boolean isHuntInProgress = false;
+	protected UserHuntWrapper uHuntWrapper;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -64,44 +68,51 @@ public class HuntDetailsFragment extends Fragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		Bundle extras = getArguments();
-		huntId = extras.getString(Constants.HUNT_ID);
-		Log.d(tag, "huntID: " + huntId);
-		ParseHelper.getHuntByObjectId(huntId, new GetCallback<Hunt>() {
+		hWrapper = (HuntWrapper) extras
+				.getSerializable(Constants.HUNT_WRAPPER_DATA_NAME);
 
-			@Override
-			public void done(Hunt object, ParseException e) {
-				if (e == null) {
+		ParseHelper.getHuntByObjectId(hWrapper.getObjectId(),
+				new GetCallback<Hunt>() {
 
-					hunt = object;
-					setupViews(getView(), hunt);
-				} else {
-					Log.d(tag, e.getMessage());
-				}
-			}
-		});
+					@Override
+					public void done(Hunt object, ParseException e) {
+						if (e == null) {
 
-		ParseHelper.getHuntByObjectId(huntId, new GetCallback<Hunt>() {
+							hunt = object;
+							setupViews(getView(), hunt);
+						} else {
+							Log.d(tag, e.getMessage());
+						}
+					}
+				});
 
-			@Override
-			public void done(Hunt hunt, ParseException e) {
-				ParseHelper.getHuntInProgressGivenHuntAndUser(hunt,
-						CIUser.getCurrentUser(), new FindCallback<UserHunt>() {
+		ParseHelper.getHuntByObjectId(hWrapper.getObjectId(),
+				new GetCallback<Hunt>() {
 
-							@Override
-							public void done(List<UserHunt> hunts,
-									ParseException e) {
-								if (e == null) {
-									if (hunts != null && hunts.size() > 0)
-										Log.d(tag,
-												"This hunt is already in progress !");
-									isHuntInProgress = true;
-									btnHuntDetailsLaunch.setText("Continue");
-								} else
-									Log.d(tag, e.getMessage());
-							}
-						});
-			}
-		});
+					@Override
+					public void done(Hunt hunt, ParseException e) {
+						ParseHelper.getHuntInProgressGivenHuntAndUser(hunt,
+								CIUser.getCurrentUser(),
+								new FindCallback<UserHunt>() {
+
+									@Override
+									public void done(List<UserHunt> hunts,
+											ParseException e) {
+										if (e == null) {
+											if (hunts != null
+													&& hunts.size() > 0) {
+												Log.d(tag,
+														"This hunt is already in progress !");
+												isHuntInProgress = true;
+												btnHuntDetailsLaunch
+														.setText("Continue");
+											}
+										} else
+											Log.d(tag, e.getMessage());
+									}
+								});
+					}
+				});
 
 	}
 
@@ -166,6 +177,9 @@ public class HuntDetailsFragment extends Fragment {
 						userHunt.setHuntStatus(HuntStatus.IN_PROGRESS);
 						userHunt.save();
 
+						uHuntWrapper = new UserHuntWrapper(
+								new ParseObjectWrapper(userHunt));
+
 					} catch (ParseException e1) {
 						Toast.makeText(getActivity().getBaseContext(),
 								"Hunt could not be started. Try again",
@@ -176,7 +190,7 @@ public class HuntDetailsFragment extends Fragment {
 
 				FragmentActivity activity = getActivity();
 				if (activity instanceof HuntStartInterface)
-					((HuntStartInterface) activity).startHunt(huntId);
+					((HuntStartInterface) activity).startHunt(uHuntWrapper);
 			}
 		};
 	}

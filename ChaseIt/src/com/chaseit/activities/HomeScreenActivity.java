@@ -29,6 +29,7 @@ import com.chaseit.fragments.NewsFeedFragment;
 import com.chaseit.fragments.RecentHuntsFragment;
 import com.chaseit.fragments.interfaces.HuntDetailsInterface;
 import com.chaseit.models.Hunt;
+import com.chaseit.models.wrappers.HuntWrapper;
 import com.chaseit.util.Constants;
 
 public class HomeScreenActivity extends ActionBarActivity implements
@@ -101,9 +102,11 @@ public class HomeScreenActivity extends ActionBarActivity implements
 			return true;
 
 		case R.id.huntDetails:
-			in = new Intent(getBaseContext(), HuntDetailsTestActivity.class);
-			in.putExtra(Constants.HUNT_ID, "Q6OO7dFnGp");
-			startActivity(in);
+			// in = new Intent(getBaseContext(), HuntDetailsTestActivity.class);
+			// in.putExtra(Constants.HUNT_ID, "Q6OO7dFnGp");
+			// startActivity(in);
+			Toast.makeText(getBaseContext(), "Disabled", Toast.LENGTH_SHORT)
+					.show();
 			return true;
 
 		case R.id.huntPlayMenu:
@@ -235,8 +238,9 @@ public class HomeScreenActivity extends ActionBarActivity implements
 	@Override
 	public void huntClicked(Hunt hunt) {
 		Log.d(tag, "hunt clicked. Activity notified !");
+		HuntWrapper hWrapper = new HuntWrapper(hunt);
 		Intent in = new Intent(getBaseContext(), HuntDetailsTestActivity.class);
-		in.putExtra(Constants.HUNT_ID, hunt.getObjectId());
+		in.putExtra(Constants.HUNT_WRAPPER_DATA_NAME, hWrapper);
 		startActivity(in);
 	}
 }

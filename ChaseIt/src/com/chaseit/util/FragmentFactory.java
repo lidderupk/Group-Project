@@ -5,32 +5,37 @@ import android.os.Bundle;
 import com.chaseit.fragments.HuntDetailsFragment;
 import com.chaseit.fragments.HuntPlayFragment;
 import com.chaseit.fragments.MapWithConnectedMarkersFragment;
+import com.chaseit.models.wrappers.HuntWrapper;
+import com.chaseit.models.wrappers.UserHuntWrapper;
 
 public class FragmentFactory {
-	public static HuntDetailsFragment getHuntDetailsFragment(String huntId) {
+	public static HuntDetailsFragment getHuntDetailsFragment(
+			HuntWrapper huntWrapper) {
 		HuntDetailsFragment huntDetailsFragment = new HuntDetailsFragment();
 
 		Bundle args = new Bundle();
-		args.putString(Constants.HUNT_ID, huntId);
+		args.putSerializable(Constants.HUNT_WRAPPER_DATA_NAME, huntWrapper);
 		huntDetailsFragment.setArguments(args);
 		return huntDetailsFragment;
 	}
 
-	public static HuntPlayFragment getHuntPlayFragment(String huntId) {
+	public static HuntPlayFragment getHuntPlayFragment(
+			UserHuntWrapper uHuntWrapper) {
 		HuntPlayFragment huntPlayFragment = new HuntPlayFragment();
 
 		Bundle args = new Bundle();
-		args.putString(Constants.HUNT_ID, huntId);
+		args.putSerializable(Constants.USER_HUNT_WRAPPER_DATA_NAME,
+				uHuntWrapper);
 		huntPlayFragment.setArguments(args);
 		return huntPlayFragment;
 	}
 
 	public static MapWithConnectedMarkersFragment getHuntMapWithMarkersFragment(
-			String huntId) {
+			HuntWrapper huntWrapper) {
 		MapWithConnectedMarkersFragment huntMapWithMarkersFragment = new MapWithConnectedMarkersFragment();
 
 		Bundle args = new Bundle();
-		args.putString(Constants.HUNT_ID, huntId);
+		args.putSerializable(Constants.HUNT_WRAPPER_DATA_NAME, huntWrapper);
 		huntMapWithMarkersFragment.setArguments(args);
 		return huntMapWithMarkersFragment;
 	}
