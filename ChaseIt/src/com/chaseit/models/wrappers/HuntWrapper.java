@@ -13,6 +13,11 @@ public class HuntWrapper implements Serializable{
 	public HuntWrapper(Hunt h){
 		wrapper = new ParseObjectWrapper(h);
 	}
+
+	public HuntWrapper(ParseObjectWrapper h){
+		wrapper = h;
+	}
+
 	
 	public String getObjectId(){
 		return wrapper.getString("objectId");
@@ -63,8 +68,8 @@ public class HuntWrapper implements Serializable{
 	/**
 	 * @return the creator
 	 */
-	public ParseObjectWrapper getCreator() {
-		return (ParseObjectWrapper)wrapper.getParseUser("creator");
+	public UserWrapper getCreator() {
+		return new UserWrapper(wrapper.getParseUser("creator"));
 	}
 
 	/**

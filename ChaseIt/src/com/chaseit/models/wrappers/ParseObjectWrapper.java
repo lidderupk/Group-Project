@@ -39,6 +39,9 @@ public class ParseObjectWrapper implements Serializable {
 			} else if(classType == ParseUser.class) {
 				ParseObjectWrapper parseUserObject = new ParseObjectWrapper((ParseObject)object.get(key));
 				values.put(key, parseUserObject);
+			} else if(classType == ParseObject.class) {
+				ParseObjectWrapper parseUserObject = new ParseObjectWrapper((ParseObject)object.get(key));
+				values.put(key, parseUserObject);
 			} else if(classType == ParseFile.class) {
 				ParseFile pf = (ParseFile)object.get(key);
 				File f = null;
@@ -119,6 +122,13 @@ public class ParseObjectWrapper implements Serializable {
 	}
 
 	public ParseObjectWrapper getParseUser(String key) {
+		if(has(key)) {
+			return (ParseObjectWrapper) values.get(key);
+		} else {
+			return null;
+		}
+	}
+	public ParseObjectWrapper getParseObject(String key) {
 		if(has(key)) {
 			return (ParseObjectWrapper) values.get(key);
 		} else {
