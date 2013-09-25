@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.ImageView;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.chaseit.R;
@@ -44,7 +44,7 @@ public class AddPictureDialogFragment extends DialogFragment {
 
 		int title = getArguments().getInt("title");
 		((TextView) view.findViewById(R.id.tvTitle)).setText(title);
-		((ImageView) view.findViewById(R.id.ivTakePicture))
+		((ImageButton) view.findViewById(R.id.ibTakePicture))
 				.setOnClickListener(new OnClickListener() {
 					public void onClick(View v) {
 						// When button is clicked, call up to owning activity.
@@ -52,7 +52,7 @@ public class AddPictureDialogFragment extends DialogFragment {
 					}
 				});
 
-		((ImageView) view.findViewById(R.id.ivSelectPicture))
+		((ImageButton) view.findViewById(R.id.ibSelectPicture))
 				.setOnClickListener(new OnClickListener() {
 					public void onClick(View v) {
 						// When button is clicked, call up to owning activity.
