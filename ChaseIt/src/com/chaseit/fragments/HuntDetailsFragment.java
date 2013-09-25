@@ -37,6 +37,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
+import com.parse.SaveCallback;
 
 public class HuntDetailsFragment extends Fragment {
 
@@ -75,29 +76,69 @@ public class HuntDetailsFragment extends Fragment {
 				new GetCallback<Hunt>() {
 
 					@Override
-					public void done(Hunt hunt, ParseException e) {
+					public void done(final Hunt hunt, ParseException e) {
 
-						ParseHelper.getHuntInProgressGivenHuntAndUser(hunt,
-								CIUser.getCurrentUser(),
-								new FindCallback<UserHunt>() {
+						// ParseHelper.getHuntInProgressGivenHuntAndUser(hunt,
+						// CIUser.getCurrentUser(),
+						// new FindCallback<UserHunt>() {
+						//
+						// @Override
+						// public void done(List<UserHunt> hunts,
+						// ParseException e) {
+						// huntsInProgress = hunts;
+						// if (e == null) {
+						// if (hunts != null
+						// && hunts.size() > 0) {
+						// Log.d(tag,
+						// "This hunt is already in progress !");
+						// isHuntInProgress = true;
+						// btnHuntDetailsLaunch
+						// .setText("Continue");
+						// }
+						// } else
+						// Log.d(tag, e.getMessage());
+						// }
+						// });
+						//
+
+						ParseHelper
+								.getMyHuntsInProgress(new FindCallback<UserHunt>() {
 
 									@Override
-									public void done(List<UserHunt> hunts,
+									public void done(
+											List<UserHunt> myHuntsInProgress,
 											ParseException e) {
-										huntsInProgress = hunts;
+										huntsInProgress = myHuntsInProgress;
 										if (e == null) {
-											if (hunts != null
-													&& hunts.size() > 0) {
-												Log.d(tag,
-														"This hunt is already in progress !");
-												isHuntInProgress = true;
-												btnHuntDetailsLaunch
-														.setText("Continue");
+
+											for (UserHunt uHunt : myHuntsInProgress) {
+												// if (uHunt
+												// .getHunt()
+												// .getObjectId()
+												// .equals(hunt
+												// .getObjectId())) {
+												// Log.d(tag,
+												// "This hunt is already in progress !");
+												// isHuntInProgress = true;
+												// btnHuntDetailsLaunch
+												// .setText("Continue");
+												// }
 											}
+
+											// if (huntsInProgress != null
+											// && huntsInProgress.size() > 0) {
+											// Log.d(tag,
+											// "This hunt is already in progress !");
+											// isHuntInProgress = true;
+											// btnHuntDetailsLaunch
+											// .setText("Continue");
+											// }
 										} else
 											Log.d(tag, e.getMessage());
+
 									}
 								});
+
 					}
 				});
 
@@ -157,13 +198,26 @@ public class HuntDetailsFragment extends Fragment {
 
 								@Override
 								public void done(Hunt object, ParseException e) {
-									userHunt.setHuntObjectId(object.getObjectId());
-									userHunt.setUserObjectId(CIUser.getCurrentUser().getObjectId());
+									userHunt.setHuntObjectId(object
+											.getObjectId());
+									userHunt.setUserObjectId(CIUser
+											.getCurrentUser().getObjectId());
 									userHunt.setHuntStatus(HuntStatus.IN_PROGRESS);
-									userHunt.setLastLocationLat(object.getStartLocation().getLatitude());
-									userHunt.setLastLocationLong(object.getStartLocation().getLongitude());
+									userHunt.setLastLocationLat(object
+											.getStartLocation().getLatitude());
+									userHunt.setLastLocationLong(object
+											.getStartLocation().getLongitude());
 									userHunt.setLocationIndex(0);
-									userHunt.saveInBackground();
+									userHunt.saveInBackground(new SaveCallback() {
+
+										@Override
+										public void done(ParseException e) {
+											if (e != null)
+												Log.d(tag, e.getMessage());
+
+											Log.d(tag, "leaving done");
+										}
+									});
 
 									startHuntOrContinue(userHunt);
 								}

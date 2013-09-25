@@ -30,7 +30,7 @@ public class UserHunt extends ParseObject {
 		return getString("huntobjectId");
 	}
 
-	public void setLocatoinObjectId(String locationObjectId) {
+	public void setLocationObjectId(String locationObjectId) {
 		put("locationobjectId", locationObjectId);
 	}
 
@@ -39,19 +39,19 @@ public class UserHunt extends ParseObject {
 	}
 
 	public void setLastLocationLat(double latitude) {
-		put("lastlocation.latitude", latitude);
+		put("lastlocationLatitude", latitude);
 	}
 
 	public double getLastLocationLat() {
-		return getDouble("lastlocation.latitude");
+		return getDouble("lastlocationLatitude");
 	}
 	
 	public void setLastLocationLong(double longitude) {
-		put("lastlocation.longitude", longitude);
+		put("lastlocationLongitude", longitude);
 	}
 
 	public double getLastLocationLong() {
-		return getDouble("lastlocation.longitude");
+		return getDouble("lastlocationLongitude");
 	}
 
 	public void setLocationIndex(int index) {
