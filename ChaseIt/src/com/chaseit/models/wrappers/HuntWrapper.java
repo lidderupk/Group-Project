@@ -14,6 +14,10 @@ public class HuntWrapper implements Serializable{
 		wrapper = new ParseObjectWrapper(h);
 	}
 	
+	public String getObjectId(){
+		return wrapper.getString("objectId");
+	}
+	
 	/**
 	 * @return the name
 	 */
