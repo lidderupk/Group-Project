@@ -233,7 +233,7 @@ public class HomeScreenActivity extends ActionBarActivity implements
 
 	@Override
 	public void onTabUnselected(Tab arg0, FragmentTransaction arg1) {
-	}
+	}  
 
 	@Override
 	public void huntClicked(Hunt hunt) {

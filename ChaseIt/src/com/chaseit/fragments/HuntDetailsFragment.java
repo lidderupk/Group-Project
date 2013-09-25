@@ -20,7 +20,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.chaseit.ParseHelper;
 import com.chaseit.R;
@@ -38,13 +37,11 @@ import com.google.android.gms.maps.model.LatLng;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
-import com.parse.ParseGeoPoint;
 
 public class HuntDetailsFragment extends Fragment {
 
 	private static final String tag = "Debug - com.chaseit.fragments.HuntDetailsFragment";
 	private HuntWrapper hWrapper;
-	private Hunt hunt;
 	private TextView tvHuntDetailsTitle;
 	private TextView tvHuntDetailsCreatorHandle;
 	private RatingBar rbHuntDetailsRating;
@@ -52,6 +49,7 @@ public class HuntDetailsFragment extends Fragment {
 	private TextView tvHuntDetailsDescription;
 	private ImageView ivHuntsDetailsMap;
 	private Button btnHuntDetailsLaunch;
+	private List<UserHunt> huntsInProgress;
 
 	private boolean isHuntInProgress = false;
 	protected UserHuntWrapper uHuntWrapper;
@@ -71,26 +69,14 @@ public class HuntDetailsFragment extends Fragment {
 		hWrapper = (HuntWrapper) extras
 				.getSerializable(Constants.HUNT_WRAPPER_DATA_NAME);
 
-		ParseHelper.getHuntByObjectId(hWrapper.getObjectId(),
-				new GetCallback<Hunt>() {
-
-					@Override
-					public void done(Hunt object, ParseException e) {
-						if (e == null) {
-
-							hunt = object;
-							setupViews(getView(), hunt);
-						} else {
-							Log.d(tag, e.getMessage());
-						}
-					}
-				});
+		setupViews(getView(), hWrapper);
 
 		ParseHelper.getHuntByObjectId(hWrapper.getObjectId(),
 				new GetCallback<Hunt>() {
 
 					@Override
 					public void done(Hunt hunt, ParseException e) {
+
 						ParseHelper.getHuntInProgressGivenHuntAndUser(hunt,
 								CIUser.getCurrentUser(),
 								new FindCallback<UserHunt>() {
@@ -98,6 +84,7 @@ public class HuntDetailsFragment extends Fragment {
 									@Override
 									public void done(List<UserHunt> hunts,
 											ParseException e) {
+										huntsInProgress = hunts;
 										if (e == null) {
 											if (hunts != null
 													&& hunts.size() > 0) {
@@ -116,7 +103,7 @@ public class HuntDetailsFragment extends Fragment {
 
 	}
 
-	private void setupViews(View view, Hunt hunt) {
+	private void setupViews(View view, HuntWrapper hWrapper) {
 
 		tvHuntDetailsTitle = (TextView) view
 				.findViewById(R.id.tvHuntDetailsTitle);
@@ -133,24 +120,17 @@ public class HuntDetailsFragment extends Fragment {
 		btnHuntDetailsLaunch = (Button) view
 				.findViewById(R.id.btnHuntDetailsLaunch);
 
-		if (Helper.isNotEmpty(hunt.getName()))
-			tvHuntDetailsTitle.setText(hunt.getName());
+		if (Helper.isNotEmpty(hWrapper.getName()))
+			tvHuntDetailsTitle.setText(hWrapper.getName());
 
-		// if (Helper.nonEmpty(hunt.getCreator());
-		// tvHuntDetailsCreatorHandle.setText(hunt.getCreator().getUsername());
+		// rbHuntDetailsRating.setRating(Math.round(.getAvgRating()));
 
-		rbHuntDetailsRating.setRating(Math.round(hunt.getAvgRating()));
+		if (Helper.isNotEmpty(hWrapper.getDetails()))
+			tvHuntDetailsDescription.setText(hWrapper.getDetails());
 
-		// get hunt location
-		// if(Helper.nonEmpty(hunt.get)))
-		// tvHuntDetailsCreatorHandle.setText(hunt.getCreator().getUsername());
-		if (Helper.isNotEmpty(hunt.getDetails()))
-			tvHuntDetailsDescription.setText(hunt.getDetails());
-
-		ParseGeoPoint startLocation = hunt.getStartLocation();
+		LatLng startLocation = hWrapper.getStartLocation();
 		if (startLocation != null) {
-			getMap(new LatLng(startLocation.getLatitude(),
-					startLocation.getLongitude()), view);
+			getMap(startLocation, view);
 		}
 
 		btnHuntDetailsLaunch.setOnClickListener(getHuntStartClickListener());
@@ -158,6 +138,8 @@ public class HuntDetailsFragment extends Fragment {
 
 	private OnClickListener getHuntStartClickListener() {
 		return new OnClickListener() {
+			private UserHunt userHunt;
+
 			@Override
 			public void onClick(View v) {
 				Log.d(tag, "start or contiue clicked");
@@ -169,30 +151,38 @@ public class HuntDetailsFragment extends Fragment {
 				 */
 
 				if (!isHuntInProgress) {
+					userHunt = new UserHunt();
+					ParseHelper.getHuntByObjectId(hWrapper.getObjectId(),
+							new GetCallback<Hunt>() {
 
-					try {
-						UserHunt userHunt = new UserHunt();
-						userHunt.setHunt(hunt);
-						userHunt.setUser(CIUser.getCurrentUser());
-						userHunt.setHuntStatus(HuntStatus.IN_PROGRESS);
-						userHunt.save();
+								@Override
+								public void done(Hunt object, ParseException e) {
+									userHunt.setHunt(object);
+									userHunt.setUser(CIUser.getCurrentUser());
+									userHunt.setHuntStatus(HuntStatus.IN_PROGRESS);
+									userHunt.saveInBackground();
 
-						uHuntWrapper = new UserHuntWrapper(
-								new ParseObjectWrapper(userHunt));
+									startHuntOrContinue(userHunt);
+								}
 
-					} catch (ParseException e1) {
-						Toast.makeText(getActivity().getBaseContext(),
-								"Hunt could not be started. Try again",
-								Toast.LENGTH_SHORT).show();
-						e1.printStackTrace();
-					}
+							});
+				} else {
+					// get the user hunt
+
+					if (huntsInProgress != null && huntsInProgress.size() > 0)
+						userHunt = huntsInProgress.get(0);
+					startHuntOrContinue(userHunt);
 				}
-
-				FragmentActivity activity = getActivity();
-				if (activity instanceof HuntStartInterface)
-					((HuntStartInterface) activity).startHunt(uHuntWrapper);
 			}
 		};
+	}
+
+	private void startHuntOrContinue(UserHunt userHunt) {
+		uHuntWrapper = new UserHuntWrapper(new ParseObjectWrapper(userHunt));
+
+		FragmentActivity activity = getActivity();
+		if (activity instanceof HuntStartInterface)
+			((HuntStartInterface) activity).startHunt(uHuntWrapper);
 	}
 
 	private void getMap(LatLng point, View view) {

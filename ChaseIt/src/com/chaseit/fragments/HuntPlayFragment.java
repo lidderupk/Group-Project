@@ -23,6 +23,7 @@ import com.chaseit.models.CIUser;
 import com.chaseit.models.Hunt;
 import com.chaseit.models.Location;
 import com.chaseit.models.UserHunt;
+import com.chaseit.models.wrappers.HuntWrapper;
 import com.chaseit.models.wrappers.UserHuntWrapper;
 import com.chaseit.util.Constants;
 import com.chaseit.util.FragmentFactory;
@@ -44,6 +45,7 @@ public class HuntPlayFragment extends Fragment {
 
 	private GoogleMap gMap;
 	private ImageView ivHuntImageClue;
+	private Hunt currentHunt;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,11 +62,14 @@ public class HuntPlayFragment extends Fragment {
 		uHuntWrapper = (UserHuntWrapper) extras
 				.getSerializable(Constants.USER_HUNT_WRAPPER_DATA_NAME);
 
-		ParseHelper.getHuntByObjectId(uHuntWrapper.getHunt().getObjectId(),
+		ParseHelper.getHuntByObjectId(uHuntWrapper.getObjectId(),
 				new GetCallback<Hunt>() {
+
 					@Override
 					public void done(Hunt hunt, ParseException e) {
+						currentHunt = hunt;
 						if (e == null) {
+
 							ParseHelper.getLocationsforHunt(hunt,
 									new FindCallback<Location>() {
 										@Override
@@ -72,6 +77,18 @@ public class HuntPlayFragment extends Fragment {
 												List<Location> objects,
 												ParseException e) {
 											Log.d(tag, "");
+
+											FragmentTransaction ft = getActivity()
+													.getSupportFragmentManager()
+													.beginTransaction();
+											ft.replace(
+													R.id.huntMap,
+													FragmentFactory
+															.getHuntMapWithMarkersFragment(new HuntWrapper(
+																	currentHunt)));
+											ft.commit();
+
+											setupViews(getView());
 										}
 									});
 						} else {
@@ -81,22 +98,14 @@ public class HuntPlayFragment extends Fragment {
 					}
 				});
 
-		LatLng latLongForHunt = getLatLongForHunt(uHuntWrapper.getHunt()
-				.getObjectId());
-
-		FragmentTransaction ft = getActivity().getSupportFragmentManager()
-				.beginTransaction();
-		ft.replace(R.id.huntMap,
-				FragmentFactory.getHuntMapWithMarkersFragment(null));
-		ft.commit();
-
-		setupViews(getView(), latLongForHunt);
+		// LatLng latLongForHunt = getLatLongForHunt(uHuntWrapper.getHunt()
+		// .getObjectId());
 	}
 
-	private void setupViews(View view, LatLng latLongForHunt) {
+	private void setupViews(View view) {
 		ivHuntImageClue = (ImageView) view.findViewById(R.id.ivHuntImageClue);
 		ivHuntImageClue.setOnClickListener(getHuntImageClueClickListener());
-		setupMaps(latLongForHunt);
+		// setupMaps(latLongForHunt);
 
 		Button btnHuntStart = (Button) view
 				.findViewById(R.id.btnHuntProgressCheck);

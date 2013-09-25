@@ -22,7 +22,7 @@ public class HuntPlayTestActivity extends FragmentActivity {
 		UserHuntWrapper uHuntWrapper = (UserHuntWrapper) getIntent()
 				.getSerializableExtra(Constants.USER_HUNT_WRAPPER_DATA_NAME);
 
-		if (uHuntWrapper != null) {
+		if (uHuntWrapper == null) {
 			Log.e(tag, "huntId is missing !.");
 			return;
 		}

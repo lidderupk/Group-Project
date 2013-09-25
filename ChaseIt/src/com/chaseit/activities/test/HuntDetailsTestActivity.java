@@ -49,7 +49,7 @@ public class HuntDetailsTestActivity extends FragmentActivity implements
 	public void startHunt(UserHuntWrapper uHuntWrapper) {
 		Log.d(tag, "hunt clicked. Activity notified !");
 		Intent in = new Intent(getBaseContext(), HuntPlayTestActivity.class);
-		in.putExtra(Constants.HUNT_WRAPPER_DATA_NAME, uHuntWrapper);
+		in.putExtra(Constants.USER_HUNT_WRAPPER_DATA_NAME, uHuntWrapper);
 		startActivity(in);
 	}
 }
