@@ -157,9 +157,12 @@ public class HuntDetailsFragment extends Fragment {
 
 								@Override
 								public void done(Hunt object, ParseException e) {
-									userHunt.setHunt(object);
-									userHunt.setUser(CIUser.getCurrentUser());
+									userHunt.setHuntObjectId(object.getObjectId());
+									userHunt.setUserObjectId(CIUser.getCurrentUser().getObjectId());
 									userHunt.setHuntStatus(HuntStatus.IN_PROGRESS);
+									userHunt.setLastLocationLat(object.getStartLocation().getLatitude());
+									userHunt.setLastLocationLong(object.getStartLocation().getLongitude());
+									userHunt.setLocationIndex(0);
 									userHunt.saveInBackground();
 
 									startHuntOrContinue(userHunt);

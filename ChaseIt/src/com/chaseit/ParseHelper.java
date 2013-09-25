@@ -72,7 +72,7 @@ public class ParseHelper {
 		if (callback == null)
 			return;
 		ParseQuery<UserHunt> query = ParseQuery.getQuery(UserHunt.class);
-		query.whereEqualTo("user", CIUser.getCurrentUser());
+		query.whereEqualTo("userobjectId", CIUser.getCurrentUser().getObjectId());
 		query.whereEqualTo("status", HuntStatus.COMPLETED.toString());
 		query.findInBackground(callback);
 	}
@@ -81,27 +81,25 @@ public class ParseHelper {
 		if (callback == null)
 			return;
 		ParseQuery<UserHunt> query = ParseQuery.getQuery(UserHunt.class);
-		query.whereEqualTo("user", CIUser.getCurrentUser());
+		query.whereEqualTo("userobjectId", CIUser.getCurrentUser().getObjectId());
 		query.whereEqualTo("status", HuntStatus.IN_PROGRESS.toString());
 		query.findInBackground(callback);
 	}
 
-	public static void getHuntsInProgressForUser(ParseUser user,
-			FindCallback<UserHunt> callback) {
+	public static void getHuntsInProgressForUser(ParseUser user, FindCallback<UserHunt> callback) {
 		if (callback == null)
 			return;
 		ParseQuery<UserHunt> query = ParseQuery.getQuery(UserHunt.class);
-		query.whereEqualTo("user", user);
+		query.whereEqualTo("userobjectId", user.getObjectId());
 		query.whereEqualTo("status", HuntStatus.IN_PROGRESS.toString());
 		query.findInBackground(callback);
 	}
 
-	public static void getHuntInProgressGivenHunt(Hunt hunt,
-			FindCallback<UserHunt> callback) {
+	public static void getHuntInProgressGivenHunt(Hunt hunt, FindCallback<UserHunt> callback) {
 		if (callback == null)
 			return;
 		ParseQuery<UserHunt> query = ParseQuery.getQuery(UserHunt.class);
-		query.whereEqualTo("hunt", hunt);
+		query.whereEqualTo("huntobjectId", hunt.getObjectId());
 		query.findInBackground(callback);
 	}  
 
@@ -110,9 +108,18 @@ public class ParseHelper {
 		if (callback == null || hunt == null)
 			return;
 		ParseQuery<UserHunt> query = ParseQuery.getQuery(UserHunt.class);
-		query.whereEqualTo("hunt", hunt);
+		query.whereEqualTo("huntobjectId", hunt.getObjectId());
 		query.whereEqualTo("status", HuntStatus.IN_PROGRESS.toString());
-		query.whereEqualTo("user", user);
+		query.whereEqualTo("userobjectId", user.getObjectId());
+		query.findInBackground(callback);
+	}
+
+	public static void getLocationByObjectId(String objectId,
+			FindCallback<Location> callback) {
+		if (callback == null)
+			return;
+		ParseQuery<Location> query = ParseQuery.getQuery(Location.class);
+		query.whereEqualTo("objectId", objectId);
 		query.findInBackground(callback);
 	}
 

@@ -2,7 +2,6 @@ package com.chaseit.models;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
-import com.parse.ParseUser;
 
 @ParseClassName("UserHunt")
 public class UserHunt extends ParseObject {
@@ -15,29 +14,54 @@ public class UserHunt extends ParseObject {
 		// empty constructor
 	}
 
-	public void setUser(ParseUser user) {
-		put("user", user);
+	public void setUserObjectId(String userObjectId) {
+		put("userobjectId", userObjectId);
 	}
 
-	public ParseUser getUser() {
-		return getParseUser("user");
+	public String getUserObjectId() {
+		return getString("userobjectId");
 	}
 
-	public void setHunt(Hunt hunt) {
-		put("hunt", hunt);
+	public void setHuntObjectId(String huntObjectId) {
+		put("huntobjectId", huntObjectId);
 	}
 
-	public Hunt getHunt() {
-		return (Hunt) getParseObject("hunt");
+	public String getHuntObjectId() {
+		return getString("huntobjectId");
 	}
 
-	public void setLastLocation(Location location) {
-		put("lastlocation", location);
+	public void setLocatoinObjectId(String locationObjectId) {
+		put("locationobjectId", locationObjectId);
 	}
 
-	public Location getLastLocation() {
-		return (Location) getParseObject("lastlocation");
+	public String getLocationObjectId() {
+		return getString("locationobjectId");
 	}
+
+	public void setLastLocationLat(double latitude) {
+		put("lastlocation.latitude", latitude);
+	}
+
+	public double getLastLocationLat() {
+		return getDouble("lastlocation.latitude");
+	}
+	
+	public void setLastLocationLong(double longitude) {
+		put("lastlocation.longitude", longitude);
+	}
+
+	public double getLastLocationLong() {
+		return getDouble("lastlocation.longitude");
+	}
+
+	public void setLocationIndex(int index) {
+		put("locationindex", index);
+	}
+
+	public int getLocationIndex() {
+		return getInt("locationindex");
+	}
+	
 
 	public void setHuntStatus(HuntStatus status) {
 		put("huntstatus", status.toString());
