@@ -2,7 +2,7 @@
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" >
+    android:layout_height="wrap_content">
     
     <TableRow
         android:id="@+id/trDialogHeader"
@@ -28,26 +28,27 @@
     <TableRow
         android:id="@+id/trSelectMethod"
         style="?android:attr/buttonBarStyle"
+        android:layout_gravity="center"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
-        
-        <ImageView
-            android:id="@+id/ivTakePicture"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@+id/ibTakePicture"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:contentDescription="@string/dialog_image_desc_take_picture"
             android:src="@android:drawable/ic_menu_camera" />
 
-        <ImageView
-            android:id="@+id/ivSelectPicture"
+        <ImageButton
+            android:id="@+id/ibSelectPicture"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:contentDescription="@string/dialog_image_desc_select_picture"
             android:src="@android:drawable/ic_menu_gallery" />
+        
+        
     </TableRow>
 
 </TableLayout>
