@@ -100,6 +100,7 @@ public class HuntDetailsFragment extends Fragment {
 						// }
 						// });
 						//
+						Log.d(tag, "");
 
 						ParseHelper
 								.getMyHuntsInProgress(new FindCallback<UserHunt>() {
