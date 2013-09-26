@@ -26,6 +26,7 @@ import com.chaseit.R;
 import com.chaseit.fragments.interfaces.HuntStartInterface;
 import com.chaseit.models.CIUser;
 import com.chaseit.models.Hunt;
+import com.chaseit.models.Location;
 import com.chaseit.models.UserHunt;
 import com.chaseit.models.UserHunt.HuntStatus;
 import com.chaseit.models.wrappers.HuntWrapper;
@@ -163,31 +164,57 @@ public class HuntDetailsFragment extends Fragment {
 							new GetCallback<Hunt>() {
 
 								@Override
-								public void done(Hunt hunt, ParseException e) {
-									userHunt.setHuntObjectId(hunt
-											.getObjectId());
+								public void done(final Hunt hunt,
+										ParseException e) {
+									userHunt.setHuntObjectId(hunt.getObjectId());
 									userHunt.setUserObjectId(CIUser
 											.getCurrentUser().getObjectId());
 									userHunt.setHuntStatus(HuntStatus.IN_PROGRESS);
-									userHunt.setLastLocationLat(hunt
-											.getStartLocation().getLatitude());
-									userHunt.setLastLocationLong(hunt
-											.getStartLocation().getLongitude());
-									userHunt.setLocationIndex(0);
-									userHunt.saveInBackground(new SaveCallback() {
 
-										@Override
-										public void done(ParseException e) {
-											if (e != null)
-												Log.d(tag, e.getMessage());
+									/*
+									 * get all locations for this hunt and set
+									 * the first one as the lastLocation for the
+									 * newly create userHunt
+									 */
+									ParseHelper.getLocationByHuntAndIndex(hunt,
+											0, new FindCallback<Location>() {
+												final Hunt innerHunt = hunt;
 
-											Log.d(tag, "leaving done");
-										}
-									});
+												@Override
+												public void done(
+														List<Location> locations,
+														ParseException e) {
+													if (locations != null
+															&& locations.size() > 0)
+														userHunt.setLastLocationObjectId(locations
+																.get(0)
+																.getObjectId());
+													userHunt.setLastLocationLat(hunt
+															.getStartLocation()
+															.getLatitude());
+													userHunt.setLastLocationLong(hunt
+															.getStartLocation()
+															.getLongitude());
+													userHunt.setLocationIndex(0);
+													userHunt.saveInBackground(new SaveCallback() {
 
-									startHuntOrContinue(userHunt);
+														@Override
+														public void done(
+																ParseException e) {
+															if (e != null)
+																Log.d(tag,
+																		e.getMessage());
+
+															Log.d(tag,
+																	"leaving done");
+														}
+													});
+
+													startHuntOrContinue(userHunt);
+
+												}
+											});
 								}
-
 							});
 				} else {
 					// get the user hunt
