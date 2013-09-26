@@ -77,31 +77,6 @@ public class HuntDetailsFragment extends Fragment {
 
 					@Override
 					public void done(final Hunt hunt, ParseException e) {
-
-						// ParseHelper.getHuntInProgressGivenHuntAndUser(hunt,
-						// CIUser.getCurrentUser(),
-						// new FindCallback<UserHunt>() {
-						//
-						// @Override
-						// public void done(List<UserHunt> hunts,
-						// ParseException e) {
-						// huntsInProgress = hunts;
-						// if (e == null) {
-						// if (hunts != null
-						// && hunts.size() > 0) {
-						// Log.d(tag,
-						// "This hunt is already in progress !");
-						// isHuntInProgress = true;
-						// btnHuntDetailsLaunch
-						// .setText("Continue");
-						// }
-						// } else
-						// Log.d(tag, e.getMessage());
-						// }
-						// });
-						//
-						Log.d(tag, "");
-
 						ParseHelper
 								.getMyHuntsInProgress(new FindCallback<UserHunt>() {
 
@@ -113,27 +88,17 @@ public class HuntDetailsFragment extends Fragment {
 										if (e == null) {
 
 											for (UserHunt uHunt : myHuntsInProgress) {
-												// if (uHunt
-												// .getHunt()
-												// .getObjectId()
-												// .equals(hunt
-												// .getObjectId())) {
-												// Log.d(tag,
-												// "This hunt is already in progress !");
-												// isHuntInProgress = true;
-												// btnHuntDetailsLaunch
-												// .setText("Continue");
-												// }
+												if (uHunt.getHuntObjectId()
+
+												.equals(hunt.getObjectId())) {
+													Log.d(tag,
+															"This hunt is already in progress !");
+													isHuntInProgress = true;
+													btnHuntDetailsLaunch
+															.setText("Continue");
+												}
 											}
 
-											// if (huntsInProgress != null
-											// && huntsInProgress.size() > 0) {
-											// Log.d(tag,
-											// "This hunt is already in progress !");
-											// isHuntInProgress = true;
-											// btnHuntDetailsLaunch
-											// .setText("Continue");
-											// }
 										} else
 											Log.d(tag, e.getMessage());
 

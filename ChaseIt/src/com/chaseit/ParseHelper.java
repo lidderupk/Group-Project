@@ -74,7 +74,7 @@ public class ParseHelper {
 		ParseQuery<UserHunt> query = ParseQuery.getQuery(UserHunt.class);
 		query.whereEqualTo("userobjectId", CIUser.getCurrentUser()
 				.getObjectId());
-		query.whereEqualTo("status", HuntStatus.COMPLETED.toString());
+		query.whereEqualTo("huntstatus", HuntStatus.COMPLETED.toString());
 		query.findInBackground(callback);
 	}
 
@@ -84,7 +84,7 @@ public class ParseHelper {
 		ParseQuery<UserHunt> query = ParseQuery.getQuery(UserHunt.class);
 		query.whereEqualTo("userobjectId", CIUser.getCurrentUser()
 				.getObjectId());
-		// query.whereEqualTo("status", HuntStatus.IN_PROGRESS.toString());
+		// query.whereEqualTo("huntstatus", HuntStatus.IN_PROGRESS.toString());
 		String string = HuntStatus.IN_PROGRESS.toString();
 		query.whereEqualTo("huntstatus", "IN_PROGRESS");
 		// query.whereEqualTo("huntobjectId", "9kmJGW0CXr");
@@ -97,7 +97,7 @@ public class ParseHelper {
 			return;
 		ParseQuery<UserHunt> query = ParseQuery.getQuery(UserHunt.class);
 		query.whereEqualTo("userobjectId", user.getObjectId());
-		query.whereEqualTo("status", HuntStatus.IN_PROGRESS.toString());
+		query.whereEqualTo("huntstatus", HuntStatus.IN_PROGRESS.toString());
 		query.findInBackground(callback);
 	}
 
@@ -116,7 +116,7 @@ public class ParseHelper {
 			return;
 		ParseQuery<UserHunt> query = ParseQuery.getQuery(UserHunt.class);
 		query.whereEqualTo("huntobjectId", hunt.getObjectId());
-		query.whereEqualTo("status", HuntStatus.IN_PROGRESS.toString());
+		query.whereEqualTo("huntstatus", HuntStatus.IN_PROGRESS.toString());
 		query.whereEqualTo("userobjectId", user.getObjectId());
 		query.findInBackground(callback);
 	}
