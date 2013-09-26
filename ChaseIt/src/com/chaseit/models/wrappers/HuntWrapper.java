@@ -2,6 +2,7 @@ package com.chaseit.models.wrappers;
 
 import java.io.Serializable;
 
+import com.chaseit.ParseHelper;
 import com.chaseit.models.Hunt;
 import com.google.android.gms.maps.model.LatLng;
 import com.parse.ParseFile;
@@ -19,7 +20,7 @@ public class HuntWrapper implements Serializable {
 	}
 
 	public String getObjectId() {
-		return wrapper.getString(ParseObjectWrapper.OBJECTID_TAG);
+		return wrapper.getString(ParseHelper.OBJECTID_TAG);
 	}
 
 	/**

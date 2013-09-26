@@ -2,6 +2,7 @@ package com.chaseit.models.wrappers;
 
 import java.io.Serializable;
 
+import com.chaseit.ParseHelper;
 import com.chaseit.models.CIUser;
 import com.parse.ParseUser;
 
@@ -21,7 +22,7 @@ public class UserWrapper implements Serializable{
 	}
 
 	public String getObjectId(){
-		return wrapper.getString(ParseObjectWrapper.OBJECTID_TAG);
+		return wrapper.getString(ParseHelper.OBJECTID_TAG);
 	}
 
 	public String getUserName(){

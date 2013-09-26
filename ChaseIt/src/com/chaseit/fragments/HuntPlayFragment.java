@@ -38,11 +38,13 @@ import com.parse.ParseException;
 public class HuntPlayFragment extends Fragment {
 
 	private static final String tag = "Debug - com.chaseit.fragments.HuntPlayFragment";
-	private UserHuntWrapper uHuntWrapper;
 
 	private GoogleMap gMap;
+
+	private UserHuntWrapper uHuntWrapper;
 	private ImageView ivHuntImageClue;
 	private Hunt currentHunt;
+	private List<Location> locationList;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -71,8 +73,9 @@ public class HuntPlayFragment extends Fragment {
 									new FindCallback<Location>() {
 										@Override
 										public void done(
-												List<Location> objects,
+												List<Location> locationList,
 												ParseException e) {
+											HuntPlayFragment.this.locationList = locationList;
 											if (e == null) {
 
 												FragmentTransaction ft = getActivity()

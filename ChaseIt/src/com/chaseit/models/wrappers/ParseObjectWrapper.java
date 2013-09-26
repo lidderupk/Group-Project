@@ -3,6 +3,7 @@ package com.chaseit.models.wrappers;
 import java.io.Serializable;
 import java.util.HashMap;
 
+import com.chaseit.ParseHelper;
 import com.google.android.gms.maps.model.LatLng;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -17,11 +18,6 @@ public class ParseObjectWrapper implements Serializable {
 	private static final long serialVersionUID = -5977604336086318801L;
 	private HashMap<String, Object> values = new HashMap<String, Object>();
 
-	public static final String LATITUDE_TAG = "latitude";
-	public static final String LONGITUDE_TAG = "longitude";
-	public static final String FILENAME_TAG = "fileName";
-	public static final String OBJECTID_TAG ="objectId";
-
 	public HashMap<String, Object> getValues() {
 		return values;
 	}
@@ -32,7 +28,7 @@ public class ParseObjectWrapper implements Serializable {
 
 	public ParseObjectWrapper(ParseObject object) {
 		// insert the objectId since this is not part of the key set
-		values.put(OBJECTID_TAG, object.getObjectId());
+		values.put(ParseHelper.OBJECTID_TAG, object.getObjectId());
 
 		for (String key : object.keySet()) {
 			@SuppressWarnings("rawtypes")
@@ -55,7 +51,7 @@ public class ParseObjectWrapper implements Serializable {
 					String fileName = pf.getName();
 					try {
 						values.put(key, pf.getData());
-						values.put(key + FILENAME_TAG, fileName);
+						values.put(key + ParseHelper.FILENAME_TAG, fileName);
 					} catch (ParseException e) {
 						e.printStackTrace();
 					}
@@ -64,8 +60,10 @@ public class ParseObjectWrapper implements Serializable {
 				ParseGeoPoint point = (ParseGeoPoint) object.get(key);
 				// LatLng l = new LatLng(point.getLatitude(),
 				// point.getLongitude());
-				values.put(key + "." + LATITUDE_TAG, point.getLatitude());
-				values.put(key + "." + LONGITUDE_TAG, point.getLongitude());
+				values.put(key + "." + ParseHelper.LATITUDE_TAG,
+						point.getLatitude());
+				values.put(key + "." + ParseHelper.LONGITUDE_TAG,
+						point.getLongitude());
 			}
 		}
 	}
@@ -113,7 +111,8 @@ public class ParseObjectWrapper implements Serializable {
 	public ParseFile getParseFile(String key) {
 		if (has(key)) {
 			byte[] data = (byte[]) values.get(key);
-			String fileName = (String) values.get(key + FILENAME_TAG);
+			String fileName = (String) values.get(key
+					+ ParseHelper.FILENAME_TAG);
 			ParseFile pF = new ParseFile(fileName, data);
 			return pF;
 
@@ -123,9 +122,11 @@ public class ParseObjectWrapper implements Serializable {
 	}
 
 	public LatLng getLocation(String key) {
-		if (has(key + "." + LATITUDE_TAG)) {
-			double lat = (Double) values.get(key + "." + LATITUDE_TAG);
-			double lon = (Double) values.get(key + "." + LONGITUDE_TAG);
+		if (has(key + "." + ParseHelper.LATITUDE_TAG)) {
+			double lat = (Double) values.get(key + "."
+					+ ParseHelper.LATITUDE_TAG);
+			double lon = (Double) values.get(key + "."
+					+ ParseHelper.LONGITUDE_TAG);
 			return new LatLng(lat, lon);
 		} else {
 			return null;

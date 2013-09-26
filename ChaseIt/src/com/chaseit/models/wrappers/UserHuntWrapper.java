@@ -2,6 +2,7 @@ package com.chaseit.models.wrappers;
 
 import java.io.Serializable;
 
+import com.chaseit.ParseHelper;
 import com.chaseit.models.UserHunt;
 import com.chaseit.models.UserHunt.HuntStatus;
 
@@ -10,7 +11,7 @@ public class UserHuntWrapper implements Serializable {
 	private ParseObjectWrapper wrapper;
 
 	public String getObjectId() {
-		return wrapper.getString(ParseObjectWrapper.OBJECTID_TAG);
+		return wrapper.getString(ParseHelper.OBJECTID_TAG);
 	}
 
 	public UserHuntWrapper(ParseObjectWrapper userHuntWrapper) {
