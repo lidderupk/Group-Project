@@ -65,4 +65,7 @@
     <string name="discard_btn_label">Discard</string>
 	<string name="done_btn_label">Done</string>
 	<string name="search_btn_txt">Search button</string> 	
+	<string name="go_btn_txt">Go</string> 	
+	<string name="created_by_label">created by: </string>
+	
 </resources>

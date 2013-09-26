@@ -32,6 +32,7 @@ public class Hunt extends ParseObject {
 	public static final String HUNT_NUMRATING_TAG = "numratings";
 	public static final String HUNT_TOTALDISTANCE_TAG = "totaldistance";
 	public static final String HUNT_CRATOR_TAG = "creator";
+	public static final String HUNT_CRATOR_NAME_TAG = "creatorName";
 	public static final String HUNT_STARTLOCATION_TAG = "startlocation";
 	public static final String HUNT_PICTURE_TAG = "huntpicture";
 	public static final String HUNT_LOCALITY_TAG = "locality";
@@ -138,11 +139,19 @@ public class Hunt extends ParseObject {
 	}
 
 	/**
+	 * @return the creator name
+	 */
+	public ParseUser getCreatorName() {
+		return (ParseUser) getParseObject(HUNT_CRATOR_NAME_TAG);
+	}
+
+	/**
 	 * @param creator
 	 *            the creator to set
 	 */
 	public void setCreator(ParseUser creator) {
 		put(HUNT_CRATOR_TAG, creator);
+		put(HUNT_CRATOR_NAME_TAG, creator.getString("name"));
 	}
 
 	/**

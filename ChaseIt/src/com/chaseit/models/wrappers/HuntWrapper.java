@@ -73,6 +73,14 @@ public class HuntWrapper implements Serializable {
 	}
 
 	/**
+	 * @return the creator
+	 */
+	public String getCreatorName() {
+		return wrapper.getString(Hunt.HUNT_CRATOR_NAME_TAG);
+	}
+
+	
+	/**
 	 * @return the startLocation
 	 */
 	public LatLng getStartLocation() {

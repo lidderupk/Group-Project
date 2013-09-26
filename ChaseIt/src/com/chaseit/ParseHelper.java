@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.chaseit.models.CIUser;
 import com.chaseit.models.Hunt;
+import com.chaseit.models.HuntImage;
 import com.chaseit.models.Location;
 import com.chaseit.models.UserHunt;
 import com.chaseit.models.UserHunt.HuntStatus;
@@ -55,6 +56,17 @@ public class ParseHelper {
 		ParseQuery<Hunt> query = ParseQuery.getQuery(Hunt.class);
 		query.whereEqualTo(ParseHelper.OBJECTID_TAG, objectId);
 		query.getFirstInBackground(callback);
+	}
+
+	public static Hunt getHuntByObjectIdBlocking(String objectId) {
+		ParseQuery<Hunt> query = ParseQuery.getQuery(Hunt.class);
+		query.whereEqualTo(ParseHelper.OBJECTID_TAG, objectId);
+		try {
+			return query.getFirst();
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	public static void getAllHuntsByProximity(ParseGeoPoint currentLocation,
@@ -118,6 +130,15 @@ public class ParseHelper {
 		ParseQuery<UserHunt> query = ParseQuery.getQuery(UserHunt.class);
 		query.whereEqualTo(UserHunt.USERHUNT_HUNTOBJECTID_TAG,
 				hunt.getObjectId());
+		query.findInBackground(callback);
+	}
+
+	public static void getHuntImagesGivenHunt(Hunt hunt,
+			FindCallback<HuntImage> callback) {
+		if (callback == null)
+			return;
+		ParseQuery<HuntImage> query = ParseQuery.getQuery(HuntImage.class);
+		query.whereEqualTo(HuntImage.HUNTIMAGE_HUNT_TAG, hunt);
 		query.findInBackground(callback);
 	}
 

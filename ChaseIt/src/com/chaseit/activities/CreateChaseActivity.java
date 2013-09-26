@@ -81,7 +81,7 @@ public class CreateChaseActivity extends FragmentActivity implements
 						|| StringUtils.isBlank(details)) {
 					showAlertDialog();
 				} else {
-					chase.setAvgRating(0);
+					chase.setAvgRating(Double.valueOf(0));
 					chase.setCreator(CIUser.getCurrentUser());
 					chase.setDetails(details);
 					chase.setDifficulty(difficulty);

@@ -3,98 +3,97 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <ImageView
+    <com.chaseit.views.TwoWayView
         android:id="@+id/ivHuntDetailsBanner"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="100dp"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:scaleType="centerCrop"
-        android:src="@drawable/pizza" />
+        android:layout_alignParentTop="true"/>
 
     <TextView
         android:id="@+id/tvHuntDetailsTitle"
-        android:layout_width="60dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/ivHuntDetailsBanner"
-        android:text="Pizza Hunt"
+        android:layout_marginTop="5dp"
+        android:text="@string/empty"
         android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
+            
+        <TextView
+        android:id="@+id/tvHuntDetailsCreatorLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvHuntDetailsTitle"
+        android:layout_alignParentLeft="true"
+        android:text="@string/created_by_label"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+        
+        <TextView
         android:id="@+id/tvHuntDetailsCreatorHandle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/tvHuntDetailsTitle"
-        android:text="Upkar Lidder"
+        android:layout_alignBottom="@+id/tvHuntDetailsCreatorLabel"
+        android:layout_toRightOf="@+id/tvHuntDetailsCreatorLabel"
+        android:text="@string/empty"
         android:textAppearance="?android:attr/textAppearanceSmall" />
-
-    <RatingBar
-        android:id="@+id/rbHuntDetailsRating"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:isIndicator="true"
-        android:layout_below="@+id/ivHuntDetailsBanner" />
-
-    <TextView
+        
+        <TextView
         android:id="@+id/tvHuntDetailsLocationName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/rbHuntDetailsRating"        
-        android:text="San Francisco"
+        android:layout_below="@+id/tvHuntDetailsCreatorHandle"
+        android:layout_alignParentLeft="true"
+        android:text="@string/empty"
         android:textAppearance="?android:attr/textAppearanceSmall" />
-
+        
+        <RatingBar
+            android:id="@+id/rbHuntDetailsRating"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tvHuntDetailsLocationName"
+            android:layout_alignParentRight="true"
+            android:isIndicator="true"
+            android:numStars="5" />
+        
     <TextView
         android:id="@+id/tvHuntDetailsDescription"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/tvHuntDetailsLocationName"
-        android:text="This is a sample hunt. The participant will visit five different pizza locations around San Francisco !. Ideal for pizza lovers. Local beers are also suggested. Enjoy !"
+        android:ellipsize="end"
+        android:maxLength="150"
+        android:maxLines="4"
+        android:minLines="1"
+        android:text="@string/empty"
         android:textAppearance="?android:attr/textAppearanceMedium" />
     
-    <!-- <com.loopj.android.image.SmartImageView android:id="@+id/siHuntsDetailsMap"
+        <fragment
+        android:id="@+id/gmHuntsDetailsMap"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="130dp"
-        android:layout_alignParentLeft="true"
-        android:layo ut_below="@+id/tvHuntDetailsDescription"/>-->
-    
-    <ImageView
-        android:id="@+id/ivHuntsDetailsMap"
-        android:layout_width="fill_parent"
         android:layout_height="190dp"
-        android:adjustViewBounds="true"
+        android:layout_above="@+id/btnHuntDetailsLaunch"
         android:layout_alignParentLeft="true"
-        android:scaleType="centerCrop"
         android:layout_below="@+id/tvHuntDetailsDescription"
-        />
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop" />
     
-   <!--   <View android:id="@+id/strut"
-        android:layout_width="0dp"
-        android:layout_height="0dp" 
-        android:layout_below="@+id/ivHuntsDetailsMap"
-        android:layout_centerHorizontal="true"/>
-
-   <Button
-        android:id="@+id/btnHuntDetailsAdd"
-        android:layout_width="0dp"
-        android:layout_height="30dp"
-        android:layout_alignRight="@id/strut"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@+id/ivHuntsDetailsMap"
-        android:text="Add" /> -->
+        
 
     <Button
         android:id="@+id/btnHuntDetailsLaunch"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/ivHuntsDetailsMap"
-        android:text="Start" />
+        android:layout_alignParentLeft="true"
+        android:text="@string/go_btn_txt" />
+
+    <!-- style="?android:attr/ratingBarStyleSmall" -->
+
+
+
 
 </RelativeLayout>

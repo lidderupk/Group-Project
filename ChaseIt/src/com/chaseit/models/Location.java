@@ -6,7 +6,7 @@ import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 
 @ParseClassName("Location")
-public class Location extends ParseObject {
+public class Location extends ParseObject implements Comparable<Location> {
 
 	public static final String LOCATION_NAME_TAG = "locationname";
 	public static final String LOCATION_LOCATION_TAG = "location";
@@ -107,6 +107,11 @@ public class Location extends ParseObject {
 	 */
 	public void setIndexInHunt(int index) {
 		put(LOCATION_INDEX_TAG, index);
+	}
+
+	@Override
+	public int compareTo(Location another) {
+		return this.getIndexInHunt() - another.getIndexInHunt();
 	}
 
 }
