@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.chaseit.ParseHelper;
 import com.chaseit.R;
 import com.chaseit.adapters.HuntImageAdapter;
+import com.chaseit.adapters.LocationImageAdapter;
 import com.chaseit.fragments.interfaces.HuntStartInterface;
 import com.chaseit.models.CIUser;
 import com.chaseit.models.Hunt;
@@ -35,7 +36,6 @@ import com.chaseit.models.wrappers.UserHuntWrapper;
 import com.chaseit.util.Constants;
 import com.chaseit.util.Helper;
 import com.chaseit.views.TwoWayView;
-import com.devsmart.android.ui.HorizontalListView;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -65,12 +65,21 @@ public class HuntDetailsFragment extends Fragment {
 	private List<HuntImage> huntImages;
 	private HuntImageAdapter huntImageAdapter;
 
+	private LocationImageAdapter locationImageAdapter;
+
 	private boolean isHuntInProgress = false;
 	private UserHunt huntInProgress;
 	private Hunt thisHunt;
 	private List<Location> huntLocations;
+	private boolean isSummary;
 	
 	protected UserHuntWrapper uHuntWrapper;
+	
+	private enum Illustrate{
+		START,
+		UPTO_PROGRESS,
+		ALL
+	};
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -87,6 +96,11 @@ public class HuntDetailsFragment extends Fragment {
 		super.onActivityCreated(savedInstanceState);
 		Bundle extras = getArguments();
 		hWrapper = (HuntWrapper) extras.getSerializable(Constants.HUNT_WRAPPER_DATA_NAME);
+		isSummary = (boolean)extras.getBoolean("showSummary");
+		if(hWrapper.getCreator().getUserName() == CIUser.getCurrentUser().getUsername()){
+			isSummary = true;
+		}
+		
 		setupViews(getView(), hWrapper);
 		
 		//get the hunt and save it off 
@@ -123,7 +137,21 @@ public class HuntDetailsFragment extends Fragment {
 			public void done(List<Location> objects, ParseException e) {
 				if(e == null){
 					huntLocations = objects;
-					drawMarkersAndPolygon(huntLocations, isHuntInProgress);
+					if(isSummary){
+						locationImageAdapter = new LocationImageAdapter(getActivity(), objects);
+						ivHuntDetailsBanner.setAdapter(locationImageAdapter);
+						locationImageAdapter.notifyDataSetChanged();						
+					}
+					Illustrate illustration = Illustrate.ALL;
+					
+					if(isSummary){
+						illustration = Illustrate.ALL;
+					} else if(isHuntInProgress){
+						illustration = Illustrate.UPTO_PROGRESS;
+					} else {
+						illustration = Illustrate.START;
+					}
+					drawMarkersAndPolygon(huntLocations, illustration);
 				}
 			}
 		});
@@ -155,17 +183,19 @@ public class HuntDetailsFragment extends Fragment {
 		tvHuntDetailsDescription = (TextView) view.findViewById(R.id.tvHuntDetailsDescription);
 		btnHuntDetailsLaunch = (Button) view.findViewById(R.id.btnHuntDetailsLaunch);
 		ivHuntDetailsBanner = (TwoWayView) view.findViewById(R.id.ivHuntDetailsBanner);	
-		ivHuntDetailsBanner.setAdapter(huntImageAdapter);
 		initilizeMap();
 		
-		//show all hunt images
-		ParseHelper.getHuntImagesGivenHunt(thisHunt, new FindCallback<HuntImage>() {
-			@Override
-			public void done(List<HuntImage> objects, ParseException e) {
-				huntImageAdapter.addAll(objects);
-				huntImageAdapter.notifyDataSetChanged();
-			}
-		});
+		if(!isSummary){
+			ivHuntDetailsBanner.setAdapter(huntImageAdapter);
+			//show all hunt images
+			ParseHelper.getHuntImagesGivenHunt(thisHunt, new FindCallback<HuntImage>() {
+				@Override
+				public void done(List<HuntImage> objects, ParseException e) {
+					huntImageAdapter.addAll(objects);
+					huntImageAdapter.notifyDataSetChanged();
+				}
+			});			
+		}
 
 		//setup hunt tagline
 		if (Helper.isNotEmpty(hWrapper.getName())){
@@ -257,9 +287,8 @@ public class HuntDetailsFragment extends Fragment {
 			((HuntStartInterface) activity).startHunt(uHuntWrapper);			
 		}
 	}
-
 	
-	private void drawMarkersAndPolygon(List<Location> mapPoints, boolean drawAllPoints) {
+	private void drawMarkersAndPolygon(List<Location> mapPoints, Illustrate illustrate) {
 		PolylineOptions rectOptions = new PolylineOptions();
 		Collections.sort(mapPoints);
 		Builder builder = new LatLngBounds.Builder();
@@ -275,9 +304,16 @@ public class HuntDetailsFragment extends Fragment {
 			rectOptions.add(ll).width(5).color(Color.BLUE).geodesic(true);
 			gmHuntsDetailsMap.addPolyline(rectOptions);
 	
-			//done if we dont need to draw multiple points
-			if(!drawAllPoints || (huntInProgress.getLocationIndex() == point.getIndexInHunt())){
+			if(illustrate == Illustrate.START){
 				break;
+			}
+
+			if(illustrate == Illustrate.UPTO_PROGRESS && (huntInProgress.getLocationIndex() == point.getIndexInHunt())){
+				break;
+			}
+			
+			if(illustrate == Illustrate.ALL){
+				continue;
 			}
 		}
 		

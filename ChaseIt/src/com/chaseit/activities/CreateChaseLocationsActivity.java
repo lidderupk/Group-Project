@@ -123,7 +123,9 @@ public class CreateChaseLocationsActivity extends FragmentActivity implements Lo
 						@Override
 						public void done(ParseException e) {
 							if(e == null){
-								setResult(RESULT_OK);
+								Intent resultIntent = new Intent();
+								resultIntent.putExtra("showSummary", true);
+								setResult(RESULT_OK, resultIntent);
 								finish();						
 							}
 						}

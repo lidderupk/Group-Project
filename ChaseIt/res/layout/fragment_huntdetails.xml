@@ -81,8 +81,6 @@
         android:adjustViewBounds="true"
         android:scaleType="centerCrop" />
     
-        
-
     <Button
         android:id="@+id/btnHuntDetailsLaunch"
         android:layout_width="match_parent"
@@ -90,10 +88,5 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:text="@string/go_btn_txt" />
-
-    <!-- style="?android:attr/ratingBarStyleSmall" -->
-
-
-
 
 </RelativeLayout>
