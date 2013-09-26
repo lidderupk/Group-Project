@@ -8,7 +8,7 @@ public class UserHunt extends ParseObject {
 
 	public static final String USERHUNT_USEROBJECTID_TAG = "userobjectId";
 	public static final String USERHUNT_HUNTOBJECTID_TAG = "huntobjectId";
-	public static final String USERHUNT_LOCATIONOBJECTID_TAG = "locationobjectId";
+	public static final String USERHUNT_LASTLOCATIONOBJECTID_TAG = "locationobjectId";
 	public static final String USERHUNT_LASTLOCATIONLATITUDE_TAG = "lastlocationLatitude";
 	public static final String USERHUNT_LASTLOCATIONLONGITUDE_TAG = "lastlocationLongitude";
 	public static final String USERHUNT_LOCATIONINDEX_TAG = "locationindex";
@@ -38,12 +38,12 @@ public class UserHunt extends ParseObject {
 		return getString(USERHUNT_HUNTOBJECTID_TAG);
 	}
 
-	public void setLocationObjectId(String locationObjectId) {
-		put(USERHUNT_LOCATIONOBJECTID_TAG, locationObjectId);
+	public void setLastLocationObjectId(String locationObjectId) {
+		put(USERHUNT_LASTLOCATIONOBJECTID_TAG, locationObjectId);
 	}
 
-	public String getLocationObjectId() {
-		return getString(USERHUNT_LOCATIONOBJECTID_TAG);
+	public String getLastLocationObjectId() {
+		return getString(USERHUNT_LASTLOCATIONOBJECTID_TAG);
 	}
 
 	public void setLastLocationLat(double latitude) {

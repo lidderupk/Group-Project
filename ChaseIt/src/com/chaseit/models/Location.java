@@ -18,7 +18,7 @@ public class Location extends ParseObject {
 	public Location() {
 		// empty constructor
 	}
-
+  
 	/**
 	 * @return the locationName
 	 */

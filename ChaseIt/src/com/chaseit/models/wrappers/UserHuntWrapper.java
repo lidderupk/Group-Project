@@ -27,7 +27,7 @@ public class UserHuntWrapper implements Serializable {
 	}
 
 	public String getLocationObjectId() {
-		return wrapper.getString(UserHunt.USERHUNT_LOCATIONOBJECTID_TAG);
+		return wrapper.getString(UserHunt.USERHUNT_LASTLOCATIONOBJECTID_TAG);
 	}
 
 	public HuntStatus getHuntStatus() {
