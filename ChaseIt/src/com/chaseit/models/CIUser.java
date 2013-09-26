@@ -4,6 +4,12 @@ import com.parse.ParseUser;
 
 public class CIUser {
 
+	public static final String CIUSER_FACEBOOKID_TAG = "facebookid";
+	public static final String CIUSER_NAME_TAG = "name";
+	public static final String CIUSER_LOCATION_TAG = "location";
+	public static final String CIUSER_GENDER_TAG = "gender";
+	public static final String CIUSER_BIRTHDAY_TAG = "birthday";
+
 	private CIUser() {
 		// empty constructor
 	}
@@ -12,7 +18,7 @@ public class CIUser {
 	 * @return the facebookid
 	 */
 	public static String getFacebookid() {
-		return ParseUser.getCurrentUser().getString("facebookid");
+		return ParseUser.getCurrentUser().getString(CIUSER_FACEBOOKID_TAG);
 	}
 
 	/**
@@ -20,14 +26,14 @@ public class CIUser {
 	 *            the facebookid to set
 	 */
 	public static void setFacebookid(String facebookid) {
-		ParseUser.getCurrentUser().put("facebookid", facebookid);
+		ParseUser.getCurrentUser().put(CIUSER_FACEBOOKID_TAG, facebookid);
 	}
 
 	/**
 	 * @return the name
 	 */
 	public static String getName() {
-		return ParseUser.getCurrentUser().getString("name");
+		return ParseUser.getCurrentUser().getString(CIUSER_NAME_TAG);
 	}
 
 	/**
@@ -35,14 +41,14 @@ public class CIUser {
 	 *            the name to set
 	 */
 	public static void setName(String name) {
-		ParseUser.getCurrentUser().put("name", name);
+		ParseUser.getCurrentUser().put(CIUSER_NAME_TAG, name);
 	}
 
 	/**
 	 * @return the location
 	 */
 	public static String getLocation() {
-		return ParseUser.getCurrentUser().getString("location");
+		return ParseUser.getCurrentUser().getString(CIUSER_LOCATION_TAG);
 	}
 
 	/**
@@ -50,14 +56,14 @@ public class CIUser {
 	 *            the location to set
 	 */
 	public static void setLocation(String location) {
-		ParseUser.getCurrentUser().put("location", location);
+		ParseUser.getCurrentUser().put(CIUSER_LOCATION_TAG, location);
 	}
 
 	/**
 	 * @return the gender
 	 */
 	public static String getGender() {
-		return ParseUser.getCurrentUser().getString("gender");
+		return ParseUser.getCurrentUser().getString(CIUSER_GENDER_TAG);
 	}
 
 	/**
@@ -65,14 +71,14 @@ public class CIUser {
 	 *            the gender to set
 	 */
 	public static void setGender(String gender) {
-		ParseUser.getCurrentUser().put("gender", gender);
+		ParseUser.getCurrentUser().put(CIUSER_GENDER_TAG, gender);
 	}
 
 	/**
 	 * @return the birthday
 	 */
 	public static String getBirthday() {
-		return ParseUser.getCurrentUser().getString("birthday");
+		return ParseUser.getCurrentUser().getString(CIUSER_BIRTHDAY_TAG);
 	}
 
 	/**
@@ -80,7 +86,7 @@ public class CIUser {
 	 *            the birthday to set
 	 */
 	public static void setBirthday(String birthday) {
-		ParseUser.getCurrentUser().put("birthday", birthday);
+		ParseUser.getCurrentUser().put(CIUSER_BIRTHDAY_TAG, birthday);
 	}
 
 	public static ParseUser getCurrentUser() {

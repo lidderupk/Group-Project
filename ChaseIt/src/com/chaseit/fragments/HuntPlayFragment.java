@@ -59,7 +59,7 @@ public class HuntPlayFragment extends Fragment {
 		uHuntWrapper = (UserHuntWrapper) extras
 				.getSerializable(Constants.USER_HUNT_WRAPPER_DATA_NAME);
 
-		ParseHelper.getHuntByObjectId(uHuntWrapper.getObjectId(),
+		ParseHelper.getHuntByObjectId(uHuntWrapper.getHuntObjectId(),
 				new GetCallback<Hunt>() {
 
 					@Override
@@ -73,23 +73,28 @@ public class HuntPlayFragment extends Fragment {
 										public void done(
 												List<Location> objects,
 												ParseException e) {
-											Log.d(tag, "");
+											if (e == null) {
 
-											FragmentTransaction ft = getActivity()
-													.getSupportFragmentManager()
-													.beginTransaction();
-											ft.replace(
-													R.id.huntMap,
-													FragmentFactory
-															.getHuntMapWithMarkersFragment(new HuntWrapper(
-																	currentHunt)));
-											ft.commit();
+												FragmentTransaction ft = getActivity()
+														.getSupportFragmentManager()
+														.beginTransaction();
+												ft.replace(
+														R.id.huntMap,
+														FragmentFactory
+																.getHuntMapWithMarkersFragment(new HuntWrapper(
+																		currentHunt)));
+												ft.commit();
 
-											setupViews(getView());
+												setupViews(getView());
+											} else {
+												Log.d(tag,
+														"no locations found for hunt: "
+																+ e.getMessage());
+											}
 										}
 									});
 						} else {
-							Log.d(tag, e.getMessage());
+							Log.d(tag, "hunt not found: " + e.getMessage());
 						}
 
 					}

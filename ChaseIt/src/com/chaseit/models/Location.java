@@ -8,6 +8,13 @@ import com.parse.ParseObject;
 @ParseClassName("Location")
 public class Location extends ParseObject {
 
+	public static final String LOCATION_NAME_TAG = "locationname";
+	public static final String LOCATION_LOCATION_TAG = "location";
+	public static final String LOCATION_HINT_TAG = "hint";
+	public static final String LOCATION_IMAGE_TAG = "image";
+	public static final String LOCATION_PARENTHUNT_TAG = "parentHunt";
+	public static final String LOCATION_INDEX_TAG = "index";
+
 	public Location() {
 		// empty constructor
 	}

@@ -6,91 +6,90 @@ import com.chaseit.models.Hunt;
 import com.google.android.gms.maps.model.LatLng;
 import com.parse.ParseFile;
 
-public class HuntWrapper implements Serializable{
+public class HuntWrapper implements Serializable {
 	private static final long serialVersionUID = 6043642531310587835L;
 	private ParseObjectWrapper wrapper;
-	
-	public HuntWrapper(Hunt h){
+
+	public HuntWrapper(Hunt h) {
 		wrapper = new ParseObjectWrapper(h);
 	}
 
-	public HuntWrapper(ParseObjectWrapper h){
+	public HuntWrapper(ParseObjectWrapper h) {
 		wrapper = h;
 	}
 
-	
-	public String getObjectId(){
-		return wrapper.getString("objectId");
+	public String getObjectId() {
+		return wrapper.getString(ParseObjectWrapper.OBJECTID_TAG);
 	}
-	
+
 	/**
 	 * @return the name
 	 */
 	public String getName() {
-		return wrapper.getString("name");
+		return wrapper.getString(Hunt.HUNT_NAME_TAG);
 	}
 
 	/**
 	 * @return the details
 	 */
 	public String getDetails() {
-		return wrapper.getString("details");
+		return wrapper.getString(Hunt.HUNT_DETAILS_TAG);
 	}
 
 	/**
 	 * @return the difficulty
 	 */
 	public int getDifficulty() {
-		return wrapper.getInt("difficulty");
+		return wrapper.getInt(Hunt.HUNT_DIFFICULTY_TAG);
 	}
 
 	/**
 	 * @return the avgRating
 	 */
 	public double getAvgRating() {
-		return wrapper.getDouble("avgrating");
+		return wrapper.getDouble(Hunt.HUNT_AVGRATING_TAG);
 	}
 
 	/**
 	 * @return the numRatings
 	 */
 	public int getNumRatings() {
-		return wrapper.getInt("numratings");
+		return wrapper.getInt(Hunt.HUNT_NUMRATING_TAG);
 	}
 
 	/**
 	 * @return the totalDistance
 	 */
 	public double getTotalDistance() {
-		return wrapper.getDouble("totaldistance");
+		return wrapper.getDouble(Hunt.HUNT_TOTALDISTANCE_TAG);
 	}
 
 	/**
 	 * @return the creator
 	 */
 	public UserWrapper getCreator() {
-		return new UserWrapper(wrapper.getParseUser("creator"));
+		return new UserWrapper(wrapper.getParseUser(Hunt.HUNT_CRATOR_TAG));
 	}
 
 	/**
 	 * @return the startLocation
 	 */
 	public LatLng getStartLocation() {
-		return (LatLng) wrapper.getLocation("startlocation");
+		return (LatLng) wrapper.getLocation(Hunt.HUNT_STARTLOCATION_TAG);
 	}
 
 	/**
 	 * @return the huntPicture
 	 */
 	public ParseFile getHuntPicture() {
-		return wrapper.getParseFile("huntpicture");
+		return wrapper.getParseFile(Hunt.HUNT_PICTURE_TAG);
 	}
 
 	/**
 	 * @return the locality
 	 */
 	public String getLocality() {
-		return wrapper.getString("locality");
+		return wrapper.getString(Hunt.HUNT_LOCALITY_TAG);
 	}
 
 }

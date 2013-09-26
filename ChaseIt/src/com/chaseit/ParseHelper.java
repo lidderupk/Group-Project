@@ -7,6 +7,7 @@ import com.chaseit.models.Hunt;
 import com.chaseit.models.Location;
 import com.chaseit.models.UserHunt;
 import com.chaseit.models.UserHunt.HuntStatus;
+import com.chaseit.models.wrappers.ParseObjectWrapper;
 import com.parse.DeleteCallback;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
@@ -47,7 +48,7 @@ public class ParseHelper {
 		if (callback == null)
 			return;
 		ParseQuery<Hunt> query = ParseQuery.getQuery(Hunt.class);
-		query.whereEqualTo("objectId", objectId);
+		query.whereEqualTo(ParseObjectWrapper.OBJECTID_TAG, objectId);
 		query.getFirstInBackground(callback);
 	}
 
@@ -126,7 +127,7 @@ public class ParseHelper {
 		if (callback == null)
 			return;
 		ParseQuery<Location> query = ParseQuery.getQuery(Location.class);
-		query.whereEqualTo("objectId", objectId);
+		query.whereEqualTo(ParseObjectWrapper.OBJECTID_TAG, objectId);
 		query.findInBackground(callback);
 	}
 
