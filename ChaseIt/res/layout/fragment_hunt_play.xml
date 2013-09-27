@@ -5,12 +5,27 @@
     android:orientation="vertical"
     android:weightSum="1" >
 
-    <FrameLayout
+   <!--  <FrameLayout
         android:id="@+id/huntMap"
         android:layout_width="match_parent"
         android:layout_height="350dp"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" /> -->
+    
+    <fragment
+        android:id="@+id/huntMap"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true" />
+    
+    <Button android:id="@+id/btnFocusOnMarkers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:text="Focus"/>
 
     <View
         android:id="@+id/helper"
@@ -19,7 +34,7 @@
         android:layout_below="@+id/huntMap"
         android:layout_centerHorizontal="true" />
 
-    <ImageView
+    <com.parse.ParseImageView
         android:id="@+id/ivHuntImageClue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

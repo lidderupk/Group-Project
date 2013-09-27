@@ -31,11 +31,11 @@ public class FragmentFactory {
 	}
 
 	public static MapWithConnectedMarkersFragment getHuntMapWithMarkersFragment(
-			HuntWrapper huntWrapper) {
+			UserHuntWrapper uhWrapper) {
 		MapWithConnectedMarkersFragment huntMapWithMarkersFragment = new MapWithConnectedMarkersFragment();
 
 		Bundle args = new Bundle();
-		args.putSerializable(Constants.HUNT_WRAPPER_DATA_NAME, huntWrapper);
+		args.putSerializable(Constants.USER_HUNT_WRAPPER_DATA_NAME, uhWrapper);
 		huntMapWithMarkersFragment.setArguments(args);
 		return huntMapWithMarkersFragment;
 	}

@@ -69,6 +69,26 @@ public class ParseHelper {
 		}
 	}
 
+	public static void getHuntInProgressById(String objectId,
+			GetCallback<UserHunt> callback) {
+		if (callback == null)
+			return;
+		ParseQuery<UserHunt> query = ParseQuery.getQuery(UserHunt.class);
+		query.whereEqualTo(ParseHelper.OBJECTID_TAG, objectId);
+		query.getFirstInBackground(callback);
+	}
+
+	public static UserHunt getHuntInProgressByIdBlocking(String objectId) {
+		ParseQuery<UserHunt> query = ParseQuery.getQuery(UserHunt.class);
+		query.whereEqualTo(ParseHelper.OBJECTID_TAG, objectId);
+		try {
+			return query.getFirst();
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 	public static void getAllHuntsByProximity(ParseGeoPoint currentLocation,
 			FindCallback<Hunt> callback) {
 		if (callback == null)
@@ -123,6 +143,21 @@ public class ParseHelper {
 		query.findInBackground(callback);
 	}
 
+	public static UserHunt getHuntsInProgressForUserBlocking(ParseUser user) {
+		ParseQuery<UserHunt> query = ParseQuery.getQuery(UserHunt.class);
+		query.whereEqualTo(UserHunt.USERHUNT_USEROBJECTID_TAG,
+				user.getObjectId());
+		query.whereEqualTo(UserHunt.USERHUNT_HUNTSTATUS_TAG,
+				UserHunt.HuntStatus.IN_PROGRESS.toString());
+		try {
+			return query.getFirst();
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null;
+		}
+
+	}
+
 	public static void getHuntInProgressGivenHunt(Hunt hunt,
 			FindCallback<UserHunt> callback) {
 		if (callback == null)
@@ -172,7 +207,18 @@ public class ParseHelper {
 		ParseQuery<Location> query = ParseQuery.getQuery(Location.class);
 		query.whereEqualTo(Location.LOCATION_PARENTHUNT_TAG, hunt);
 		query.findInBackground(callback);
-	}  
+	}
+
+	public static List<Location> getLocationsforHuntBlocking(Hunt hunt) {
+		ParseQuery<Location> query = ParseQuery.getQuery(Location.class);
+		query.whereEqualTo(Location.LOCATION_PARENTHUNT_TAG, hunt);
+		try {
+			return query.find();
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 	public static void getLocationByHuntAndIndex(Hunt hunt, int index,
 			FindCallback<Location> callback) {
