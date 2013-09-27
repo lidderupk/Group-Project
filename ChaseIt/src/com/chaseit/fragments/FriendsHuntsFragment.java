@@ -16,7 +16,7 @@ import com.chaseit.models.Hunt;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 
-public class MyHuntsFragment extends Fragment {
+public class FriendsHuntsFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {

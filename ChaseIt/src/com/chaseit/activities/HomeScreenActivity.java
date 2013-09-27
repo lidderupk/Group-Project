@@ -24,7 +24,7 @@ import com.chaseit.activities.test.HuntDetailsTestActivity;
 import com.chaseit.activities.test.HuntMapWithMarkersTestActivity;
 import com.chaseit.activities.test.HuntPlayTestActivity;
 import com.chaseit.activities.test.MapsTestActivity;
-import com.chaseit.fragments.MyHuntsFragment;
+import com.chaseit.fragments.FriendsHuntsFragment;
 import com.chaseit.fragments.NewsFeedFragment;
 import com.chaseit.fragments.InProgressHuntsFragment;
 import com.chaseit.fragments.interfaces.HuntDetailsInterface;
@@ -184,7 +184,7 @@ public class HomeScreenActivity extends ActionBarActivity implements
 		Tab tabRecent = actionBar.newTab().setText("In Progress")
 				.setTag("InProgressHuntsFragment").setTabListener(this);
 		Tab tabMine = actionBar.newTab().setText("Friends")
-				.setTag("MyHuntsFragment").setTabListener(this);
+				.setTag("FriendsHuntsFragment").setTabListener(this);
 
 		actionBar.addTab(tabHome);
 		actionBar.addTab(tabMine);
@@ -241,7 +241,7 @@ public class HomeScreenActivity extends ActionBarActivity implements
 		} else if (tab.getTag() == "InProgressHuntsFragment") {
 			ft.replace(R.id.flNewsFeedFragment, new InProgressHuntsFragment());
 		} else {
-			ft.replace(R.id.flNewsFeedFragment, new MyHuntsFragment());
+			ft.replace(R.id.flNewsFeedFragment, new FriendsHuntsFragment());
 		}
 	}
 
