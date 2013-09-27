@@ -19,7 +19,7 @@ import com.parse.ParseImageView;
 public class HuntAdapter extends ArrayAdapter<Hunt> {
 
 	public HuntAdapter(Context context, List<Hunt> objects) {
-		super(context, R.layout.item_hangout, objects);
+		super(context, R.layout.hunt_newsfeed_item, objects);
 	}
 
 	@Override
@@ -28,17 +28,21 @@ public class HuntAdapter extends ArrayAdapter<Hunt> {
 		Hunt hunt = getItem(position);
 		if (view == null) {
 			LayoutInflater inflater = LayoutInflater.from(getContext());
-			view = inflater.inflate(R.layout.item_hangout, null);
+			view = inflater.inflate(R.layout.hunt_newsfeed_item, null);
 		}
 
 		ParseImageView imHuntImage = (ParseImageView) view.findViewById(R.id.ivHuntImage);
 		TextView tvHuntName = (TextView) view.findViewById(R.id.tvHuntName);
 		TextView tvHuntDetails = (TextView) view
 				.findViewById(R.id.tvHuntDetails);
+		TextView tvHuntRating = (TextView) view.findViewById(R.id.tvHuntRating);
+		TextView tvHuntCreator = (TextView) view.findViewById(R.id.tvHuntCreator);
 
 		tvHuntName.setText(hunt.getName());
 		tvHuntDetails.setText(hunt.getDetails());
 		ParseFile huntPic = hunt.getHuntPicture();
+		tvHuntRating.setText(Double.toString(hunt.getAvgRating()));
+		tvHuntCreator.setText(hunt.getCreator().toString());
 		
 		if (huntPic != null) {
 			imHuntImage.setParseFile(huntPic);

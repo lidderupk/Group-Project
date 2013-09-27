@@ -16,6 +16,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.chaseit.ParseHelper;
 import com.chaseit.R;
@@ -98,6 +99,13 @@ AddPictureListener {
 //				pDialog.setMessage("Adding Location to Your Chase...");
 //				pDialog.setCancelable(false);
 //				pDialog.show();
+				
+				//dont proceed if no hint
+				if(photoHint == null && StringUtils.isBlank(etChaseHint.getText().toString())){
+					showError();
+					return;
+				}
+				
 				String newFriendlyName = etPlace.getText().toString();
 				friendlyName = StringUtils.isNotBlank(newFriendlyName) ? newFriendlyName : friendlyName;
 				Location location = new Location();
@@ -128,6 +136,12 @@ AddPictureListener {
 		});
 	}
 
+	private void showError(){
+//		Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
+//		findViewById(android.R.id.content).getRootView().startAnimation(shake);
+		Toast.makeText(getBaseContext(), "Please add a picture or message for hint", Toast.LENGTH_SHORT).show();
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.

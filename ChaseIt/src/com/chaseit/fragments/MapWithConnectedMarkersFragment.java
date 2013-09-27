@@ -15,6 +15,7 @@ import android.widget.Button;
 
 import com.chaseit.R;
 import com.chaseit.models.Location;
+import com.chaseit.models.wrappers.HuntWrapper;
 import com.chaseit.util.Constants;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -26,18 +27,16 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.LatLngBounds.Builder;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.parse.ParseGeoPoint;
 
 public class MapWithConnectedMarkersFragment extends Fragment {
 	private static final String tag = "Debug - com.chaseit.fragments.MapWithConnectedMarkersFragment";
-	private String huntId;
+	private HuntWrapper huntWrapper;
 	private GoogleMap googleMap;
 	private Builder builder;
 	private Button focusOnMarkers;
 	private PolylineOptions rectOptions;
-	private Polyline polyline;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,8 +51,9 @@ public class MapWithConnectedMarkersFragment extends Fragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		Bundle extras = getArguments();
-		huntId = extras.getString(Constants.HUNT_ID);
-		Log.d(tag, "huntID: " + huntId);
+		huntWrapper = (HuntWrapper) extras
+				.getSerializable(Constants.HUNT_WRAPPER_DATA_NAME);
+		Log.d(tag, "huntID: " + huntWrapper.getName());
 		setupViews(getView(), getFakeLocations());
 	}
 
@@ -92,7 +92,7 @@ public class MapWithConnectedMarkersFragment extends Fragment {
 						.geodesic(true);
 			}
 
-			polyline = googleMap.addPolyline(rectOptions);
+			googleMap.addPolyline(rectOptions);
 
 			googleMap.setOnCameraChangeListener(new OnCameraChangeListener() {
 
@@ -127,10 +127,6 @@ public class MapWithConnectedMarkersFragment extends Fragment {
 				Log.d(tag, "unable to get a handle on google map");
 			}
 		}
-	}
-
-	private LatLng getLatLongForHunt(String huntId) {
-		return new LatLng(Constants.latUnionSquare, Constants.lngUnionSquare);
 	}
 
 	private List<Location> getFakeLocations() {

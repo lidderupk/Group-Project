@@ -1,12 +1,18 @@
 package com.chaseit.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
-import android.widget.Button;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.chaseit.ChaseItApplication;
 import com.chaseit.ParseHelper;
@@ -15,24 +21,30 @@ import com.chaseit.models.CIUser;
 import com.facebook.FacebookRequestError;
 import com.facebook.Request;
 import com.facebook.Response;
+import com.facebook.Session;
 import com.facebook.model.GraphUser;
 import com.facebook.widget.ProfilePictureView;
 import com.parse.ParseFacebookUtils;
 import com.parse.ParseUser;
 
-
-public class UserDetailsActivity extends Activity {
+public class UserDetailsActivity extends ActionBarActivity {
 
 	private ProfilePictureView userProfilePictureView;
 	private TextView userNameView;
 	private TextView userLocationView;
 	private TextView userGenderView;
 	private TextView userDateOfBirthView;
-	private Button logoutButton;
+	private DrawerLayout mDrawerLayout;
+	private ListView mDrawerList;
+	private ActionBarDrawerToggle mDrawerToggle;
+	private CharSequence mDrawerTitle;
+	private CharSequence mTitle;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		setupNavigationDrawer();
 
 		setContentView(R.layout.activity_profile);
 
@@ -42,16 +54,8 @@ public class UserDetailsActivity extends Activity {
 		userGenderView = (TextView) findViewById(R.id.userGender);
 		userDateOfBirthView = (TextView) findViewById(R.id.userDateOfBirth);
 
-		logoutButton = (Button) findViewById(R.id.logoutButton);
-		logoutButton.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				onLogoutButtonClicked();
-			}
-		});
-
 		// Fetch Facebook user info if the session is active
-		com.facebook.Session session = ParseFacebookUtils.getSession();
+		Session session = ParseFacebookUtils.getSession();
 		if (session != null && session.isOpened()) {
 			makeMeRequest();
 		}
@@ -71,6 +75,21 @@ public class UserDetailsActivity extends Activity {
 			// activity showing the login view.
 			startLoginActivity();
 		}
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		// If the nav drawer is open, hide action items related to the content
+		// view
+		boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
+		menu.findItem(R.id.create_chase).setVisible(!drawerOpen);
+		return super.onPrepareOptionsMenu(menu);
 	}
 
 	private void makeMeRequest() {
@@ -148,10 +167,8 @@ public class UserDetailsActivity extends Activity {
 	}
 
 	private void onLogoutButtonClicked() {
-		// Log the user out
 		ParseUser.logOut();
 
-		// Go to the login view
 		startLoginActivity();
 	}
 
@@ -161,4 +178,77 @@ public class UserDetailsActivity extends Activity {
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		startActivity(intent);
 	}
+
+	private void setupNavigationDrawer() {
+
+
+		mTitle = mDrawerTitle = getTitle();
+		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+		mDrawerList = (ListView) findViewById(R.id.left_drawer_profile);
+		mDrawerToggle = new ActionBarDrawerToggle(this, /*
+																			 * host
+																			 * Activity
+																			 */
+		mDrawerLayout, /* DrawerLayout object */
+		R.drawable.ic_drawer, /* nav drawer icon to replace 'Up' caret */
+		R.string.drawer_open, /* "open drawer" description */
+		R.string.drawer_close /* "close drawer" description */
+		) {
+
+			/** Called when a drawer has settled in a completely closed state. */
+			public void onDrawerClosed(View view) {
+				getSupportActionBar().setTitle(mTitle);
+				// invalidateOptionsMenu();
+			}
+
+			/** Called when a drawer has settled in a completely open state. */
+			public void onDrawerOpened(View drawerView) {
+				getSupportActionBar().setTitle(mDrawerTitle);
+				// invalidateOptionsMenu();
+			}
+		};
+
+		String[] menuArray = getResources().getStringArray(
+				R.array.menu_drawer_array);
+		mDrawerList.setAdapter(new ArrayAdapter<String>(this,
+				R.layout.drawer_list_item, menuArray));
+		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+
+		// Set the drawer toggle as the DrawerListener
+		mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setHomeButtonEnabled(true);
+
+		// TODO: add stuff in the navigation drawer
+	}
+
+	private class DrawerItemClickListener implements
+			ListView.OnItemClickListener {
+		@Override
+		public void onItemClick(AdapterView<?> parent, View view, int position,
+				long id) {
+			selectItem(position);
+		}
+	}
+
+	private void selectItem(int position) {
+		Toast.makeText(this, Integer.toString(position), Toast.LENGTH_SHORT)
+				.show();
+
+		if (position == 0) {
+
+		}
+
+		if (position == 4) {
+			// Log the user out
+			ParseUser.logOut();
+
+			// Go to the login view
+			startLoginActivity();
+		}
+		mDrawerList.setItemChecked(position, true);
+		mDrawerLayout.closeDrawer(mDrawerList);
+	}
+
 }

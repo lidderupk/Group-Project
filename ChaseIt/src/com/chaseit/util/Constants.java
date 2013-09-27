@@ -3,6 +3,9 @@ package com.chaseit.util;
 public class Constants {
 
 	public static final String HUNT_ID = "HUNT_ID";
+	public static final String HUNT_WRAPPER_DATA_NAME = "HUNT_WRAPPER_DATA_NAME";
+	public static final String USER_HUNT_WRAPPER_DATA_NAME = "USER_HUNT_WRAPPER_DATA_NAME";
+
 	public static final double latUnionSquare = 37.788055;
 	public static final double lngUnionSquare = -122.407919;
 
@@ -19,4 +22,5 @@ public class Constants {
 	public static final double lngRichmond = -122.481583;
 
 	public static final String IMAGE_EXTRA = "bmp_img";
+	public static final String MARKERS_DATA = "MARKERS_DATA";
 }

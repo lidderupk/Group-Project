@@ -16,7 +16,7 @@ public class HuntMapWithMarkersTestActivity extends FragmentActivity {
 
 		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 		ft.replace(R.id.flMapWithMarkers,
-				FragmentFactory.getHuntMapWithMarkersFragment("1"));
+				FragmentFactory.getHuntMapWithMarkersFragment(null));
 		ft.commit();
 	}
 }

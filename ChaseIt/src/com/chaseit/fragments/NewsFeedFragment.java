@@ -10,7 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ListView;
+import android.widget.Spinner;
 
 import com.chaseit.ParseHelper;
 import com.chaseit.R;
@@ -19,6 +21,7 @@ import com.chaseit.adapters.HuntAdapter;
 import com.chaseit.models.Hunt;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseGeoPoint;
 
 public class NewsFeedFragment extends Fragment {
 
@@ -38,7 +41,7 @@ public class NewsFeedFragment extends Fragment {
 
 			@Override
 			public void done(List<Hunt> objects, ParseException e) {
-				if (e == null) {
+				if (e == null && objects != null) {
 					for (Hunt hunts : objects) {
 						HuntAdapter adapter = new HuntAdapter(getActivity(),
 								objects);
@@ -63,6 +66,100 @@ public class NewsFeedFragment extends Fragment {
 		super.onActivityCreated(savedInstanceState);
 	}
 
+	@Override
+	public void onStart() {
+		super.onStart();
+		Spinner spinner = (Spinner) getView().findViewById(R.id.spFilter);
+		spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> parentView,
+					View selectedItemView, int position, long id) {
+				if (position == 0) {
+					ParseHelper
+							.getAllHuntsByNumRatings(new FindCallback<Hunt>() {
+
+								@Override
+								public void done(List<Hunt> objects,
+										ParseException e) {
+									if (e == null && objects != null) {
+										for (Hunt hunts : objects) {
+											HuntAdapter adapter = new HuntAdapter(
+													getActivity(), objects);
+											// Attach the adapter to a ListView
+											ListView listView = (ListView) getView()
+													.findViewById(
+															R.id.lvHuntList);
+											listView.setAdapter(adapter);
+											listView.setOnItemClickListener(getHuntClickedListener());
+										}
+
+									} else {
+										e.printStackTrace();
+									}
+								}
+
+							});
+				} else if (position == 1){
+					ParseHelper
+					.getAllHuntsByCreateDate(new FindCallback<Hunt>() {
+
+						@Override
+						public void done(List<Hunt> objects,
+								ParseException e) {
+							if (e == null && objects != null) {
+								for (Hunt hunts : objects) {
+									HuntAdapter adapter = new HuntAdapter(
+											getActivity(), objects);
+									// Attach the adapter to a ListView
+									ListView listView = (ListView) getView()
+											.findViewById(
+													R.id.lvHuntList);
+									listView.setAdapter(adapter);
+									listView.setOnItemClickListener(getHuntClickedListener());
+								}
+
+							} else {
+								e.printStackTrace();
+							}
+						}
+
+					});
+				} else if (position == 2){
+					ParseHelper
+					.getAllHuntsByAvgRating(new FindCallback<Hunt>() {
+
+						@Override
+						public void done(List<Hunt> objects,
+								ParseException e) {
+							if (e == null && objects != null) {
+								for (Hunt hunts : objects) {
+									HuntAdapter adapter = new HuntAdapter(
+											getActivity(), objects);
+									// Attach the adapter to a ListView
+									ListView listView = (ListView) getView()
+											.findViewById(
+													R.id.lvHuntList);
+									listView.setAdapter(adapter);
+									listView.setOnItemClickListener(getHuntClickedListener());
+								}
+
+							} else {
+								e.printStackTrace();
+							}
+						}
+
+					});
+				}
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parentView) {
+				// your code here
+			}
+
+		});
+	}
+
 	private OnItemClickListener getHuntClickedListener() {
 		return new OnItemClickListener() {
 
@@ -81,7 +178,7 @@ public class NewsFeedFragment extends Fragment {
 					homeScreenActivity = (HomeScreenActivity) getActivity();
 					homeScreenActivity.huntClicked(hunt);
 				} catch (ClassCastException castException) {
-					Log.e(tag, castException.getMessage()	);
+					Log.e(tag, castException.getMessage());
 				}
 			}
 		};

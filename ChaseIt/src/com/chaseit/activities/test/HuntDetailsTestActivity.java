@@ -9,9 +9,10 @@ import android.view.Menu;
 
 import com.chaseit.R;
 import com.chaseit.fragments.interfaces.HuntStartInterface;
+import com.chaseit.models.wrappers.HuntWrapper;
+import com.chaseit.models.wrappers.UserHuntWrapper;
 import com.chaseit.util.Constants;
 import com.chaseit.util.FragmentFactory;
-import com.chaseit.util.Helper;
 
 public class HuntDetailsTestActivity extends FragmentActivity implements
 		HuntStartInterface {
@@ -23,16 +24,17 @@ public class HuntDetailsTestActivity extends FragmentActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_hunt_details_test);
 
-		String huntId = getIntent().getStringExtra(Constants.HUNT_ID);
+		HuntWrapper hWrapper = (HuntWrapper) getIntent().getSerializableExtra(
+				Constants.HUNT_WRAPPER_DATA_NAME);
 
-		if (!Helper.isNotEmpty(huntId)) {
+		if (hWrapper == null) {
 			Log.e(tag, "huntId is missing !.");
 			return;
 		}
 
 		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 		ft.replace(R.id.flHuntDetails,
-				FragmentFactory.getHuntDetailsFragment(huntId));
+				FragmentFactory.getHuntDetailsFragment(hWrapper));
 		ft.commit();
 	}
 
@@ -44,10 +46,10 @@ public class HuntDetailsTestActivity extends FragmentActivity implements
 	}
 
 	@Override
-	public void startHunt(String huntId) {
+	public void startHunt(UserHuntWrapper uHuntWrapper) {
 		Log.d(tag, "hunt clicked. Activity notified !");
 		Intent in = new Intent(getBaseContext(), HuntPlayTestActivity.class);
-		in.putExtra(Constants.HUNT_ID, huntId);
+		in.putExtra(Constants.USER_HUNT_WRAPPER_DATA_NAME, uHuntWrapper);
 		startActivity(in);
 	}
 }

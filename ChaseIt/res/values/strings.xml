@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Chase It</string>
+    <string name="app_name">The Chase</string>
     <string name="app_id">169473563243077</string>
     <string name="action_settings">Settings</string>
     <string name="login">Log In</string>
     <string name="logout">Log Out</string>
-    <string name="login_intro">Check out your Facebook profile by logging in with the button below!</string>
+    <string name="login_intro">Login to The Chase using Facebook</string>
     <string name="location">Location</string>
     <string name="gender">Gender</string>
     <string name="date_of_birth">Date of Birth</string>
     <string name="relationship">Relationship</string>
     <string name="title_activity_news_feed_test">NewsFeedTestActivity</string>
     <string name="hunt_name_example">Around the Town Hunt</string>
+    <string name="rating">3 stars</string>
+    <string name="creator">You</string>
     <string name="hunt_details_example">This is a fun hunt around San Francisco. It includes a gas station, a Chinese take out restaurant, the best Pizza place in town and ends at a young and hip place !</string>
     <string name="menu_create_hunt">Create Hunt</string>
    
@@ -28,6 +30,12 @@
         <item>Medium</item>
         <item>Hard</item>
     </string-array>
+    
+        <string-array name="array_filter">
+        <item>Rating</item>
+        <item>Difficulty</item>
+        <item>Date</item>
+    </string-array>
 
     <string name="dialog_image_desc_take_picture">Take Picture</string>
     <string name="dialog_image_desc_select_picture">Select Picture</string>
@@ -37,6 +45,7 @@
     <string name="add_image_description">Add Image</string>
     <string name="title_activity_placeholder">PlaceholderActivity</string>
     <string name="title_activity_hunt_details">Hunt Details</string>
+  
     <string name="title_activity_hunt_play">Hunt in Progress</string>
 
     <string name="drawer_open">Open Drawer</string>
@@ -46,6 +55,7 @@
         <item>Settings</item>
         <item>Invite Friends</item>
         <item>About</item>
+        <item>Log Out</item>
     </string-array>
 
     <string name="add_location_title">Add Location</string>

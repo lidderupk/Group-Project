@@ -26,10 +26,12 @@ import com.chaseit.activities.test.HuntPlayTestActivity;
 import com.chaseit.activities.test.MapsTestActivity;
 import com.chaseit.fragments.MyHuntsFragment;
 import com.chaseit.fragments.NewsFeedFragment;
-import com.chaseit.fragments.RecentHuntsFragment;
+import com.chaseit.fragments.InProgressHuntsFragment;
 import com.chaseit.fragments.interfaces.HuntDetailsInterface;
 import com.chaseit.models.Hunt;
+import com.chaseit.models.wrappers.HuntWrapper;
 import com.chaseit.util.Constants;
+import com.parse.ParseUser;
 
 public class HomeScreenActivity extends ActionBarActivity implements
 		TabListener, HuntDetailsInterface {
@@ -85,7 +87,6 @@ public class HomeScreenActivity extends ActionBarActivity implements
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// TODO Auto-generated method stub
 
 		// Pass the event to ActionBarDrawerToggle, if it returns
 		// true, then it has handled the app icon touch event
@@ -101,9 +102,11 @@ public class HomeScreenActivity extends ActionBarActivity implements
 			return true;
 
 		case R.id.huntDetails:
-			in = new Intent(getBaseContext(), HuntDetailsTestActivity.class);
-			in.putExtra(Constants.HUNT_ID, "Q6OO7dFnGp");
-			startActivity(in);
+			 in = new Intent(getBaseContext(), HuntDetailsTestActivity.class);
+			 in.putExtra(Constants.HUNT_ID, "Q6OO7dFnGp");
+			 startActivity(in);
+			Toast.makeText(getBaseContext(), "Disabled", Toast.LENGTH_SHORT)
+					.show();
 			return true;
 
 		case R.id.huntPlayMenu:
@@ -175,12 +178,12 @@ public class HomeScreenActivity extends ActionBarActivity implements
 		ActionBar actionBar = getSupportActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-		Tab tabHome = actionBar.newTab().setText("All Hunts")
+		Tab tabHome = actionBar.newTab().setText("Public")
 				.setTag("HomeTimelineFragment").setTabListener(this);
 
-		Tab tabRecent = actionBar.newTab().setText("Recent")
-				.setTag("RecentFragment").setTabListener(this);
-		Tab tabMine = actionBar.newTab().setText("Mine")
+		Tab tabRecent = actionBar.newTab().setText("In Progress")
+				.setTag("InProgressHuntsFragment").setTabListener(this);
+		Tab tabMine = actionBar.newTab().setText("Friends")
 				.setTag("MyHuntsFragment").setTabListener(this);
 
 		actionBar.addTab(tabHome);
@@ -207,10 +210,24 @@ public class HomeScreenActivity extends ActionBarActivity implements
 					UserDetailsActivity.class);
 			startActivity(i);
 		}
+		
+		if (position == 4){
+				// Log the user out
+				ParseUser.logOut();
+
+				// Go to the login view
+				startLoginActivity();
+		}
 		mDrawerList.setItemChecked(position, true);
 		mDrawerLayout.closeDrawer(mDrawerList);
 	}
 
+	private void startLoginActivity() {
+		Intent intent = new Intent(this, LoginActivity.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		startActivity(intent);
+	}
 	/* TabListener Methods */
 
 	@Override
@@ -221,8 +238,8 @@ public class HomeScreenActivity extends ActionBarActivity implements
 	public void onTabSelected(Tab tab, FragmentTransaction ft) {
 		if (tab.getTag() == "HomeTimelineFragment") {
 			ft.replace(R.id.flNewsFeedFragment, new NewsFeedFragment());
-		} else if (tab.getTag() == "RecentHuntsFragment") {
-			ft.replace(R.id.flNewsFeedFragment, new RecentHuntsFragment());
+		} else if (tab.getTag() == "InProgressHuntsFragment") {
+			ft.replace(R.id.flNewsFeedFragment, new InProgressHuntsFragment());
 		} else {
 			ft.replace(R.id.flNewsFeedFragment, new MyHuntsFragment());
 		}
@@ -230,13 +247,14 @@ public class HomeScreenActivity extends ActionBarActivity implements
 
 	@Override
 	public void onTabUnselected(Tab arg0, FragmentTransaction arg1) {
-	}
+	}  
 
 	@Override
 	public void huntClicked(Hunt hunt) {
 		Log.d(tag, "hunt clicked. Activity notified !");
+		HuntWrapper hWrapper = new HuntWrapper(hunt);
 		Intent in = new Intent(getBaseContext(), HuntDetailsTestActivity.class);
-		in.putExtra(Constants.HUNT_ID, hunt.getObjectId());
+		in.putExtra(Constants.HUNT_WRAPPER_DATA_NAME, hWrapper);
 		startActivity(in);
 	}
 }
