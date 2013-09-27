@@ -1,7 +1,9 @@
 package com.chaseit.fragments.interfaces;
 
-import com.chaseit.models.wrappers.UserHuntWrapper;
+import java.util.List;
+
+import android.location.Location;
 
 public interface HuntPlayInterface {
-	public void huntStarted(UserHuntWrapper uHuntWrapper);
+	public void redrawMapWithMarkers(List<Location> locations);
 }
