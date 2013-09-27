@@ -140,7 +140,7 @@ AddPictureListener {
 //		Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
 //		findViewById(android.R.id.content).getRootView().startAnimation(shake);
 		Toast.makeText(getBaseContext(), "Please add a picture or message for hint", Toast.LENGTH_SHORT).show();
-	}
+	}	
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
