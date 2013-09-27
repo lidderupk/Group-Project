@@ -31,6 +31,7 @@ import com.chaseit.models.Location;
 import com.chaseit.models.UserHunt;
 import com.chaseit.models.UserHunt.HuntStatus;
 import com.chaseit.models.wrappers.HuntWrapper;
+import com.chaseit.models.wrappers.LocationWrapper;
 import com.chaseit.models.wrappers.ParseObjectWrapper;
 import com.chaseit.models.wrappers.UserHuntWrapper;
 import com.chaseit.util.Constants;
@@ -71,6 +72,8 @@ public class HuntDetailsFragment extends Fragment {
 	private UserHunt huntInProgress;
 	private Hunt thisHunt;
 	private List<Location> huntLocations;
+	private ArrayList<LocationWrapper> huntLocationsWrapped = new ArrayList<LocationWrapper>();
+
 	private boolean isSummary;
 	
 	protected UserHuntWrapper uHuntWrapper;
@@ -137,6 +140,7 @@ public class HuntDetailsFragment extends Fragment {
 			public void done(List<Location> objects, ParseException e) {
 				if(e == null){
 					huntLocations = objects;
+					huntLocationsWrapped = LocationWrapper.fromLocations(objects);
 					if(isSummary){
 						locationImageAdapter = new LocationImageAdapter(getActivity(), objects);
 						ivHuntDetailsBanner.setAdapter(locationImageAdapter);
@@ -236,12 +240,18 @@ public class HuntDetailsFragment extends Fragment {
 					userHunt.setHuntObjectId(thisHunt.getObjectId());
 					userHunt.setUserObjectId(CIUser.getCurrentUser().getObjectId());
 					userHunt.setHuntStatus(HuntStatus.IN_PROGRESS);
-					userHunt.setLastLocationLat(thisHunt.getStartLocation().getLatitude());
-					userHunt.setLastLocationLong(thisHunt.getStartLocation().getLongitude());
-					userHunt.setLocationIndex(0);
+//					userHunt.setLastLocationLat(thisHunt.getStartLocation().getLatitude());
+//					userHunt.setLastLocationLong(thisHunt.getStartLocation().getLongitude());
+//					userHunt.setLastLocationIndex(0);
+					
+					userHunt.setLastLocationLat(0);
+					userHunt.setLastLocationLong(0);
+					userHunt.setLastLocationIndex(-1);
+
 					//check if we already have locations
 					if(huntLocations != null && huntLocations.size() > 0){
 						userHunt.setLastLocationObjectId(huntLocations.get(0).getObjectId());
+//						userHunt.setLastLocationObjectId(null);
 						userHunt.saveInBackground(new SaveCallback() {
 							@Override
 							public void done(ParseException e) {
@@ -253,12 +263,15 @@ public class HuntDetailsFragment extends Fragment {
 							}
 						});
 					} else {
+//						//setup the hunt in progress for update
+//						userHunt = huntInProgress;
 						//fetch the first location only
 						ParseHelper.getLocationByHuntAndIndex(thisHunt, 0, new FindCallback<Location>() {
 							@Override
 							public void done( List<Location> locations, ParseException e) {
 								if (locations != null && locations.size() > 0){
 									userHunt.setLastLocationObjectId(locations.get(0).getObjectId());
+//									userHunt.setLastLocationObjectId("");
 									userHunt.saveInBackground(new SaveCallback() {
 										@Override
 										public void done(ParseException e) {
@@ -274,7 +287,28 @@ public class HuntDetailsFragment extends Fragment {
 						});
 					}
 				} else {
-					startHuntOrContinue(huntInProgress);
+					if(huntInProgress.getHuntStatus() == HuntStatus.COMPLETED){
+						//reset the hunt
+						huntInProgress.setHuntStatus(HuntStatus.IN_PROGRESS);
+						huntInProgress.setLastLocationIndex(-1);
+						huntInProgress.setLastLocationLat(0);
+						huntInProgress.setLastLocationLong(0);
+						if(huntLocations != null && huntLocations.size() > 0){
+							huntInProgress.setLastLocationObjectId(huntLocations.get(0).getObjectId());								
+						}
+						huntInProgress.saveInBackground(new SaveCallback() {
+							@Override
+							public void done(ParseException e) {
+								if (e != null){
+									Log.d(tag,e.getMessage());													
+								}
+								Log.d(tag, "leaving done");
+								startHuntOrContinue(huntInProgress);
+							}
+						});
+					} else {
+						startHuntOrContinue(huntInProgress);						
+					}
 				}
 			}
 		};
@@ -284,7 +318,7 @@ public class HuntDetailsFragment extends Fragment {
 		uHuntWrapper = new UserHuntWrapper(new ParseObjectWrapper(userHunt));
 		FragmentActivity activity = getActivity();
 		if (activity instanceof HuntStartInterface){
-			((HuntStartInterface) activity).startHunt(uHuntWrapper);			
+			((HuntStartInterface) activity).startHunt(uHuntWrapper, new HuntWrapper(thisHunt), huntLocationsWrapped );			
 		}
 	}
 	
@@ -317,7 +351,7 @@ public class HuntDetailsFragment extends Fragment {
 			}
 		}
 		
-		// move the camera to show the whole chase
+		// move the camera to show chase makers and polygon
 		gmHuntsDetailsMap.moveCamera(CameraUpdateFactory.newLatLngBounds(
 				builder.build(), 10));
 

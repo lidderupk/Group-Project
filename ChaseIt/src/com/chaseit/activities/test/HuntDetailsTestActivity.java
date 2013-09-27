@@ -1,5 +1,7 @@
 package com.chaseit.activities.test;
 
+import java.util.ArrayList;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -10,6 +12,7 @@ import android.view.Menu;
 import com.chaseit.R;
 import com.chaseit.fragments.interfaces.HuntStartInterface;
 import com.chaseit.models.wrappers.HuntWrapper;
+import com.chaseit.models.wrappers.LocationWrapper;
 import com.chaseit.models.wrappers.UserHuntWrapper;
 import com.chaseit.util.Constants;
 import com.chaseit.util.FragmentFactory;
@@ -47,10 +50,14 @@ public class HuntDetailsTestActivity extends FragmentActivity implements
 	}
 
 	@Override
-	public void startHunt(UserHuntWrapper uHuntWrapper) {
+	public void startHunt(UserHuntWrapper uHuntWrapper, HuntWrapper wHunt, ArrayList<LocationWrapper> wLocations) {
 		Log.d(tag, "hunt clicked. Activity notified !");
 		Intent in = new Intent(getBaseContext(), HuntPlayTestActivity.class);
+		Bundle b = new Bundle();
+		b.putParcelableArrayList(Constants.LOCATIONS_WRAPPER_DATA_NAME, wLocations);
 		in.putExtra(Constants.USER_HUNT_WRAPPER_DATA_NAME, uHuntWrapper);
+		in.putExtra(Constants.HUNT_WRAPPER_DATA_NAME, wHunt);
+		in.putExtra(Constants.LOCATIONS_BUNDLE_DATA_NAME, b);
 		startActivity(in);
 	}
 }

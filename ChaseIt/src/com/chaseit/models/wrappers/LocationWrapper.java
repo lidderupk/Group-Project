@@ -1,13 +1,18 @@
 package com.chaseit.models.wrappers;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.chaseit.ParseHelper;
 import com.chaseit.models.Location;
 import com.google.android.gms.maps.model.LatLng;
 import com.parse.ParseFile;
 
-public class LocationWrapper implements Serializable {
+public class LocationWrapper implements Serializable, Parcelable {
 	private static final long serialVersionUID = -8674218181201709458L;
 	private ParseObjectWrapper wrapper;
 
@@ -19,6 +24,7 @@ public class LocationWrapper implements Serializable {
 		wrapper = locationW;
 	}
 
+	
 	public String getObjectId() {
 		return wrapper.getString(ParseHelper.OBJECTID_TAG);
 	}
@@ -64,6 +70,47 @@ public class LocationWrapper implements Serializable {
 	 */
 	public int getIndexInHunt() {
 		return wrapper.getInt(Location.LOCATION_INDEX_TAG);
+	}
+	
+	
+	public static ArrayList<LocationWrapper> fromLocations(List<Location> locations){
+		if(locations == null){
+			return null;
+		}
+		ArrayList<LocationWrapper> wrappers = new ArrayList<LocationWrapper>();
+		for(Location l : locations){
+			wrappers.add(new LocationWrapper(l));
+		}
+		
+		return wrappers;
+	}
+	
+	public LocationWrapper(Parcel in) {
+        readFromParcel(in);
+    }
+ 
+    public static final Parcelable.Creator<LocationWrapper> CREATOR = new Parcelable.Creator<LocationWrapper>() {
+        public LocationWrapper createFromParcel(Parcel in) {
+            return new LocationWrapper(in);
+        }
+ 
+        public LocationWrapper[] newArray(int size) {
+            return new LocationWrapper[size];
+        }
+    };
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeSerializable(wrapper);
+	}
+	
+	public void readFromParcel(Parcel in){
+		wrapper = (ParseObjectWrapper) in.readSerializable();
 	}
 
 }

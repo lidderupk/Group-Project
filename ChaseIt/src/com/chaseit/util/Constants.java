@@ -5,6 +5,8 @@ public class Constants {
 	public static final String HUNT_ID = "HUNT_ID";
 	public static final String HUNT_WRAPPER_DATA_NAME = "HUNT_WRAPPER_DATA_NAME";
 	public static final String USER_HUNT_WRAPPER_DATA_NAME = "USER_HUNT_WRAPPER_DATA_NAME";
+	public static final String LOCATIONS_WRAPPER_DATA_NAME = "LOCATIONS_WRAPPER_DATA_NAME";
+	public static final String LOCATIONS_BUNDLE_DATA_NAME = "LOCATIONS_BUNDLE_DATA_NAME";
 
 	public static final double latUnionSquare = 37.788055;
 	public static final double lngUnionSquare = -122.407919;

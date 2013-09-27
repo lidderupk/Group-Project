@@ -62,7 +62,7 @@ public class UserHunt extends ParseObject {
 		return getDouble(USERHUNT_LASTLOCATIONLONGITUDE_TAG);
 	}
 
-	public void setLocationIndex(int index) {
+	public void setLastLocationIndex(int index) {
 		put(USERHUNT_LOCATIONINDEX_TAG, index);
 	}
 
