@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.chaseit.R;
@@ -31,19 +32,26 @@ public class HuntAdapter extends ArrayAdapter<Hunt> {
 			view = inflater.inflate(R.layout.hunt_newsfeed_item, null);
 		}
 
-		ParseImageView imHuntImage = (ParseImageView) view.findViewById(R.id.ivHuntImage);
+		ParseImageView imHuntImage = (ParseImageView) view
+				.findViewById(R.id.ivHuntImage);
 		TextView tvHuntName = (TextView) view.findViewById(R.id.tvHuntName);
 		TextView tvHuntDetails = (TextView) view
 				.findViewById(R.id.tvHuntDetails);
-		TextView tvHuntRating = (TextView) view.findViewById(R.id.tvHuntRating);
-		TextView tvHuntCreator = (TextView) view.findViewById(R.id.tvHuntCreator);
+		RatingBar tvHuntRating = (RatingBar) view
+				.findViewById(R.id.tvHuntRating);
+		TextView tvHuntCreator = (TextView) view
+				.findViewById(R.id.tvHuntCreator);
 
 		tvHuntName.setText(hunt.getName());
 		tvHuntDetails.setText(hunt.getDetails());
 		ParseFile huntPic = hunt.getHuntPicture();
-		tvHuntRating.setText(Double.toString(hunt.getAvgRating()));
-		tvHuntCreator.setText(hunt.getCreator().toString());
-		
+		tvHuntRating.setNumStars(hunt.getNumRatings());
+		if (hunt.getCreatorName() != null) {
+			tvHuntCreator.setText(hunt.getCreatorName().toString());
+		} else {
+			tvHuntCreator.setText("Anonymous User");
+		}
+
 		if (huntPic != null) {
 			imHuntImage.setParseFile(huntPic);
 			imHuntImage.loadInBackground(new GetDataCallback() {

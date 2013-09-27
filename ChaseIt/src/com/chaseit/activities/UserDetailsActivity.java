@@ -184,7 +184,7 @@ public class UserDetailsActivity extends ActionBarActivity {
 
 		mTitle = mDrawerTitle = getTitle();
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-		mDrawerList = (ListView) findViewById(R.id.left_drawer_profile);
+//		mDrawerList = (ListView) findViewById(R.id.left_drawer_profile);
 		mDrawerToggle = new ActionBarDrawerToggle(this, /*
 																			 * host
 																			 * Activity

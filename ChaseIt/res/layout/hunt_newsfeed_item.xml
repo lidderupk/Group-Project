@@ -1,55 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
 
-    <com.parse.ParseImageView
-        android:id="@+id/ivHuntImage"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <com.parse.ParseImageView
+                android:id="@+id/ivHuntImage"
+                android:layout_width="175dp"
+                android:layout_height="200dp"
+                android:scaleX="0.5"
+                android:src="@drawable/sample_project_hunt" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/tvHuntCreator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/creator"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tvHuntName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hunt_name_example"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <RatingBar
+                    android:id="@+id/tvHuntRating"
+                    style="?android:attr/ratingBarStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="7dp"
+                    android:layout_marginTop="5dp"
+                    android:numStars="5"
+                    android:rating="2.0"
+                    android:stepSize="1.0" />
+
+                <TextView
+                    android:id="@+id/tvHuntDifficulty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="3dp"
+                    android:layout_marginTop="5dp"
+                    android:text="Difficulty: Easy"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tvHuntFriends"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="3dp"
+                    android:layout_marginTop="3dp"
+                    android:text="Who&apos;s Playing: "
+                    android:textSize="12sp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal" >
+
+                    <ImageView
+                        android:id="@+id/tvHuntFriendsImage"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginRight="3dp"
+                        android:background="@drawable/abc_ab_solid_dark_holo" />
+
+                    <ImageView
+                        android:id="@+id/tvHuntFriendsImage2"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginRight="3dp"
+                        android:background="@drawable/abc_ab_solid_dark_holo" />
+
+                    <ImageView
+                        android:id="@+id/tvHuntFriendsImage3"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginRight="3dp"
+                        android:background="@drawable/abc_ab_solid_dark_holo" />
+
+                    <ImageView
+                        android:id="@+id/tvHuntFriendsImage4"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginRight="3dp"
+                        android:background="@drawable/abc_ab_solid_dark_holo" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvHuntDetailsLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="16dp"
-        android:scaleX="0.5"
-        android:src="@drawable/sample_project_hunt" />
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:text="Details: " />
 
     <TextView
         android:id="@+id/tvHuntDetails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/tvHuntName"
-        android:layout_below="@+id/tvHuntName"
-        android:layout_marginTop="14dp"
+        android:layout_marginBottom="14dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
         android:text="@string/hunt_details_example" />
 
-        <TextView
-        android:id="@+id/tvHuntRating"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/tvHuntName"
-        android:layout_alignBottom="@+id/tvHuntName"
-        android:paddingLeft="40dp"
-        android:paddingBottom="5dp"
-        android:text="@string/rating" />
-
-    <TextView
-        android:id="@+id/tvHuntName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/ivHuntImage"
-        android:layout_toRightOf="@+id/ivHuntImage"
-        android:text="@string/hunt_name_example"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-    
-        <TextView
-        android:id="@+id/tvHuntCreator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/tvHuntRating"
-        android:layout_below="@+id/tvHuntRating"
-        android:paddingLeft="40dp"
-        android:paddingBottom="5dp"
-        android:textSize="12sp"
-        android:text="@string/creator" />
-
-</RelativeLayout>
+</LinearLayout>
