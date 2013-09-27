@@ -106,7 +106,6 @@ public class CreateChaseLocationsActivity extends FragmentActivity implements Lo
 		} else {
 			mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
 		}
-
 	}
 
 	private void setupOnDoneAction() {

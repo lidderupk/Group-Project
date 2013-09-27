@@ -2,64 +2,77 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:weightSum="1" >
+    android:orientation="vertical" >
 
-   <!--  <FrameLayout
-        android:id="@+id/huntMap"
-        android:layout_width="match_parent"
-        android:layout_height="350dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true" /> -->
-    
     <fragment
         android:id="@+id/huntMap"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="350dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true" />
-    
-    <Button android:id="@+id/btnFocusOnMarkers"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:text="Focus"/>
-
-    <View
-        android:id="@+id/helper"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_below="@+id/huntMap"
-        android:layout_centerHorizontal="true" />
-
-    <com.parse.ParseImageView
-        android:id="@+id/ivHuntImageClue"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_toLeftOf="@id/helper"
-        android:layout_alignTop="@id/helper"
-        android:layout_above="@+id/btnHuntProgressCheck"
-        android:src="@drawable/pizza_hint" />
-
-    <TextView
-        android:id="@+id/tvHuntMessageClue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"	
-        android:layout_toRightOf="@+id/helper"
-        android:layout_above="@+id/btnHuntProgressCheck"
-        android:layout_alignTop="@id/helper"
-        android:text="This is placeholder for message clue for next location."
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:layout_alignParentTop="true"
+        android:layout_above="@+id/pbHuntProgress" />
 
     <Button
-        android:id="@+id/btnHuntProgressCheck"
+        android:id="@+id/btnFocusOnMarkers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="Focus" />
+
+    <ProgressBar
+        android:id="@+id/pbHuntProgress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_above="@+id/llClues"
+        android:layout_alignParentLeft="true" />
+
+    <LinearLayout
+        android:id="@+id/llClues"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:text="I Am Here !" />
+        android:layout_above="@+id/llButtons"
+        android:minHeight="90dp" >
+
+        <com.parse.ParseImageView
+            android:id="@+id/ivHuntImageClue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/tvHuntMessageClue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/empty"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llButtons"
+        style="?android:attr/buttonBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" >
+
+        <Button
+            android:id="@+id/btnDemoHuntProgressCheck"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Demo I Am Here !" />
+
+        <Button
+            android:id="@+id/btnHuntProgressCheck"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="I Am Here !" />
+    </LinearLayout>
 
 </RelativeLayout>
