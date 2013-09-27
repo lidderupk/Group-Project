@@ -18,6 +18,7 @@ public class HuntDetailsTestActivity extends FragmentActivity implements
 		HuntStartInterface {
 
 	private static final String tag = "Debug - com.chaseit.activities.test.HuntDetailsTestActivity";
+	public static final int HUNT_DETAIL_REQ = 550;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

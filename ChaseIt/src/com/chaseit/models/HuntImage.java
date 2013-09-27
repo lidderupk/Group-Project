@@ -7,6 +7,9 @@ import com.parse.ParseObject;
 @ParseClassName("HuntImage")
 public class HuntImage extends ParseObject {
 
+	public static final String HUNTIMAGE_HUNT_TAG = "hunt";
+	public static final String HUNTIMAGE_IMAGE_TAG = "image";
+
 	public HuntImage() {
 		// empty constructor
 	}

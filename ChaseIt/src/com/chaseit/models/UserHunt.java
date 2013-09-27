@@ -6,6 +6,14 @@ import com.parse.ParseObject;
 @ParseClassName("UserHunt")
 public class UserHunt extends ParseObject {
 
+	public static final String USERHUNT_USEROBJECTID_TAG = "userobjectId";
+	public static final String USERHUNT_HUNTOBJECTID_TAG = "huntobjectId";
+	public static final String USERHUNT_LASTLOCATIONOBJECTID_TAG = "locationobjectId";
+	public static final String USERHUNT_LASTLOCATIONLATITUDE_TAG = "lastlocationLatitude";
+	public static final String USERHUNT_LASTLOCATIONLONGITUDE_TAG = "lastlocationLongitude";
+	public static final String USERHUNT_LOCATIONINDEX_TAG = "locationindex";
+	public static final String USERHUNT_HUNTSTATUS_TAG = "huntstatus";
+
 	public enum HuntStatus {
 		IN_PROGRESS, COMPLETED
 	};
@@ -15,60 +23,59 @@ public class UserHunt extends ParseObject {
 	}
 
 	public void setUserObjectId(String userObjectId) {
-		put("userobjectId", userObjectId);
+		put(USERHUNT_USEROBJECTID_TAG, userObjectId);
 	}
 
 	public String getUserObjectId() {
-		return getString("userobjectId");
+		return getString(USERHUNT_USEROBJECTID_TAG);
 	}
 
 	public void setHuntObjectId(String huntObjectId) {
-		put("huntobjectId", huntObjectId);
+		put(USERHUNT_HUNTOBJECTID_TAG, huntObjectId);
 	}
 
 	public String getHuntObjectId() {
-		return getString("huntobjectId");
+		return getString(USERHUNT_HUNTOBJECTID_TAG);
 	}
 
-	public void setLocatoinObjectId(String locationObjectId) {
-		put("locationobjectId", locationObjectId);
+	public void setLastLocationObjectId(String locationObjectId) {
+		put(USERHUNT_LASTLOCATIONOBJECTID_TAG, locationObjectId);
 	}
 
-	public String getLocationObjectId() {
-		return getString("locationobjectId");
+	public String getLastLocationObjectId() {
+		return getString(USERHUNT_LASTLOCATIONOBJECTID_TAG);
 	}
 
 	public void setLastLocationLat(double latitude) {
-		put("lastlocation.latitude", latitude);
+		put(USERHUNT_LASTLOCATIONLATITUDE_TAG, latitude);
 	}
 
 	public double getLastLocationLat() {
-		return getDouble("lastlocation.latitude");
+		return getDouble(USERHUNT_LASTLOCATIONLATITUDE_TAG);
 	}
-	
+
 	public void setLastLocationLong(double longitude) {
-		put("lastlocation.longitude", longitude);
+		put(USERHUNT_LASTLOCATIONLONGITUDE_TAG, longitude);
 	}
 
 	public double getLastLocationLong() {
-		return getDouble("lastlocation.longitude");
+		return getDouble(USERHUNT_LASTLOCATIONLONGITUDE_TAG);
 	}
 
 	public void setLocationIndex(int index) {
-		put("locationindex", index);
+		put(USERHUNT_LOCATIONINDEX_TAG, index);
 	}
 
 	public int getLocationIndex() {
-		return getInt("locationindex");
+		return getInt(USERHUNT_LOCATIONINDEX_TAG);
 	}
-	
 
 	public void setHuntStatus(HuntStatus status) {
-		put("huntstatus", status.toString());
+		put(USERHUNT_HUNTSTATUS_TAG, status.toString());
 	}
 
 	public HuntStatus getHuntStatus() {
-		return HuntStatus.valueOf(getString("huntstatus"));
+		return HuntStatus.valueOf(getString(USERHUNT_HUNTSTATUS_TAG));
 	}
 
 }

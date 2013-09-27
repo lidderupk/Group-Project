@@ -19,10 +19,8 @@ import android.widget.ImageView;
 import com.chaseit.ParseHelper;
 import com.chaseit.R;
 import com.chaseit.activities.HuntShowImageActivity;
-import com.chaseit.models.CIUser;
 import com.chaseit.models.Hunt;
 import com.chaseit.models.Location;
-import com.chaseit.models.UserHunt;
 import com.chaseit.models.wrappers.HuntWrapper;
 import com.chaseit.models.wrappers.UserHuntWrapper;
 import com.chaseit.util.Constants;
@@ -36,16 +34,17 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
-import com.parse.ParseGeoPoint;
 
 public class HuntPlayFragment extends Fragment {
 
 	private static final String tag = "Debug - com.chaseit.fragments.HuntPlayFragment";
-	private UserHuntWrapper uHuntWrapper;
 
 	private GoogleMap gMap;
+
+	private UserHuntWrapper uHuntWrapper;
 	private ImageView ivHuntImageClue;
 	private Hunt currentHunt;
+	private List<Location> locationList;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -62,7 +61,7 @@ public class HuntPlayFragment extends Fragment {
 		uHuntWrapper = (UserHuntWrapper) extras
 				.getSerializable(Constants.USER_HUNT_WRAPPER_DATA_NAME);
 
-		ParseHelper.getHuntByObjectId(uHuntWrapper.getObjectId(),
+		ParseHelper.getHuntByObjectId(uHuntWrapper.getHuntObjectId(),
 				new GetCallback<Hunt>() {
 
 					@Override
@@ -74,25 +73,31 @@ public class HuntPlayFragment extends Fragment {
 									new FindCallback<Location>() {
 										@Override
 										public void done(
-												List<Location> objects,
+												List<Location> locationList,
 												ParseException e) {
-											Log.d(tag, "");
+											HuntPlayFragment.this.locationList = locationList;
+											if (e == null) {
 
-											FragmentTransaction ft = getActivity()
-													.getSupportFragmentManager()
-													.beginTransaction();
-											ft.replace(
-													R.id.huntMap,
-													FragmentFactory
-															.getHuntMapWithMarkersFragment(new HuntWrapper(
-																	currentHunt)));
-											ft.commit();
+												FragmentTransaction ft = getActivity()
+														.getSupportFragmentManager()
+														.beginTransaction();
+												ft.replace(
+														R.id.huntMap,
+														FragmentFactory
+																.getHuntMapWithMarkersFragment(new HuntWrapper(
+																		currentHunt)));
+												ft.commit();
 
-											setupViews(getView());
+												setupViews(getView());
+											} else {
+												Log.d(tag,
+														"no locations found for hunt: "
+																+ e.getMessage());
+											}
 										}
 									});
 						} else {
-							Log.d(tag, e.getMessage());
+							Log.d(tag, "hunt not found: " + e.getMessage());
 						}
 
 					}
@@ -175,30 +180,4 @@ public class HuntPlayFragment extends Fragment {
 			}
 		}
 	}
-
-//	private Hunt getHunt() {
-//		Hunt hunt = new Hunt();
-//		hunt.setName("Hunt name");
-//		hunt.setDetails("Hunt Details");
-//		hunt.setAvgRating(3.3);
-//		hunt.setLocality("Union Square");
-//		hunt.setNumRatings(3);
-//		hunt.setObjectId("AAAAAAAAA");
-//		hunt.setStartLocation(new ParseGeoPoint(Constants.latUnionSquare,
-//				Constants.lngUnionSquare));
-//		hunt.setTotalDistance(23);
-//		return hunt;
-//	}
-
-//	private UserHunt getUserHunt() {
-//		Hunt hunt = getHunt();
-//		UserHunt userHunt = new UserHunt();
-//		userHunt.setHunt(hunt);
-//		userHunt.setUser(CIUser.getCurrentUser());
-//		Location loc = new Location();
-//		loc.setLocation(hunt.getStartLocation());
-//		loc.setHint("first location Hint");
-//		userHunt.setLastLocation(loc);
-//		return userHunt;
-//	}
 }

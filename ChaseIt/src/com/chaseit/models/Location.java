@@ -6,17 +6,24 @@ import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 
 @ParseClassName("Location")
-public class Location extends ParseObject {
+public class Location extends ParseObject implements Comparable<Location> {
+
+	public static final String LOCATION_NAME_TAG = "locationname";
+	public static final String LOCATION_LOCATION_TAG = "location";
+	public static final String LOCATION_HINT_TAG = "hint";
+	public static final String LOCATION_IMAGE_TAG = "image";
+	public static final String LOCATION_PARENTHUNT_TAG = "parenthunt";
+	public static final String LOCATION_INDEX_TAG = "index";
 
 	public Location() {
 		// empty constructor
 	}
-
+  
 	/**
 	 * @return the locationName
 	 */
 	public String getLocationName() {
-		return getString("locationname");
+		return getString(LOCATION_NAME_TAG);
 	}
 
 	/**
@@ -24,14 +31,14 @@ public class Location extends ParseObject {
 	 *            the locationName to set
 	 */
 	public void setLocationName(String locationName) {
-		put("locationname", locationName);
+		put(LOCATION_NAME_TAG, locationName);
 	}
 
 	/**
 	 * @return the location
 	 */
 	public ParseGeoPoint getLocation() {
-		return getParseGeoPoint("location");
+		return getParseGeoPoint(LOCATION_LOCATION_TAG);
 	}
 
 	/**
@@ -39,14 +46,14 @@ public class Location extends ParseObject {
 	 *            the location to set
 	 */
 	public void setLocation(ParseGeoPoint location) {
-		put("location", location);
+		put(LOCATION_LOCATION_TAG, location);
 	}
 
 	/**
 	 * @return the hint
 	 */
 	public String getHint() {
-		return getString("hint");
+		return getString(LOCATION_HINT_TAG);
 	}
 
 	/**
@@ -54,14 +61,14 @@ public class Location extends ParseObject {
 	 *            the hint to set
 	 */
 	public void setHint(String hint) {
-		put("hint", hint);
+		put(LOCATION_HINT_TAG, hint);
 	}
 
 	/**
 	 * @return the image
 	 */
 	public ParseFile getImage() {
-		return getParseFile("image");
+		return getParseFile(LOCATION_IMAGE_TAG);
 	}
 
 	/**
@@ -69,14 +76,14 @@ public class Location extends ParseObject {
 	 *            the image to set
 	 */
 	public void setImage(ParseFile image) {
-		put("image", image);
+		put(LOCATION_IMAGE_TAG, image);
 	}
 
 	/**
 	 * @returns the parent hunt for this location
 	 */
 	public Hunt getParentHunt() {
-		return (Hunt) getParseObject("parentHunt");
+		return (Hunt) getParseObject(LOCATION_PARENTHUNT_TAG);
 	}
 
 	/**
@@ -84,14 +91,14 @@ public class Location extends ParseObject {
 	 *            parent hunt this location belongs to
 	 */
 	public void setParentHunt(Hunt parent) {
-		put("parenthunt", parent);
+		put(LOCATION_PARENTHUNT_TAG, parent);
 	}
 
 	/**
 	 * @return get the index in the hunt
 	 */
 	public int getIndexInHunt() {
-		return getInt("index");
+		return getInt(LOCATION_INDEX_TAG);
 	}
 
 	/**
@@ -99,7 +106,12 @@ public class Location extends ParseObject {
 	 *            in the hunt
 	 */
 	public void setIndexInHunt(int index) {
-		put("index", index);
+		put(LOCATION_INDEX_TAG, index);
+	}
+
+	@Override
+	public int compareTo(Location another) {
+		return this.getIndexInHunt() - another.getIndexInHunt();
 	}
 
 }

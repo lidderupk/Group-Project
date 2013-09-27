@@ -1,13 +1,12 @@
 package com.chaseit.fragments;
 
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
+import org.apache.commons.lang3.StringUtils;
+
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -17,15 +16,18 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.chaseit.ParseHelper;
 import com.chaseit.R;
+import com.chaseit.adapters.HuntImageAdapter;
+import com.chaseit.adapters.LocationImageAdapter;
 import com.chaseit.fragments.interfaces.HuntStartInterface;
 import com.chaseit.models.CIUser;
 import com.chaseit.models.Hunt;
+import com.chaseit.models.HuntImage;
+import com.chaseit.models.Location;
 import com.chaseit.models.UserHunt;
 import com.chaseit.models.UserHunt.HuntStatus;
 import com.chaseit.models.wrappers.HuntWrapper;
@@ -33,13 +35,22 @@ import com.chaseit.models.wrappers.ParseObjectWrapper;
 import com.chaseit.models.wrappers.UserHuntWrapper;
 import com.chaseit.util.Constants;
 import com.chaseit.util.Helper;
+import com.chaseit.views.TwoWayView;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.LatLngBounds.Builder;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.parse.FindCallback;
-import com.parse.GetCallback;
 import com.parse.ParseException;
+import com.parse.SaveCallback;
 
 public class HuntDetailsFragment extends Fragment {
-
 	private static final String tag = "Debug - com.chaseit.fragments.HuntDetailsFragment";
 	private HuntWrapper hWrapper;
 	private TextView tvHuntDetailsTitle;
@@ -47,18 +58,36 @@ public class HuntDetailsFragment extends Fragment {
 	private RatingBar rbHuntDetailsRating;
 	private TextView tvHuntDetailsLocationName;
 	private TextView tvHuntDetailsDescription;
-	private ImageView ivHuntsDetailsMap;
+	private GoogleMap gmHuntsDetailsMap;
 	private Button btnHuntDetailsLaunch;
-	private List<UserHunt> huntsInProgress;
+	private TwoWayView ivHuntDetailsBanner;
+	
+	private List<HuntImage> huntImages;
+	private HuntImageAdapter huntImageAdapter;
+
+	private LocationImageAdapter locationImageAdapter;
 
 	private boolean isHuntInProgress = false;
+	private UserHunt huntInProgress;
+	private Hunt thisHunt;
+	private List<Location> huntLocations;
+	private boolean isSummary;
+	
 	protected UserHuntWrapper uHuntWrapper;
+	
+	private enum Illustrate{
+		START,
+		UPTO_PROGRESS,
+		ALL
+	};
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_huntdetails, container,
 				false);
+		huntImages = new ArrayList<HuntImage>();
+		huntImageAdapter = new HuntImageAdapter(getActivity(), huntImages);
 		return view;
 	}
 
@@ -66,74 +95,133 @@ public class HuntDetailsFragment extends Fragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		Bundle extras = getArguments();
-		hWrapper = (HuntWrapper) extras
-				.getSerializable(Constants.HUNT_WRAPPER_DATA_NAME);
-
+		hWrapper = (HuntWrapper) extras.getSerializable(Constants.HUNT_WRAPPER_DATA_NAME);
+		isSummary = (boolean)extras.getBoolean("showSummary");
+		if(hWrapper.getCreator().getUserName() == CIUser.getCurrentUser().getUsername()){
+			isSummary = true;
+		}
+		
 		setupViews(getView(), hWrapper);
-
-		ParseHelper.getHuntByObjectId(hWrapper.getObjectId(),
-				new GetCallback<Hunt>() {
-
-					@Override
-					public void done(Hunt hunt, ParseException e) {
-
-						ParseHelper.getHuntInProgressGivenHuntAndUser(hunt,
-								CIUser.getCurrentUser(),
-								new FindCallback<UserHunt>() {
-
-									@Override
-									public void done(List<UserHunt> hunts,
-											ParseException e) {
-										huntsInProgress = hunts;
-										if (e == null) {
-											if (hunts != null
-													&& hunts.size() > 0) {
-												Log.d(tag,
-														"This hunt is already in progress !");
-												isHuntInProgress = true;
-												btnHuntDetailsLaunch
-														.setText("Continue");
-											}
-										} else
-											Log.d(tag, e.getMessage());
-									}
-								});
+		
+		//get the hunt and save it off 
+		thisHunt = ParseHelper.getHuntByObjectIdBlocking(hWrapper.getObjectId());
+		
+		//find if hunt is in progress
+		ParseHelper.getMyHuntsInProgress(new FindCallback<UserHunt>() {
+			@Override
+			public void done( List<UserHunt> myHuntsInProgress, ParseException e) {
+				if (e == null) {
+					if(myHuntsInProgress == null || myHuntsInProgress.size() == 0){
+						huntInProgress = null;
+						isHuntInProgress = false;
+					} else {
+						for (UserHunt uHunt : myHuntsInProgress) {
+							if (uHunt.getHuntObjectId().equals(hWrapper.getObjectId())) {
+								Log.d(tag, "This hunt is already in progress !");
+								isHuntInProgress = true;
+								huntInProgress = uHunt;
+							}
+						}						
 					}
-				});
+				} else {
+					Log.d(tag, e.getMessage());
+				}
+				//setup 'start click listener' only after we know if hunt is in progress or not
+				btnHuntDetailsLaunch.setOnClickListener(getHuntStartClickListener());
+			}
+		});
+		
+		//get all locations for hunt
+		ParseHelper.getLocationsforHunt(thisHunt, new FindCallback<Location>() {
+			@Override
+			public void done(List<Location> objects, ParseException e) {
+				if(e == null){
+					huntLocations = objects;
+					if(isSummary){
+						locationImageAdapter = new LocationImageAdapter(getActivity(), objects);
+						ivHuntDetailsBanner.setAdapter(locationImageAdapter);
+						locationImageAdapter.notifyDataSetChanged();						
+					}
+					Illustrate illustration = Illustrate.ALL;
+					
+					if(isSummary){
+						illustration = Illustrate.ALL;
+					} else if(isHuntInProgress){
+						illustration = Illustrate.UPTO_PROGRESS;
+					} else {
+						illustration = Illustrate.START;
+					}
+					drawMarkersAndPolygon(huntLocations, illustration);
+				}
+			}
+		});
 
 	}
+	
+	/**
+	 * function to load map. If map is not created it will create it for you
+	 * */
+	private void initilizeMap() {
+		if (gmHuntsDetailsMap == null) {
+			gmHuntsDetailsMap = ((SupportMapFragment)getActivity().getSupportFragmentManager().findFragmentById(R.id.gmHuntsDetailsMap)).getMap();
+			gmHuntsDetailsMap.setMyLocationEnabled(false);
+			UiSettings mapUiSettings = gmHuntsDetailsMap.getUiSettings();
+			//make this a non interactive map
+			mapUiSettings.setAllGesturesEnabled(false);
+			if (gmHuntsDetailsMap == null) {
+				Log.d("DEBUG", "Sorry! unable to create maps");
+			}
+		}
+	}
+
 
 	private void setupViews(View view, HuntWrapper hWrapper) {
-
-		tvHuntDetailsTitle = (TextView) view
-				.findViewById(R.id.tvHuntDetailsTitle);
-		tvHuntDetailsCreatorHandle = (TextView) view
-				.findViewById(R.id.tvHuntDetailsCreatorHandle);
-		rbHuntDetailsRating = (RatingBar) view
-				.findViewById(R.id.rbHuntDetailsRating);
-		tvHuntDetailsLocationName = (TextView) view
-				.findViewById(R.id.tvHuntDetailsLocationName);
-		tvHuntDetailsDescription = (TextView) view
-				.findViewById(R.id.tvHuntDetailsDescription);
-		ivHuntsDetailsMap = (ImageView) view
-				.findViewById(R.id.ivHuntsDetailsMap);
-		btnHuntDetailsLaunch = (Button) view
-				.findViewById(R.id.btnHuntDetailsLaunch);
-
-		if (Helper.isNotEmpty(hWrapper.getName()))
-			tvHuntDetailsTitle.setText(hWrapper.getName());
-
-		// rbHuntDetailsRating.setRating(Math.round(.getAvgRating()));
-
-		if (Helper.isNotEmpty(hWrapper.getDetails()))
-			tvHuntDetailsDescription.setText(hWrapper.getDetails());
-
-		LatLng startLocation = hWrapper.getStartLocation();
-		if (startLocation != null) {
-			getMap(startLocation, view);
+		tvHuntDetailsTitle = (TextView) view.findViewById(R.id.tvHuntDetailsTitle);
+		tvHuntDetailsCreatorHandle = (TextView) view.findViewById(R.id.tvHuntDetailsCreatorHandle);
+		rbHuntDetailsRating = (RatingBar) view.findViewById(R.id.rbHuntDetailsRating);
+		tvHuntDetailsLocationName = (TextView) view.findViewById(R.id.tvHuntDetailsLocationName);
+		tvHuntDetailsDescription = (TextView) view.findViewById(R.id.tvHuntDetailsDescription);
+		btnHuntDetailsLaunch = (Button) view.findViewById(R.id.btnHuntDetailsLaunch);
+		ivHuntDetailsBanner = (TwoWayView) view.findViewById(R.id.ivHuntDetailsBanner);	
+		initilizeMap();
+		
+		if(!isSummary){
+			ivHuntDetailsBanner.setAdapter(huntImageAdapter);
+			//show all hunt images
+			ParseHelper.getHuntImagesGivenHunt(thisHunt, new FindCallback<HuntImage>() {
+				@Override
+				public void done(List<HuntImage> objects, ParseException e) {
+					huntImageAdapter.addAll(objects);
+					huntImageAdapter.notifyDataSetChanged();
+				}
+			});			
 		}
 
-		btnHuntDetailsLaunch.setOnClickListener(getHuntStartClickListener());
+		//setup hunt tagline
+		if (Helper.isNotEmpty(hWrapper.getName())){
+			tvHuntDetailsTitle.setText(hWrapper.getName());			
+		}
+		
+		//set hunt creator name
+		if(StringUtils.isNotBlank(hWrapper.getCreatorName())){
+			tvHuntDetailsCreatorHandle.setText(hWrapper.getCreatorName());
+		}
+		
+		if(StringUtils.isNotBlank(hWrapper.getLocality())){
+			tvHuntDetailsLocationName.setText(hWrapper.getLocality());
+		} else {
+			tvHuntDetailsLocationName.setText("Unknown");
+		}
+
+		//show hunt rating
+		rbHuntDetailsRating.setRating(Math.round(hWrapper.getAvgRating()));
+		rbHuntDetailsRating.setEnabled(false);
+		
+		//show hunt details
+		if (Helper.isNotEmpty(hWrapper.getDetails())){
+			tvHuntDetailsDescription.setText(hWrapper.getDetails());			
+		}
+
 	}
 
 	private OnClickListener getHuntStartClickListener() {
@@ -143,38 +231,50 @@ public class HuntDetailsFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				Log.d(tag, "start or contiue clicked");
-
-				/*
-				 * hunt started, create a new user hunt and push to parse
-				 * 
-				 * first get the hunt from parse
-				 */
-
 				if (!isHuntInProgress) {
 					userHunt = new UserHunt();
-					ParseHelper.getHuntByObjectId(hWrapper.getObjectId(),
-							new GetCallback<Hunt>() {
-
-								@Override
-								public void done(Hunt object, ParseException e) {
-									userHunt.setHuntObjectId(object.getObjectId());
-									userHunt.setUserObjectId(CIUser.getCurrentUser().getObjectId());
-									userHunt.setHuntStatus(HuntStatus.IN_PROGRESS);
-									userHunt.setLastLocationLat(object.getStartLocation().getLatitude());
-									userHunt.setLastLocationLong(object.getStartLocation().getLongitude());
-									userHunt.setLocationIndex(0);
-									userHunt.saveInBackground();
-
-									startHuntOrContinue(userHunt);
+					userHunt.setHuntObjectId(thisHunt.getObjectId());
+					userHunt.setUserObjectId(CIUser.getCurrentUser().getObjectId());
+					userHunt.setHuntStatus(HuntStatus.IN_PROGRESS);
+					userHunt.setLastLocationLat(thisHunt.getStartLocation().getLatitude());
+					userHunt.setLastLocationLong(thisHunt.getStartLocation().getLongitude());
+					userHunt.setLocationIndex(0);
+					//check if we already have locations
+					if(huntLocations != null && huntLocations.size() > 0){
+						userHunt.setLastLocationObjectId(huntLocations.get(0).getObjectId());
+						userHunt.saveInBackground(new SaveCallback() {
+							@Override
+							public void done(ParseException e) {
+								if (e != null){
+									Log.d(tag,e.getMessage());													
 								}
-
-							});
+								Log.d(tag, "leaving done");
+								startHuntOrContinue(userHunt);
+							}
+						});
+					} else {
+						//fetch the first location only
+						ParseHelper.getLocationByHuntAndIndex(thisHunt, 0, new FindCallback<Location>() {
+							@Override
+							public void done( List<Location> locations, ParseException e) {
+								if (locations != null && locations.size() > 0){
+									userHunt.setLastLocationObjectId(locations.get(0).getObjectId());
+									userHunt.saveInBackground(new SaveCallback() {
+										@Override
+										public void done(ParseException e) {
+											if (e != null){
+												Log.d(tag,e.getMessage());													
+											}
+											Log.d(tag, "leaving done");
+											startHuntOrContinue(userHunt);
+										}
+									});										
+								}
+							}
+						});
+					}
 				} else {
-					// get the user hunt
-
-					if (huntsInProgress != null && huntsInProgress.size() > 0)
-						userHunt = huntsInProgress.get(0);
-					startHuntOrContinue(userHunt);
+					startHuntOrContinue(huntInProgress);
 				}
 			}
 		};
@@ -182,63 +282,44 @@ public class HuntDetailsFragment extends Fragment {
 
 	private void startHuntOrContinue(UserHunt userHunt) {
 		uHuntWrapper = new UserHuntWrapper(new ParseObjectWrapper(userHunt));
-
 		FragmentActivity activity = getActivity();
-		if (activity instanceof HuntStartInterface)
-			((HuntStartInterface) activity).startHunt(uHuntWrapper);
-	}
-
-	private void getMap(LatLng point, View view) {
-		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder
-				.append("http://maps.google.com/maps/api/staticmap?markers=");
-		stringBuilder.append(point.latitude);
-		stringBuilder.append(",");
-		stringBuilder.append(point.longitude);
-		stringBuilder.append("&zoom=16&size=520x520&sensor=false");
-		String[] stringURL = new String[1];
-		stringURL[0] = stringBuilder.toString();
-		GetGoogleImage task = new GetGoogleImage(view);
-		task.execute(stringURL);
-	}
-}
-
-class GetGoogleImage extends AsyncTask<String, Void, Bitmap> {
-
-	private View view;
-	private static final String tag = "Debug com.chaseit.fragments.GetGoogleImage";
-
-	public GetGoogleImage(View view) {
-		super();
-		this.view = view;
-	}
-
-	@Override
-	protected Bitmap doInBackground(String... stringURL) {
-		Bitmap bmp = null;
-		try {
-			URL url = new URL(stringURL[0]);
-			Log.d(tag, "url: " + url);
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			conn.setDoInput(true);
-			conn.connect();
-			InputStream is = conn.getInputStream();
-			BitmapFactory.Options options = new BitmapFactory.Options();
-
-			bmp = BitmapFactory.decodeStream(is, null, options);
-		} catch (Exception e) {
-			e.printStackTrace();
+		if (activity instanceof HuntStartInterface){
+			((HuntStartInterface) activity).startHunt(uHuntWrapper);			
 		}
-
-		return bmp;
 	}
+	
+	private void drawMarkersAndPolygon(List<Location> mapPoints, Illustrate illustrate) {
+		PolylineOptions rectOptions = new PolylineOptions();
+		Collections.sort(mapPoints);
+		Builder builder = new LatLngBounds.Builder();
+		for (Location point : mapPoints) {			
+			LatLng ll = new LatLng(point.getLocation().getLatitude(), point.getLocation().getLongitude());
+			
+			//drop marker first 
+			gmHuntsDetailsMap.addMarker(new MarkerOptions().position(ll)
+					.title((point.getIndexInHunt() + 1) + ". " + point.getLocationName())
+					.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
 
-	@Override
-	protected void onPostExecute(Bitmap result) {
-		ImageView iHuntsDetailsMap = (ImageView) view
-				.findViewById(R.id.ivHuntsDetailsMap);
-		iHuntsDetailsMap.setImageBitmap(result);
-		super.onPostExecute(result);
+			builder.include(ll);
+			rectOptions.add(ll).width(5).color(Color.BLUE).geodesic(true);
+			gmHuntsDetailsMap.addPolyline(rectOptions);
+	
+			if(illustrate == Illustrate.START){
+				break;
+			}
+
+			if(illustrate == Illustrate.UPTO_PROGRESS && (huntInProgress.getLocationIndex() == point.getIndexInHunt())){
+				break;
+			}
+			
+			if(illustrate == Illustrate.ALL){
+				continue;
+			}
+		}
+		
+		// move the camera to show the whole chase
+		gmHuntsDetailsMap.moveCamera(CameraUpdateFactory.newLatLngBounds(
+				builder.build(), 10));
+
 	}
-
 }

@@ -20,11 +20,14 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.chaseit.R;
+import com.chaseit.activities.test.HuntDetailsTestActivity;
 import com.chaseit.fragments.AddPictureFragment;
 import com.chaseit.fragments.AddPictureFragment.AddPictureListener;
 import com.chaseit.models.CIUser;
 import com.chaseit.models.Hunt;
 import com.chaseit.models.HuntImage;
+import com.chaseit.models.wrappers.HuntWrapper;
+import com.chaseit.util.Constants;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.SaveCallback;
@@ -41,6 +44,7 @@ public class CreateChaseActivity extends FragmentActivity implements
 	private Bitmap bitmapFile;
 	private String bitmapFileName;
 	private AlertDialog alert;
+	private Hunt chase;
 //	private ProgressDialog pDialog;
 
 	@Override
@@ -55,8 +59,24 @@ public class CreateChaseActivity extends FragmentActivity implements
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if(requestCode == CreateChaseLocationsActivity.CREATE_CHASE_LOCATIONS_REQ_CODE){
 			//destroy this activity
+			if(resultCode == RESULT_OK){
+				Intent i = getIntent();
+				if(i != null && i.getBooleanExtra("showSummary", false)){
+					HuntWrapper hWrapper = new HuntWrapper(chase);
+					Intent in = new Intent(getBaseContext(), HuntDetailsTestActivity.class);
+					in.putExtra(Constants.HUNT_WRAPPER_DATA_NAME, hWrapper);
+					in.putExtra("showSummary", true);
+					startActivityForResult(in, HuntDetailsTestActivity.HUNT_DETAIL_REQ);
+				} else {				
+					setResult(resultCode);
+					finish();				
+				}
+			}
 			setResult(resultCode);
 			finish();			
+		} else if(requestCode == HuntDetailsTestActivity.HUNT_DETAIL_REQ) {
+			setResult(resultCode);
+			finish();				
 		} else {
 			super.onActivityResult(requestCode, resultCode, data);
 		}
@@ -73,7 +93,7 @@ public class CreateChaseActivity extends FragmentActivity implements
 		btnCreate.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				final Hunt chase = new Hunt();
+				chase = new Hunt();
 				String headline = etAddHeadline.getText().toString();
 				String details = etAddDetails.getText().toString();
 				int difficulty = sDifficulty.getSelectedItemPosition();
@@ -81,7 +101,7 @@ public class CreateChaseActivity extends FragmentActivity implements
 						|| StringUtils.isBlank(details)) {
 					showAlertDialog();
 				} else {
-					chase.setAvgRating(0);
+					chase.setAvgRating(Double.valueOf(0.1));
 					chase.setCreator(CIUser.getCurrentUser());
 					chase.setDetails(details);
 					chase.setDifficulty(difficulty);

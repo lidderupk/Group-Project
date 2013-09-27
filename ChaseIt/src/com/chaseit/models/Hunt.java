@@ -24,7 +24,19 @@ public class Hunt extends ParseObject {
 	protected ParseGeoPoint startLocation;
 	protected ParseFile huntPicture;
 	protected String locality;
-	
+
+	public static final String HUNT_NAME_TAG = "name";
+	public static final String HUNT_DETAILS_TAG = "details";
+	public static final String HUNT_DIFFICULTY_TAG = "difficulty";
+	public static final String HUNT_AVGRATING_TAG = "avgrating";
+	public static final String HUNT_NUMRATING_TAG = "numratings";
+	public static final String HUNT_TOTALDISTANCE_TAG = "totaldistance";
+	public static final String HUNT_CRATOR_TAG = "creator";
+	public static final String HUNT_CRATOR_NAME_TAG = "creatorName";
+	public static final String HUNT_STARTLOCATION_TAG = "startlocation";
+	public static final String HUNT_PICTURE_TAG = "huntpicture";
+	public static final String HUNT_LOCALITY_TAG = "locality";
+
 	public Hunt() {
 		// empty constructor
 	}
@@ -33,7 +45,7 @@ public class Hunt extends ParseObject {
 	 * @return the name
 	 */
 	public String getName() {
-		return getString("name");
+		return getString(HUNT_NAME_TAG);
 	}
 
 	/**
@@ -41,14 +53,14 @@ public class Hunt extends ParseObject {
 	 *            the name to set
 	 */
 	public void setName(String name) {
-		put("name", name);
+		put(HUNT_NAME_TAG, name);
 	}
 
 	/**
 	 * @return the details
 	 */
 	public String getDetails() {
-		return getString("details");
+		return getString(HUNT_DETAILS_TAG);
 	}
 
 	/**
@@ -56,14 +68,14 @@ public class Hunt extends ParseObject {
 	 *            the details to set
 	 */
 	public void setDetails(String details) {
-		put("details", details);
+		put(HUNT_DETAILS_TAG, details);
 	}
 
 	/**
 	 * @return the difficulty
 	 */
 	public int getDifficulty() {
-		return getInt("difficulty");
+		return getInt(HUNT_DIFFICULTY_TAG);
 	}
 
 	/**
@@ -71,14 +83,14 @@ public class Hunt extends ParseObject {
 	 *            the difficulty to set
 	 */
 	public void setDifficulty(int difficulty) {
-		put("difficulty", difficulty);
+		put(HUNT_DIFFICULTY_TAG, difficulty);
 	}
 
 	/**
 	 * @return the avgRating
 	 */
 	public double getAvgRating() {
-		return getDouble("avgrating");
+		return getDouble(HUNT_AVGRATING_TAG);
 	}
 
 	/**
@@ -86,14 +98,14 @@ public class Hunt extends ParseObject {
 	 *            the avgRating to set
 	 */
 	public void setAvgRating(double avgRating) {
-		put("avgrating", avgRating);
+		put(HUNT_AVGRATING_TAG, avgRating);
 	}
 
 	/**
 	 * @return the numRatings
 	 */
 	public int getNumRatings() {
-		return getInt("numratings");
+		return getInt(HUNT_NUMRATING_TAG);
 	}
 
 	/**
@@ -101,14 +113,14 @@ public class Hunt extends ParseObject {
 	 *            the numRatings to set
 	 */
 	public void setNumRatings(int numRatings) {
-		put("numratings", numRatings);
+		put(HUNT_NUMRATING_TAG, numRatings);
 	}
 
 	/**
 	 * @return the totalDistance
 	 */
 	public double getTotalDistance() {
-		return getDouble("totaldistance");
+		return getDouble(HUNT_TOTALDISTANCE_TAG);
 	}
 
 	/**
@@ -116,14 +128,21 @@ public class Hunt extends ParseObject {
 	 *            the totalDistance to set
 	 */
 	public void setTotalDistance(double totalDistance) {
-		put("totaldistance", totalDistance);
+		put(HUNT_TOTALDISTANCE_TAG, totalDistance);
 	}
 
 	/**
 	 * @return the creator
 	 */
 	public ParseUser getCreator() {
-		return (ParseUser) getParseObject("creator");
+		return (ParseUser) getParseObject(HUNT_CRATOR_TAG);
+	}
+
+	/**
+	 * @return the creator name
+	 */
+	public ParseUser getCreatorName() {
+		return (ParseUser) getParseObject(HUNT_CRATOR_NAME_TAG);
 	}
 
 	/**
@@ -131,14 +150,15 @@ public class Hunt extends ParseObject {
 	 *            the creator to set
 	 */
 	public void setCreator(ParseUser creator) {
-		put("creator", creator);
+		put(HUNT_CRATOR_TAG, creator);
+		put(HUNT_CRATOR_NAME_TAG, creator.getString("name"));
 	}
 
 	/**
 	 * @return the startLocation
 	 */
 	public ParseGeoPoint getStartLocation() {
-		return (ParseGeoPoint) getParseGeoPoint("startlocation");
+		return (ParseGeoPoint) getParseGeoPoint(HUNT_STARTLOCATION_TAG);
 	}
 
 	/**
@@ -146,14 +166,14 @@ public class Hunt extends ParseObject {
 	 *            the startLocation to set
 	 */
 	public void setStartLocation(ParseGeoPoint startLocation) {
-		put("startlocation", startLocation);
+		put(HUNT_STARTLOCATION_TAG, startLocation);
 	}
 
 	/**
 	 * @return the huntPicture
 	 */
 	public ParseFile getHuntPicture() {
-		return getParseFile("huntpicture");
+		return getParseFile(HUNT_PICTURE_TAG);
 	}
 
 	/**
@@ -161,21 +181,22 @@ public class Hunt extends ParseObject {
 	 *            the huntPicture to set
 	 */
 	public void setHuntPicture(ParseFile huntPicture) {
-		put("huntpicture", huntPicture);
+		put(HUNT_PICTURE_TAG, huntPicture);
 	}
-	
+
 	/**
 	 * @return the locality
 	 */
 	public String getLocality() {
-		return getString("locality");
+		return getString(HUNT_LOCALITY_TAG);
 	}
 
 	/**
-	 * @param locality the locality to set
+	 * @param locality
+	 *            the locality to set
 	 */
 	public void setLocality(String locality) {
-		put("locality", locality);
+		put(HUNT_LOCALITY_TAG, locality);
 	}
 
 	public static List<Hunt> createSampleHunts(Context c) {

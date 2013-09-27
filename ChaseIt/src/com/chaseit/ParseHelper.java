@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.chaseit.models.CIUser;
 import com.chaseit.models.Hunt;
+import com.chaseit.models.HuntImage;
 import com.chaseit.models.Location;
 import com.chaseit.models.UserHunt;
 import com.chaseit.models.UserHunt.HuntStatus;
@@ -17,12 +18,18 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 public class ParseHelper {
+	public static final String CREATED_AT = "createdAt";
+	public static final String LATITUDE_TAG = "latitude";
+	public static final String LONGITUDE_TAG = "longitude";
+	public static final String FILENAME_TAG = "fileName";
+	public static final String OBJECTID_TAG = "objectId";
+
 	// information retrieval
 	public static void getAllHuntsByCreateDate(FindCallback<Hunt> callback) {
 		if (callback == null)
 			return;
 		ParseQuery<Hunt> query = ParseQuery.getQuery(Hunt.class);
-		query.orderByDescending("createdAt");
+		query.orderByDescending(CREATED_AT);
 		query.findInBackground(callback);
 	}
 
@@ -30,7 +37,7 @@ public class ParseHelper {
 		if (callback == null)
 			return;
 		ParseQuery<Hunt> query = ParseQuery.getQuery(Hunt.class);
-		query.orderByDescending("avgrating");
+		query.orderByDescending(Hunt.HUNT_AVGRATING_TAG);
 		query.findInBackground(callback);
 	}
 
@@ -38,7 +45,7 @@ public class ParseHelper {
 		if (callback == null)
 			return;
 		ParseQuery<Hunt> query = ParseQuery.getQuery(Hunt.class);
-		query.orderByDescending("numratings");
+		query.orderByDescending(Hunt.HUNT_NUMRATING_TAG);
 		query.findInBackground(callback);
 	}
 
@@ -47,8 +54,19 @@ public class ParseHelper {
 		if (callback == null)
 			return;
 		ParseQuery<Hunt> query = ParseQuery.getQuery(Hunt.class);
-		query.whereEqualTo("objectId", objectId);
+		query.whereEqualTo(ParseHelper.OBJECTID_TAG, objectId);
 		query.getFirstInBackground(callback);
+	}
+
+	public static Hunt getHuntByObjectIdBlocking(String objectId) {
+		ParseQuery<Hunt> query = ParseQuery.getQuery(Hunt.class);
+		query.whereEqualTo(ParseHelper.OBJECTID_TAG, objectId);
+		try {
+			return query.getFirst();
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	public static void getAllHuntsByProximity(ParseGeoPoint currentLocation,
@@ -56,7 +74,7 @@ public class ParseHelper {
 		if (callback == null)
 			return;
 		ParseQuery<Hunt> query = ParseQuery.getQuery(Hunt.class);
-		query.whereNear("startlocation", currentLocation);
+		query.whereNear(Hunt.HUNT_STARTLOCATION_TAG, currentLocation);
 		query.findInBackground(callback);
 	}
 
@@ -64,7 +82,7 @@ public class ParseHelper {
 		if (callback == null)
 			return;
 		ParseQuery<Hunt> query = ParseQuery.getQuery(Hunt.class);
-		query.whereEqualTo("creator", CIUser.getCurrentUser());
+		query.whereEqualTo(Hunt.HUNT_CRATOR_TAG, CIUser.getCurrentUser());
 		query.findInBackground(callback);
 	}
 
@@ -72,8 +90,10 @@ public class ParseHelper {
 		if (callback == null)
 			return;
 		ParseQuery<UserHunt> query = ParseQuery.getQuery(UserHunt.class);
-		query.whereEqualTo("userobjectId", CIUser.getCurrentUser().getObjectId());
-		query.whereEqualTo("huntstatus", HuntStatus.COMPLETED.toString());
+		query.whereEqualTo(UserHunt.USERHUNT_USEROBJECTID_TAG, CIUser
+				.getCurrentUser().getObjectId());
+		query.whereEqualTo(UserHunt.USERHUNT_HUNTSTATUS_TAG,
+				HuntStatus.COMPLETED.toString());
 		query.findInBackground(callback);
 	}
 
@@ -81,36 +101,58 @@ public class ParseHelper {
 		if (callback == null)
 			return;
 		ParseQuery<UserHunt> query = ParseQuery.getQuery(UserHunt.class);
-		query.whereEqualTo("userobjectId", CIUser.getCurrentUser().getObjectId());
-		query.whereEqualTo("huntstatus", HuntStatus.IN_PROGRESS.toString());
+		query.whereEqualTo(UserHunt.USERHUNT_USEROBJECTID_TAG, CIUser
+				.getCurrentUser().getObjectId());
+		// query.whereEqualTo("huntstatus", HuntStatus.IN_PROGRESS.toString());
+		String string = HuntStatus.IN_PROGRESS.toString();
+		query.whereEqualTo(UserHunt.USERHUNT_HUNTSTATUS_TAG,
+				UserHunt.HuntStatus.IN_PROGRESS.toString());
+		// query.whereEqualTo("huntobjectId", "9kmJGW0CXr");
 		query.findInBackground(callback);
 	}
 
-	public static void getHuntsInProgressForUser(ParseUser user, FindCallback<UserHunt> callback) {
+	public static void getHuntsInProgressForUser(ParseUser user,
+			FindCallback<UserHunt> callback) {
 		if (callback == null)
 			return;
 		ParseQuery<UserHunt> query = ParseQuery.getQuery(UserHunt.class);
-		query.whereEqualTo("userobjectId", user.getObjectId());
-		query.whereEqualTo("huntstatus", HuntStatus.IN_PROGRESS.toString());
+		query.whereEqualTo(UserHunt.USERHUNT_USEROBJECTID_TAG,
+				user.getObjectId());
+		query.whereEqualTo(UserHunt.USERHUNT_HUNTSTATUS_TAG,
+				UserHunt.HuntStatus.IN_PROGRESS.toString());
 		query.findInBackground(callback);
 	}
 
-	public static void getHuntInProgressGivenHunt(Hunt hunt, FindCallback<UserHunt> callback) {
+	public static void getHuntInProgressGivenHunt(Hunt hunt,
+			FindCallback<UserHunt> callback) {
 		if (callback == null)
 			return;
 		ParseQuery<UserHunt> query = ParseQuery.getQuery(UserHunt.class);
-		query.whereEqualTo("huntobjectId", hunt.getObjectId());
+		query.whereEqualTo(UserHunt.USERHUNT_HUNTOBJECTID_TAG,
+				hunt.getObjectId());
 		query.findInBackground(callback);
-	}  
+	}
+
+	public static void getHuntImagesGivenHunt(Hunt hunt,
+			FindCallback<HuntImage> callback) {
+		if (callback == null)
+			return;
+		ParseQuery<HuntImage> query = ParseQuery.getQuery(HuntImage.class);
+		query.whereEqualTo(HuntImage.HUNTIMAGE_HUNT_TAG, hunt);
+		query.findInBackground(callback);
+	}
 
 	public static void getHuntInProgressGivenHuntAndUser(Hunt hunt,
 			ParseUser user, FindCallback<UserHunt> callback) {
 		if (callback == null || hunt == null)
 			return;
 		ParseQuery<UserHunt> query = ParseQuery.getQuery(UserHunt.class);
-		query.whereEqualTo("huntobjectId", hunt.getObjectId());
-		query.whereEqualTo("huntstatus", HuntStatus.IN_PROGRESS.toString());
-		query.whereEqualTo("userobjectId", user.getObjectId());
+		query.whereEqualTo(UserHunt.USERHUNT_HUNTOBJECTID_TAG,
+				hunt.getObjectId());
+		query.whereEqualTo(UserHunt.USERHUNT_HUNTSTATUS_TAG,
+				HuntStatus.IN_PROGRESS.toString());
+		query.whereEqualTo(UserHunt.USERHUNT_USEROBJECTID_TAG,
+				user.getObjectId());
 		query.findInBackground(callback);
 	}
 
@@ -119,7 +161,7 @@ public class ParseHelper {
 		if (callback == null)
 			return;
 		ParseQuery<Location> query = ParseQuery.getQuery(Location.class);
-		query.whereEqualTo("objectId", objectId);
+		query.whereEqualTo(ParseHelper.OBJECTID_TAG, objectId);
 		query.findInBackground(callback);
 	}
 
@@ -128,17 +170,17 @@ public class ParseHelper {
 		if (callback == null)
 			return;
 		ParseQuery<Location> query = ParseQuery.getQuery(Location.class);
-		query.whereEqualTo("parenthunt", hunt);
+		query.whereEqualTo(Location.LOCATION_PARENTHUNT_TAG, hunt);
 		query.findInBackground(callback);
-	}
+	}  
 
 	public static void getLocationByHuntAndIndex(Hunt hunt, int index,
 			FindCallback<Location> callback) {
 		if (callback == null)
 			return;
 		ParseQuery<Location> query = ParseQuery.getQuery(Location.class);
-		query.whereEqualTo("parenthunt", hunt);
-		query.whereEqualTo("index", index);
+		query.whereEqualTo(Location.LOCATION_PARENTHUNT_TAG, hunt);
+		query.whereEqualTo(Location.LOCATION_INDEX_TAG, index);
 		query.findInBackground(callback);
 	}
 
@@ -191,5 +233,4 @@ public class ParseHelper {
 
 		});
 	}
-
 }
