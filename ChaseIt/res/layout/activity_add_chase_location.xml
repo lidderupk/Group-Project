@@ -8,7 +8,7 @@
         android:id="@+id/trHeader"
         android:layout_width="match_parent"
         android:layout_height="12dp"
-        android:background="@color/abc_search_url_text_holo"
+        android:background="#33B5E5"
         android:focusable="false" >
 
         <TextView
@@ -45,7 +45,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dip"
-        android:background="@color/abc_search_url_text_holo" />
+        android:background="#33B5E5" />
 
     <TableRow
         android:id="@+id/trLongRow"
@@ -73,7 +73,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dip"
-        android:background="@color/abc_search_url_text_holo" />
+        android:background="#33B5E5" />
 
     <TableRow
         android:id="@+id/trFriendlyNameRow"
@@ -104,7 +104,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dip"
-        android:background="@color/abc_search_url_text_holo" />
+        android:background="#33B5E5" />
 
     <TableRow
         android:id="@+id/trHintImageRow"
