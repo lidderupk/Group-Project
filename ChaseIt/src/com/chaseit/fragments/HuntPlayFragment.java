@@ -226,6 +226,12 @@ public class HuntPlayFragment extends Fragment implements LocationListener {
 
 
 	private void focusOnMarkers() {
+		/*
+		 * if this is a new hunt, nothing to draw
+		 */
+		if(wLastLocation == null)
+			return;
+					
 		ArrayList<LocationWrapper> conquered = getConqueredLocationsInChase(wLastLocation.getIndexInHunt());
 		drawMarkersAndPolygon(conquered, true);
 	}
