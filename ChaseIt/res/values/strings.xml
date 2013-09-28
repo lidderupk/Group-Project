@@ -17,7 +17,6 @@
     <string name="creator">You</string>
     <string name="hunt_details_example">This is a fun hunt around San Francisco. It includes a gas station, a Chinese take out restaurant, the best Pizza place in town and ends at a young and hip place !</string>
     <string name="menu_create_hunt">Create Hunt</string>
-   
     <string name="title_activity_maps_test">MapsTestActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_create_chase">Make a Chase</string>
@@ -30,8 +29,7 @@
         <item>Medium</item>
         <item>Hard</item>
     </string-array>
-    
-        <string-array name="array_filter">
+    <string-array name="array_filter">
         <item>Rating</item>
         <item>Difficulty</item>
         <item>Date</item>
@@ -45,12 +43,11 @@
     <string name="add_image_description">Add Image</string>
     <string name="title_activity_placeholder">PlaceholderActivity</string>
     <string name="title_activity_hunt_details">Hunt Details</string>
-  
     <string name="title_activity_hunt_play">Hunt in Progress</string>
-
     <string name="drawer_open">Open Drawer</string>
     <string name="drawer_close">Close Drawer</string>
-        <string-array name="menu_drawer_array">
+
+    <string-array name="menu_drawer_array">
         <item>Profile</item>
         <item>Settings</item>
         <item>Invite Friends</item>
@@ -73,9 +70,10 @@
     <string name="title_activity_hunt_show_image">HuntShowImageActivity</string>
     <string name="add_location_help_text">Search or long press to start</string>
     <string name="discard_btn_label">Discard</string>
-	<string name="done_btn_label">Done</string>
-	<string name="search_btn_txt">Search button</string> 	
-	<string name="go_btn_txt">Go</string> 	
-	<string name="created_by_label">created by: </string>
-	
+    <string name="done_btn_label">Done</string>
+    <string name="search_btn_txt">Search button</string>
+    <string name="go_btn_txt">Go</string>
+    <string name="created_by_label">created by: </string>
+    <string name="title_activity_hunt_success">Hunt Summary</string>
+
 </resources>
