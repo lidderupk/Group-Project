@@ -4,7 +4,12 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBar.Tab;
@@ -25,16 +30,35 @@ import com.chaseit.activities.test.HuntMapWithMarkersTestActivity;
 import com.chaseit.activities.test.HuntPlayTestActivity;
 import com.chaseit.activities.test.MapsTestActivity;
 import com.chaseit.fragments.FriendsHuntsFragment;
-import com.chaseit.fragments.NewsFeedFragment;
 import com.chaseit.fragments.InProgressHuntsFragment;
+import com.chaseit.fragments.NewsFeedFragment;
 import com.chaseit.fragments.interfaces.HuntDetailsInterface;
 import com.chaseit.models.Hunt;
 import com.chaseit.models.wrappers.HuntWrapper;
 import com.chaseit.util.Constants;
 import com.parse.ParseUser;
+import com.viewpagerindicator.TabPageIndicator;
+import com.viewpagerindicator.TitlePageIndicator;
 
 public class HomeScreenActivity extends ActionBarActivity implements
-		TabListener, HuntDetailsInterface {
+		HuntDetailsInterface {
+	/**
+	 * The number of pages.
+	 */
+	private static final int NUM_PAGES = 3;
+
+	/**
+	 * The pager widget, which handles animation and allows swiping horizontally
+	 * to access previous and next wizard steps.
+	 */
+	private ViewPager mPager;
+
+	private TabPageIndicator mTabPageIndicator;
+
+	/**
+	 * The pager adapter, which provides the pages to the view pager widget.
+	 */
+	private PagerAdapter mPagerAdapter;
 
 	private static final String tag = "Debug - com.chaseit.activities.HomeScreenActivity";
 
@@ -52,7 +76,69 @@ public class HomeScreenActivity extends ActionBarActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_news_feed);
 		setupNavigationDrawer();
-		setupNavigationTabs();
+		// setupNavigationTabs();
+
+		// Instantiate a ViewPager and a PagerAdapter.
+		mPager = (ViewPager) findViewById(R.id.pager);
+		mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
+		mPager.setAdapter(mPagerAdapter);
+
+		// Set-up TabPageIndicator
+		mTabPageIndicator = (TabPageIndicator) findViewById(R.id.tabpageindicator);
+		mTabPageIndicator.setViewPager(mPager);
+//		mTabPageIndicator.setOnPageChangeListener(mPageChangeListener);
+	}
+
+	@Override
+	public void onBackPressed() {
+		if (mPager.getCurrentItem() == 0) {
+			// If the user is currently looking at the first step, allow the
+			// system to handle the
+			// Back button. This calls finish() on this activity and pops the
+			// back stack.
+			super.onBackPressed();
+		} else {
+			// Otherwise, select the previous step.
+			mPager.setCurrentItem(mPager.getCurrentItem() - 1);
+		}
+	}
+
+	private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+		public ScreenSlidePagerAdapter(FragmentManager fm) {
+			super(fm);
+		}
+
+		@Override
+		public Fragment getItem(int position) {
+			switch (position) {
+			case 0:
+				return new NewsFeedFragment();
+			case 1:
+				return new FriendsHuntsFragment();
+			case 2:
+				return new InProgressHuntsFragment();
+			default:
+				return null;
+			}
+		}
+
+		@Override
+		public int getCount() {
+			return NUM_PAGES;
+		}
+
+		@Override
+		public CharSequence getPageTitle(int position) {
+			switch (position) {
+			case 0:
+				return "PUBLIC";
+			case 1:
+				return "FRIENDS";
+			case 2:
+			default:
+				return "IN PROGRESS";
+			}
+		}
 	}
 
 	@Override
@@ -102,9 +188,9 @@ public class HomeScreenActivity extends ActionBarActivity implements
 			return true;
 
 		case R.id.huntDetails:
-			 in = new Intent(getBaseContext(), HuntDetailsTestActivity.class);
-			 in.putExtra(Constants.HUNT_ID, "Q6OO7dFnGp");
-			 startActivity(in);
+			in = new Intent(getBaseContext(), HuntDetailsTestActivity.class);
+			in.putExtra(Constants.HUNT_ID, "Q6OO7dFnGp");
+			startActivity(in);
 			Toast.makeText(getBaseContext(), "Disabled", Toast.LENGTH_SHORT)
 					.show();
 			return true;
@@ -171,26 +257,25 @@ public class HomeScreenActivity extends ActionBarActivity implements
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		getSupportActionBar().setHomeButtonEnabled(true);
 
-		// TODO: add stuff in the navigation drawer
 	}
 
-	private void setupNavigationTabs() {
-		ActionBar actionBar = getSupportActionBar();
-		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-
-		Tab tabHome = actionBar.newTab().setText("Public")
-				.setTag("HomeTimelineFragment").setTabListener(this);
-
-		Tab tabRecent = actionBar.newTab().setText("In Progress")
-				.setTag("InProgressHuntsFragment").setTabListener(this);
-		Tab tabMine = actionBar.newTab().setText("Friends")
-				.setTag("FriendsHuntsFragment").setTabListener(this);
-
-		actionBar.addTab(tabHome);
-		actionBar.addTab(tabMine);
-		actionBar.addTab(tabRecent);
-		actionBar.selectTab(tabHome);
-	}
+	// private void setupNavigationTabs() {
+	// ActionBar actionBar = getSupportActionBar();
+	// actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+	//
+	// Tab tabHome = actionBar.newTab().setText("Public")
+	// .setTag("HomeTimelineFragment").setTabListener(this);
+	//
+	// Tab tabRecent = actionBar.newTab().setText("In Progress")
+	// .setTag("InProgressHuntsFragment").setTabListener(this);
+	// Tab tabMine = actionBar.newTab().setText("Friends")
+	// .setTag("FriendsHuntsFragment").setTabListener(this);
+	//
+	// actionBar.addTab(tabHome);
+	// actionBar.addTab(tabMine);
+	// actionBar.addTab(tabRecent);
+	// actionBar.selectTab(tabHome);
+	// }
 
 	private class DrawerItemClickListener implements
 			ListView.OnItemClickListener {
@@ -210,13 +295,13 @@ public class HomeScreenActivity extends ActionBarActivity implements
 					UserDetailsActivity.class);
 			startActivity(i);
 		}
-		
-		if (position == 4){
-				// Log the user out
-				ParseUser.logOut();
 
-				// Go to the login view
-				startLoginActivity();
+		if (position == 4) {
+			// Log the user out
+			ParseUser.logOut();
+
+			// Go to the login view
+			startLoginActivity();
 		}
 		mDrawerList.setItemChecked(position, true);
 		mDrawerLayout.closeDrawer(mDrawerList);
@@ -228,26 +313,27 @@ public class HomeScreenActivity extends ActionBarActivity implements
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		startActivity(intent);
 	}
-	/* TabListener Methods */
 
-	@Override
-	public void onTabReselected(Tab arg0, FragmentTransaction arg1) {
-	}
-
-	@Override
-	public void onTabSelected(Tab tab, FragmentTransaction ft) {
-		if (tab.getTag() == "HomeTimelineFragment") {
-			ft.replace(R.id.flNewsFeedFragment, new NewsFeedFragment());
-		} else if (tab.getTag() == "InProgressHuntsFragment") {
-			ft.replace(R.id.flNewsFeedFragment, new InProgressHuntsFragment());
-		} else {
-			ft.replace(R.id.flNewsFeedFragment, new FriendsHuntsFragment());
-		}
-	}
-
-	@Override
-	public void onTabUnselected(Tab arg0, FragmentTransaction arg1) {
-	}  
+	// /* TabListener Methods */
+	//
+	// @Override
+	// public void onTabReselected(Tab arg0, FragmentTransaction arg1) {
+	// }
+	//
+	// @Override
+	// public void onTabSelected(Tab tab, FragmentTransaction ft) {
+	// if (tab.getTag() == "HomeTimelineFragment") {
+	// ft.replace(R.id.pager, new NewsFeedFragment());
+	// } else if (tab.getTag() == "InProgressHuntsFragment") {
+	// ft.replace(R.id.pager, new InProgressHuntsFragment());
+	// } else {
+	// ft.replace(R.id.pager, new FriendsHuntsFragment());
+	// }
+	// }
+	//
+	// @Override
+	// public void onTabUnselected(Tab arg0, FragmentTransaction arg1) {
+	// }
 
 	@Override
 	public void huntClicked(Hunt hunt) {

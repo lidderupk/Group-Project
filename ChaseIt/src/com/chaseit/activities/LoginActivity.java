@@ -81,9 +81,7 @@ public class LoginActivity extends Activity {
 					Log.d(ChaseItApplication.TAG,
 							"User logged in through Facebook!");
 					// showUserDetailsActivity();
-					Intent in = new Intent(LoginActivity.this,
-							HomeScreenActivity.class);
-					startActivity(in);
+					showNewsfeedActivty();
 				}
 			}
 		});

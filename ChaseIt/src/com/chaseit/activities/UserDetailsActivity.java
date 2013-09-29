@@ -7,6 +7,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,7 +18,12 @@ import android.widget.Toast;
 import com.chaseit.ChaseItApplication;
 import com.chaseit.ParseHelper;
 import com.chaseit.R;
+import com.chaseit.activities.test.HuntDetailsTestActivity;
+import com.chaseit.activities.test.HuntMapWithMarkersTestActivity;
+import com.chaseit.activities.test.HuntPlayTestActivity;
+import com.chaseit.activities.test.MapsTestActivity;
 import com.chaseit.models.CIUser;
+import com.chaseit.util.Constants;
 import com.facebook.FacebookRequestError;
 import com.facebook.Request;
 import com.facebook.Response;
@@ -44,9 +50,9 @@ public class UserDetailsActivity extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setupNavigationDrawer();
-
 		setContentView(R.layout.activity_profile);
+
+		setupNavigationDrawer();
 
 		userProfilePictureView = (ProfilePictureView) findViewById(R.id.userProfilePicture);
 		userNameView = (TextView) findViewById(R.id.userName);
@@ -90,6 +96,53 @@ public class UserDetailsActivity extends ActionBarActivity {
 		boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
 		menu.findItem(R.id.create_chase).setVisible(!drawerOpen);
 		return super.onPrepareOptionsMenu(menu);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+		// Pass the event to ActionBarDrawerToggle, if it returns
+		// true, then it has handled the app icon touch event
+		if (mDrawerToggle.onOptionsItemSelected(item)) {
+			return true;
+		}
+		// Handle your other action bar items...
+		Intent in;
+		switch (item.getItemId()) {
+		case R.id.maps:
+			in = new Intent(getBaseContext(), MapsTestActivity.class);
+			startActivity(in);
+			return true;
+
+		case R.id.huntDetails:
+			 in = new Intent(getBaseContext(), HuntDetailsTestActivity.class);
+			 in.putExtra(Constants.HUNT_ID, "Q6OO7dFnGp");
+			 startActivity(in);
+			Toast.makeText(getBaseContext(), "Disabled", Toast.LENGTH_SHORT)
+					.show();
+			return true;
+
+		case R.id.huntPlayMenu:
+			in = new Intent(getBaseContext(), HuntPlayTestActivity.class);
+			startActivity(in);
+			return true;
+
+		case R.id.huntMapLineMenu:
+			in = new Intent(getBaseContext(),
+					HuntMapWithMarkersTestActivity.class);
+
+			startActivity(in);
+			return true;
+
+		case R.id.create_chase:
+			Intent createChase = new Intent(getBaseContext(),
+					CreateChaseActivity.class);
+			startActivityForResult(createChase,
+					CreateChaseActivity.CREATE_CHASE_ACTIVITY_CODE);
+
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 
 	private void makeMeRequest() {
@@ -181,30 +234,25 @@ public class UserDetailsActivity extends ActionBarActivity {
 
 	private void setupNavigationDrawer() {
 
-
 		mTitle = mDrawerTitle = getTitle();
-		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-//		mDrawerList = (ListView) findViewById(R.id.left_drawer_profile);
-		mDrawerToggle = new ActionBarDrawerToggle(this, /*
-																			 * host
-																			 * Activity
-																			 */
+		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_profile);
+		mDrawerList = (ListView) findViewById(R.id.left_drawer_profile);
+		mDrawerToggle = new ActionBarDrawerToggle(this, /* host Activity */
 		mDrawerLayout, /* DrawerLayout object */
 		R.drawable.ic_drawer, /* nav drawer icon to replace 'Up' caret */
 		R.string.drawer_open, /* "open drawer" description */
 		R.string.drawer_close /* "close drawer" description */
 		) {
-
 			/** Called when a drawer has settled in a completely closed state. */
 			public void onDrawerClosed(View view) {
 				getSupportActionBar().setTitle(mTitle);
-				// invalidateOptionsMenu();
+				invalidateOptionsMenu();
 			}
 
 			/** Called when a drawer has settled in a completely open state. */
 			public void onDrawerOpened(View drawerView) {
 				getSupportActionBar().setTitle(mDrawerTitle);
-				// invalidateOptionsMenu();
+				invalidateOptionsMenu();
 			}
 		};
 
@@ -219,8 +267,6 @@ public class UserDetailsActivity extends ActionBarActivity {
 
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		getSupportActionBar().setHomeButtonEnabled(true);
-
-		// TODO: add stuff in the navigation drawer
 	}
 
 	private class DrawerItemClickListener implements

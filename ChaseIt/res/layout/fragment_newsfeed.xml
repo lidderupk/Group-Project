@@ -6,7 +6,7 @@
     <LinearLayout
         android:id="@+id/llFilter"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal" >
 
         <TextView
@@ -27,11 +27,14 @@
 
     <ListView
         android:id="@+id/lvHuntList"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/llFilter"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true" >
+        android:divider="@null"
+        android:dividerHeight="4dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:scrollbarStyle="outsideInset" >
     </ListView>
 
 </RelativeLayout>

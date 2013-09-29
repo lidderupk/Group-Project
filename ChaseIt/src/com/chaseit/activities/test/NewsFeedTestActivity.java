@@ -18,9 +18,9 @@ public class NewsFeedTestActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_news_feed);
 
-		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-		ft.replace(R.id.flNewsFeedFragment, new NewsFeedFragment());
-		ft.commit();
+//		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+//		ft.replace(R.id.flNewsFeedFragment, new NewsFeedFragment());
+//		ft.commit();
 	}
 
 	@Override
