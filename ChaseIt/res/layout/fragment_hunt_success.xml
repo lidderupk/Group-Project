@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <fragment
+        android:id="@+id/successHuntMap"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_above="@+id/bottomBar" />
+    
+    <LinearLayout
+        android:id="@+id/bottomBar"
+          android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:weightSum="1">
+        
+        <RatingBar
+            android:id="@+id/rbHuntSuccessRate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:stepSize="1.0"
+            android:layout_weight=".4"
+            android:layout_marginRight="5dp"/>
+        
+        <ImageButton
+            android:id="@+id/ibHuntSuccessImages"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight=".3"
+            android:src="@drawable/device_access_camera" />
+
+        <ImageButton
+            android:id="@+id/ibHuntSuccessFinish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight=".3"
+            android:src="@drawable/finish_flag" />
+        
+    </LinearLayout>
+</RelativeLayout>

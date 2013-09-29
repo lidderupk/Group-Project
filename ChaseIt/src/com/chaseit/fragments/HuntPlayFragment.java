@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -21,11 +24,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.chaseit.ParseHelper;
 import com.chaseit.R;
 import com.chaseit.activities.HuntShowImageActivity;
+import com.chaseit.activities.HuntSuccessActivity;
 import com.chaseit.models.Location;
 import com.chaseit.models.UserHunt;
 import com.chaseit.models.UserHunt.HuntStatus;
@@ -72,6 +75,8 @@ public class HuntPlayFragment extends Fragment implements LocationListener {
 	private Location nextLocation;
 
 	private LocationManager mLocationManager;
+
+	private Dialog alert;
 
 
 	@Override
@@ -168,16 +173,14 @@ public class HuntPlayFragment extends Fragment implements LocationListener {
 			//find out if we are starting the hunt
 			if (uHuntWrapper.getLocationIndex() == -1) {
 				// just started
-				Toast.makeText(getActivity().getBaseContext(), "Hunt has started",Toast.LENGTH_SHORT).show();
+				showAlertDialog("The hunt has started. See below for first clue message or picture. All the best !!");
 			} else if(wNextLocation == null || isHuntComplete(wLastLocation)){					
 				//we are done with the hunt
 				//SXG go to success page
-				Toast.makeText(getActivity().getBaseContext(), "Hunt is over",Toast.LENGTH_SHORT).show();
+				showHuntFinishedAlertDialog("Congratulations!. You have successfully finished the hunt");
 				btnHuntProgressCheck.setClickable(false);
 				btnDemoHuntProgressCheck.setClickable(false);
-			} else {
-				Toast.makeText(getActivity().getBaseContext(), "Hunt is NOT over, next location loaded", Toast.LENGTH_SHORT).show();
-			}
+			} 
 		} else {
 			Log.d(tag, "no locations found for hunt");
 		}
@@ -245,7 +248,6 @@ public class HuntPlayFragment extends Fragment implements LocationListener {
 				//if with 200m of target, or in demo mode 
 				if (distanceFromTarget < 200 || !isLive) {
 					//they have successfully found the target location.
-					Toast.makeText(getActivity().getBaseContext(), "Perfect!. Congratulations!!", Toast.LENGTH_SHORT).show();
 
 					//update locations
 					wLastLocation = wNextLocation;
@@ -259,14 +261,14 @@ public class HuntPlayFragment extends Fragment implements LocationListener {
 					wNextLocation = getWrappedLocationByIndex(wLastLocation.getIndexInHunt() + 1);
 
 					//setup hunt progress status
-					HuntStatus huntStatus;
+					HuntStatus huntStatus = HuntStatus.IN_PROGRESS;;
 					if(wNextLocation == null || isHuntComplete(wLastLocation)){
-						Toast.makeText(getActivity().getBaseContext(), "Hunt is complete !. Congratulations !!", Toast.LENGTH_SHORT).show();
+						showHuntFinishedAlertDialog("Congratulations!. You have successfully finished the hunt");
 						huntStatus = HuntStatus.COMPLETED;
 						btnHuntProgressCheck.setClickable(false);
 						btnDemoHuntProgressCheck.setClickable(false);
-					} else {
-						huntStatus = HuntStatus.IN_PROGRESS;
+					}else{
+						showAlertDialog("Congratulations ! You have successfully completed this run, please continue to the next location.");
 					}
 
 					//update user hunt
@@ -284,10 +286,11 @@ public class HuntPlayFragment extends Fragment implements LocationListener {
 					if(huntStatus == HuntStatus.IN_PROGRESS){
 						//fetch new clues
 						fetchAndShowCluesForLocation(wNextLocation, true);
-						Toast.makeText(getActivity().getBaseContext(), "Hunt is NOT over, loading next location", Toast.LENGTH_SHORT).show();													
+//						Toast.makeText(getActivity().getBaseContext(), "Hunt is NOT over, loading next location", Toast.LENGTH_SHORT).show();													
 					}
 				} else {
-					Toast.makeText(getActivity().getBaseContext(), "Sorry, not quite there. Try again", Toast.LENGTH_SHORT).show();
+					showAlertDialog("Sorry, not quite there. Try again");
+//					Toast.makeText(getActivity().getBaseContext(), "Sorry, not quite there. Try again", Toast.LENGTH_SHORT).show();
 				}
 			}
 		};
@@ -360,7 +363,7 @@ public class HuntPlayFragment extends Fragment implements LocationListener {
 				target.latitude, target.longitude, 
 				results);
 		result = Float.valueOf(results[0]);
-		Toast.makeText(getActivity().getBaseContext(), "Distance: " + result + " meters", Toast.LENGTH_SHORT).show();
+		Log.d(tag, "Distance: " + result + " meters");
 		return result;
 	}
 
@@ -461,5 +464,38 @@ public class HuntPlayFragment extends Fragment implements LocationListener {
 	public void onProviderEnabled(String provider) { }
 	@Override
 	public void onStatusChanged(String provider, int status, Bundle extras) { }
+	
+	private void showAlertDialog(String msg) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+		builder.setMessage(msg).setCancelable(false)
+				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						alert.dismiss();
+					}
+				});
+		alert = builder.create();
+		alert.show();
+	}
+	
+	private void showHuntFinishedAlertDialog(String msg) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+		builder.setMessage(msg).setCancelable(false)
+				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						//go to hunt success, pass the location parceable
+						alert.dismiss();
+						Intent in = new Intent(getActivity().getBaseContext(), HuntSuccessActivity.class);
+						Bundle b = new Bundle();
+						b.putParcelableArrayList(Constants.LOCATIONS_WRAPPER_DATA_NAME, wLocations);
+						in.putExtra(Constants.USER_HUNT_WRAPPER_DATA_NAME, uHuntWrapper);
+						in.putExtra(Constants.HUNT_WRAPPER_DATA_NAME, wHunt);
+						in.putExtra(Constants.LOCATIONS_BUNDLE_DATA_NAME, b);
+						startActivity(in);
+						
+					}
+				});
+		alert = builder.create();
+		alert.show();
+	}
 
 }
