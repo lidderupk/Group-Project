@@ -88,6 +88,11 @@
             android:name="com.chaseit.activities.HuntShowImageActivity"
             android:label="@string/title_activity_hunt_show_image" >
         </activity>
+        <activity
+            android:name="com.chaseit.activities.HuntSuccessActivity"
+            android:label="@string/title_activity_hunt_success" >
+        </activity>
+        
     </application>
 
 </manifest>

@@ -245,8 +245,13 @@ public class HuntPlayFragment extends Fragment implements LocationListener {
 			public void onClick(View arg0) {
 				LatLng target = wNextLocation.getLocation();
 				Float distanceFromTarget = getDistanceFromTarget(target);
+				
+				if(isLive && distanceFromTarget == null){
+					showAlertDialog("We are unable to locate you. Ensure that the GPS is enabled on your phone.");
+					return;
+				}
 				//if with 200m of target, or in demo mode 
-				if (distanceFromTarget < 200 || !isLive) {
+				if (!isLive || distanceFromTarget < 200) {
 					//they have successfully found the target location.
 
 					//update locations
@@ -357,6 +362,9 @@ public class HuntPlayFragment extends Fragment implements LocationListener {
 
 	public Float getDistanceFromTarget(LatLng target) {
 		android.location.Location currentLocation = googleMap.getMyLocation();
+		if(currentLocation == null)
+			return null;
+		
 		Float result = null;
 		float[] results = new float[10];
 		android.location.Location.distanceBetween(currentLocation.getLatitude(), currentLocation.getLongitude(), 

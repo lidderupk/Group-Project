@@ -109,30 +109,6 @@ public class UserDetailsActivity extends ActionBarActivity {
 		// Handle your other action bar items...
 		Intent in;
 		switch (item.getItemId()) {
-		case R.id.maps:
-			in = new Intent(getBaseContext(), MapsTestActivity.class);
-			startActivity(in);
-			return true;
-
-		case R.id.huntDetails:
-			 in = new Intent(getBaseContext(), HuntDetailsTestActivity.class);
-			 in.putExtra(Constants.HUNT_ID, "Q6OO7dFnGp");
-			 startActivity(in);
-			Toast.makeText(getBaseContext(), "Disabled", Toast.LENGTH_SHORT)
-					.show();
-			return true;
-
-		case R.id.huntPlayMenu:
-			in = new Intent(getBaseContext(), HuntPlayTestActivity.class);
-			startActivity(in);
-			return true;
-
-		case R.id.huntMapLineMenu:
-			in = new Intent(getBaseContext(),
-					HuntMapWithMarkersTestActivity.class);
-
-			startActivity(in);
-			return true;
 
 		case R.id.create_chase:
 			Intent createChase = new Intent(getBaseContext(),
