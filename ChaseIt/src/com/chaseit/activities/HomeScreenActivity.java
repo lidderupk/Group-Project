@@ -7,13 +7,9 @@ import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBar.Tab;
-import android.support.v7.app.ActionBar.TabListener;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -22,13 +18,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.chaseit.R;
 import com.chaseit.activities.test.HuntDetailsTestActivity;
-import com.chaseit.activities.test.HuntMapWithMarkersTestActivity;
-import com.chaseit.activities.test.HuntPlayTestActivity;
-import com.chaseit.activities.test.MapsTestActivity;
 import com.chaseit.fragments.FriendsHuntsFragment;
 import com.chaseit.fragments.InProgressHuntsFragment;
 import com.chaseit.fragments.NewsFeedFragment;
@@ -38,7 +30,6 @@ import com.chaseit.models.wrappers.HuntWrapper;
 import com.chaseit.util.Constants;
 import com.parse.ParseUser;
 import com.viewpagerindicator.TabPageIndicator;
-import com.viewpagerindicator.TitlePageIndicator;
 
 public class HomeScreenActivity extends ActionBarActivity implements
 		HuntDetailsInterface {
@@ -263,8 +254,6 @@ public class HomeScreenActivity extends ActionBarActivity implements
 	}
 
 	private void selectItem(int position) {
-		Toast.makeText(this, Integer.toString(position), Toast.LENGTH_SHORT)
-				.show();
 
 		if (position == 0) {
 			Intent i = new Intent(HomeScreenActivity.this,

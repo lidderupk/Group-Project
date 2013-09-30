@@ -54,6 +54,13 @@
         <item>About</item>
         <item>Log Out</item>
     </string-array>
+    <string-array name="menu_drawer_array_profile">
+        <item>Home</item>
+        <item>Settings</item>
+        <item>Invite Friends</item>
+        <item>About</item>
+        <item>Log Out</item>
+    </string-array>
 
     <string name="add_location_title">Add Location</string>
     <string name="latitude_label">Latitude</string>

@@ -13,17 +13,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.chaseit.ChaseItApplication;
 import com.chaseit.ParseHelper;
 import com.chaseit.R;
-import com.chaseit.activities.test.HuntDetailsTestActivity;
-import com.chaseit.activities.test.HuntMapWithMarkersTestActivity;
-import com.chaseit.activities.test.HuntPlayTestActivity;
-import com.chaseit.activities.test.MapsTestActivity;
 import com.chaseit.models.CIUser;
-import com.chaseit.util.Constants;
 import com.facebook.FacebookRequestError;
 import com.facebook.Request;
 import com.facebook.Response;
@@ -97,7 +91,7 @@ public class UserDetailsActivity extends ActionBarActivity {
 		menu.findItem(R.id.create_chase).setVisible(!drawerOpen);
 		return super.onPrepareOptionsMenu(menu);
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -233,7 +227,7 @@ public class UserDetailsActivity extends ActionBarActivity {
 		};
 
 		String[] menuArray = getResources().getStringArray(
-				R.array.menu_drawer_array);
+				R.array.menu_drawer_array_profile);
 		mDrawerList.setAdapter(new ArrayAdapter<String>(this,
 				R.layout.drawer_list_item, menuArray));
 		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
@@ -255,10 +249,11 @@ public class UserDetailsActivity extends ActionBarActivity {
 	}
 
 	private void selectItem(int position) {
-		Toast.makeText(this, Integer.toString(position), Toast.LENGTH_SHORT)
-				.show();
 
 		if (position == 0) {
+			Intent i = new Intent(UserDetailsActivity.this,
+					HomeScreenActivity.class);
+			startActivity(i);
 
 		}
 
