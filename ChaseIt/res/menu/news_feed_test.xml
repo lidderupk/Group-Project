@@ -1,6 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <item
+    <!-- item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:showAsAction="never"
@@ -11,6 +11,6 @@
         android:orderInCategory="200"
         android:showAsAction="always"
         android:title="show create"
-        android:icon="@drawable/sample_project_hunt"/>
+        android:icon="@drawable/sample_project_hunt"/-->
     
 </menu>

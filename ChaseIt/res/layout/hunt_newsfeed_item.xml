@@ -19,15 +19,15 @@
 
             <com.parse.ParseImageView
                 android:id="@+id/ivHuntImage"
-                android:layout_width="175dp"
-                android:layout_height="200dp"
-                android:scaleX="0.5"
+                android:layout_width="160dp"
+                android:layout_height="160dp"
                 android:src="@drawable/sample_project_hunt" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:orientation="vertical" >
 
             <TextView
@@ -57,8 +57,7 @@
                     android:layout_marginBottom="7dp"
                     android:layout_marginTop="5dp"
                     android:numStars="5"
-                    android:rating="2.0"
-                    android:stepSize="1.0" />
+                    android:rating="3.0"/>
 
                 <TextView
                     android:id="@+id/tvHuntDifficulty"

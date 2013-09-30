@@ -141,8 +141,8 @@ public class Hunt extends ParseObject {
 	/**
 	 * @return the creator name
 	 */
-	public ParseUser getCreatorName() {
-		return (ParseUser) getParseObject(HUNT_CRATOR_NAME_TAG);
+	public String getCreatorName() {
+		return getString(HUNT_CRATOR_NAME_TAG);
 	}
 
 	/**

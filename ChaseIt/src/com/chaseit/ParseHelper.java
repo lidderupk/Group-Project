@@ -239,11 +239,12 @@ public class ParseHelper {
 		}
 	}
 
-	public static void rateHunt(Hunt hunt, int rating, SaveCallback callback) {
+	public static void rateHunt(Hunt hunt, double rating, SaveCallback callback) {
 		double avgRating = Math.abs(hunt.getAvgRating());
 		int numRatings = Math.abs(hunt.getNumRatings());
 
 		double totalRating = avgRating * numRatings;
+		totalRating += rating;
 		++numRatings;
 		avgRating = totalRating / numRatings;
 		hunt.setAvgRating(avgRating);

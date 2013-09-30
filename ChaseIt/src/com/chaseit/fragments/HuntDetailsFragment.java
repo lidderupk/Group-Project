@@ -100,7 +100,9 @@ public class HuntDetailsFragment extends Fragment {
 		Bundle extras = getArguments();
 		hWrapper = (HuntWrapper) extras.getSerializable(Constants.HUNT_WRAPPER_DATA_NAME);
 		isSummary = (boolean)extras.getBoolean("showSummary");
-		if(hWrapper.getCreator().getUserName() == CIUser.getCurrentUser().getUsername()){
+		String creatorName = hWrapper.getCreatorName();
+		String viewerName = CIUser.getName();
+		if(creatorName.equalsIgnoreCase(viewerName)){
 			isSummary = true;
 		}
 		
@@ -218,7 +220,8 @@ public class HuntDetailsFragment extends Fragment {
 		}
 
 		//show hunt rating
-		rbHuntDetailsRating.setRating(Math.round(hWrapper.getAvgRating()));
+		//TODO : remove the minimum 3star hack :)
+		rbHuntDetailsRating.setRating(Math.max(3, Math.round(hWrapper.getAvgRating())));
 		rbHuntDetailsRating.setEnabled(false);
 		
 		//show hunt details
