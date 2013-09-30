@@ -34,7 +34,7 @@ public class ParseObjectWrapper implements Serializable {
 			@SuppressWarnings("rawtypes")
 			Class classType = object.get(key).getClass();
 			if (classType == byte[].class || classType == String.class
-					|| classType == Integer.class || classType == int.class
+					|| classType == Integer.class || classType == int.class || classType == Double.class
 					|| classType == Boolean.class || classType == double.class) {
 				values.put(key, object.get(key));
 			} else if (classType == ParseUser.class) {

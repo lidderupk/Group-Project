@@ -45,7 +45,7 @@ public class HuntAdapter extends ArrayAdapter<Hunt> {
 		tvHuntName.setText(hunt.getName());
 		tvHuntDetails.setText(hunt.getDetails());
 		ParseFile huntPic = hunt.getHuntPicture();
-		tvHuntRating.setNumStars(hunt.getNumRatings());
+		tvHuntRating.setRating((float)Math.max(3, hunt.getAvgRating()));
 		if (hunt.getCreatorName() != null) {
 			tvHuntCreator.setText(hunt.getCreatorName().toString());
 		} else {

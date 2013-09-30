@@ -1,24 +1,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:abc="http://schemas.android.com/apk/res-auto" >
 
-    <!--item
-        android:id="@+id/create_hunt"
-        android:icon="@android:drawable/ic_input_add"
-        abc:showAsAction="always"
-        android:title="@string/menu_create_hunt"
-        android:visible="true"/-->
-
-        <!--item
-        android:id="@+id/action_settings"
-        android:orderInCategory="600"
-        android:showAsAction="never"
-        android:title="@string/action_settings"/-->
-
         <item
         android:id="@+id/create_chase"
-        android:orderInCategory="100"
         android:icon="@android:drawable/ic_input_add"
         android:showAsAction="always"
+        android:visible="true"
         android:title="@string/create_button_label"/>
     
     
