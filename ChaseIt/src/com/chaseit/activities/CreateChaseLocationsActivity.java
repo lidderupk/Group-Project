@@ -260,7 +260,7 @@ public class CreateChaseLocationsActivity extends FragmentActivity implements Lo
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.create_chase_locations, menu);
+		getMenuInflater().inflate(R.menu.empty, menu);
 		return true;
 	}
 

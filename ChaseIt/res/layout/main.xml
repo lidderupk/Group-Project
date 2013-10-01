@@ -16,12 +16,13 @@
         android:orientation="vertical" >
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="100dp"
             android:gravity="center"
+            android:textColor="@android:color/white"
             android:text="@string/login_intro"
-            android:textSize="18sp" />
+            android:textSize="30sp" />
 
         <Button
             android:id="@+id/loginButton"

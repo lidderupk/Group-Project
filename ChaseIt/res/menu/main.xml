@@ -1,12 +1,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:abc="http://schemas.android.com/apk/res-auto" >
 
-        <item
+    <item
         android:id="@+id/create_chase"
         android:icon="@android:drawable/ic_input_add"
         android:showAsAction="always"
-        android:visible="true"
-        android:title="@string/create_button_label"/>
-    
-    
+        abc:showAsAction="always"
+        android:title="@string/create_button_label"
+        android:visible="true"/>
+
 </menu>
