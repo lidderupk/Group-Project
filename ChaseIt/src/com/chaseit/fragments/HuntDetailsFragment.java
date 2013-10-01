@@ -353,10 +353,9 @@ public class HuntDetailsFragment extends Fragment {
 				continue;
 			}
 		}
-		
+
 		// move the camera to show chase makers and polygon
-		gmHuntsDetailsMap.moveCamera(CameraUpdateFactory.newLatLngBounds(
-				builder.build(), 10));
+		gmHuntsDetailsMap.moveCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 5));
 
 	}
 }

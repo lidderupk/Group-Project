@@ -125,6 +125,9 @@ AddPictureListener {
 						if (e == null) {
 							Intent resultIntent = new Intent();
 							resultIntent.putExtra("friendlyName", friendlyName);
+							resultIntent.putExtra("latitude", point.getLatitude());
+							resultIntent.putExtra("longitude", point.getLongitude());
+
 							setResult(RESULT_OK, resultIntent);
 							finish();
 						} else {

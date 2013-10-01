@@ -215,15 +215,19 @@ public class CreateChaseLocationsActivity extends FragmentActivity implements Lo
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == Activity.RESULT_OK) {
 			friendlyName = data.getStringExtra("friendlyName");
+			double latitude = data.getDoubleExtra("latitude", 0.0);
+			double longitude = data.getDoubleExtra("longitude", 0.0);
 			// add current point to the list of locations for this chase
 			if(mapPoints.size() == 0){
 				chase.setLocality(friendlyName);
-				chase.setStartLocation(new ParseGeoPoint(currentPoint.latitude, currentPoint.longitude));
+				chase.setStartLocation(new ParseGeoPoint(latitude, longitude));
 
 			}
-			mapPoints.add(currentPoint);
+			LatLng point = new LatLng(latitude, longitude);
+			
+			mapPoints.add(point);
 			fCreateChaseMap.addMarker(new MarkerOptions()
-			.position(currentPoint)
+			.position(point)
 			.title((mapPoints.size()) + ". " + friendlyName)
 			.icon(BitmapDescriptorFactory
 					.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
@@ -334,7 +338,7 @@ public class CreateChaseLocationsActivity extends FragmentActivity implements Lo
 		protected void onPostExecute(List<Address> addresses) {
 			if(addresses != null && addresses.size() > 0){
 				friendlyName = addresses.get(0).getSubLocality() + ", " + addresses.get(0).getSubLocality();
-				currentPoint = new LatLng(addresses.get(0).getLatitude(), addresses.get(0).getLatitude());
+				currentPoint = new LatLng(addresses.get(0).getLatitude(), addresses.get(0).getLongitude());
 			} else {
 				if(location != null && !(location.latitude == 0 && location.longitude == 0)){
 					friendlyName = "Unknown";
