@@ -3,8 +3,9 @@
 
     <item
         android:id="@+id/create_chase"
-        android:icon="@android:drawable/ic_delete"
+        android:icon="@android:drawable/ic_input_add"
         android:showAsAction="always"
+        abc:showAsAction="always"
         android:title="@string/create_button_label"
         android:visible="true"/>
 
