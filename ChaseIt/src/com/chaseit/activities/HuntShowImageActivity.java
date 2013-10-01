@@ -26,7 +26,7 @@ public class HuntShowImageActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.hunt_show_image, menu);
+		getMenuInflater().inflate(R.menu.empty, menu);
 		return true;
 	}
 

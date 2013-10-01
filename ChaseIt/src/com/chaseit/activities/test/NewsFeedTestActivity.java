@@ -25,23 +25,23 @@ public class NewsFeedTestActivity extends FragmentActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.news_feed_test, menu);
+		getMenuInflater().inflate(R.menu.empty, menu);
 		return true;
 	}
 
-	@Override
-	public boolean onMenuItemSelected(int featureId, MenuItem item) {
-		Intent in;
-		switch (item.getItemId()) {
-
-		case R.id.create_chase:
-			Intent createChase = new Intent(getBaseContext(),
-					CreateChaseActivity.class);
-			startActivityForResult(createChase,
-					CreateChaseActivity.CREATE_CHASE_ACTIVITY_CODE);
-
-		default:
-			return super.onOptionsItemSelected(item);
-		}
-	}
+//	@Override
+//	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+//		Intent in;
+//		switch (item.getItemId()) {
+//
+//		case R.id.create_chase:
+//			Intent createChase = new Intent(getBaseContext(),
+//					CreateChaseActivity.class);
+//			startActivityForResult(createChase,
+//					CreateChaseActivity.CREATE_CHASE_ACTIVITY_CODE);
+//
+//		default:
+//			return super.onOptionsItemSelected(item);
+//		}
+//	}
 }

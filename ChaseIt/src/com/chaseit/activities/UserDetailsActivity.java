@@ -82,15 +82,15 @@ public class UserDetailsActivity extends ActionBarActivity {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
-
-	@Override
-	public boolean onPrepareOptionsMenu(Menu menu) {
-		// If the nav drawer is open, hide action items related to the content
-		// view
-		boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-		menu.findItem(R.id.create_chase).setVisible(!drawerOpen);
-		return super.onPrepareOptionsMenu(menu);
-	}
+//
+//	@Override
+//	public boolean onPrepareOptionsMenu(Menu menu) {
+//		// If the nav drawer is open, hide action items related to the content
+//		// view
+//		boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
+//		menu.findItem(R.id.create_chase).setVisible(!drawerOpen);
+//		return super.onPrepareOptionsMenu(menu);
+//	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -99,20 +99,26 @@ public class UserDetailsActivity extends ActionBarActivity {
 		// true, then it has handled the app icon touch event
 		if (mDrawerToggle.onOptionsItemSelected(item)) {
 			return true;
-		}
-		// Handle your other action bar items...
-		Intent in;
-		switch (item.getItemId()) {
-
-		case R.id.create_chase:
+		} else {
 			Intent createChase = new Intent(getBaseContext(),
 					CreateChaseActivity.class);
 			startActivityForResult(createChase,
 					CreateChaseActivity.CREATE_CHASE_ACTIVITY_CODE);
-
-		default:
-			return super.onOptionsItemSelected(item);
+			return true;
 		}
+		// Handle your other action bar items...
+//		Intent in;
+//		switch (item.getItemId()) {
+//
+//		case R.id.create_chase:
+//			Intent createChase = new Intent(getBaseContext(),
+//					CreateChaseActivity.class);
+//			startActivityForResult(createChase,
+//					CreateChaseActivity.CREATE_CHASE_ACTIVITY_CODE);
+//
+//		default:
+//			return super.onOptionsItemSelected(item);
+//		}
 	}
 
 	private void makeMeRequest() {

@@ -20,6 +20,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.chaseit.R;
+import com.chaseit.R.menu;
 import com.chaseit.activities.test.HuntDetailsTestActivity;
 import com.chaseit.fragments.FriendsHuntsFragment;
 import com.chaseit.fragments.InProgressHuntsFragment;
@@ -67,6 +68,7 @@ public class HomeScreenActivity extends ActionBarActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_news_feed);
 		setupNavigationDrawer();
+
 		// setupNavigationTabs();
 
 		// Instantiate a ViewPager and a PagerAdapter.
@@ -77,7 +79,13 @@ public class HomeScreenActivity extends ActionBarActivity implements
 		// Set-up TabPageIndicator
 		mTabPageIndicator = (TabPageIndicator) findViewById(R.id.tabpageindicator);
 		mTabPageIndicator.setViewPager(mPager);
-//		mTabPageIndicator.setOnPageChangeListener(mPageChangeListener);
+		// mTabPageIndicator.setOnPageChangeListener(mPageChangeListener);
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.main, menu);
+		return super.onCreateOptionsMenu(menu);
 	}
 
 	@Override
@@ -148,17 +156,11 @@ public class HomeScreenActivity extends ActionBarActivity implements
 	/* ActionBar Options Menu */
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}
-
-	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		// If the nav drawer is open, hide action items related to the content
 		// view
-		boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-		menu.findItem(R.id.create_chase).setVisible(!drawerOpen);
+//		boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
+//		menu.findItem(R.id.create_chase).recreate();
 		return super.onPrepareOptionsMenu(menu);
 	}
 
@@ -169,19 +171,13 @@ public class HomeScreenActivity extends ActionBarActivity implements
 		// true, then it has handled the app icon touch event
 		if (mDrawerToggle.onOptionsItemSelected(item)) {
 			return true;
-		}
-		// Handle your other action bar items...
-		Intent in;
-		switch (item.getItemId()) {
-
-		case R.id.create_chase:
+		} else {
+			// Handle your other action bar items...
 			Intent createChase = new Intent(getBaseContext(),
 					CreateChaseActivity.class);
 			startActivityForResult(createChase,
 					CreateChaseActivity.CREATE_CHASE_ACTIVITY_CODE);
-
-		default:
-			return super.onOptionsItemSelected(item);
+			return true;
 		}
 	}
 
@@ -202,13 +198,14 @@ public class HomeScreenActivity extends ActionBarActivity implements
 			/** Called when a drawer has settled in a completely closed state. */
 			public void onDrawerClosed(View view) {
 				getSupportActionBar().setTitle(mTitle);
+				
 				// invalidateOptionsMenu();
 			}
 
 			/** Called when a drawer has settled in a completely open state. */
 			public void onDrawerOpened(View drawerView) {
 				getSupportActionBar().setTitle(mDrawerTitle);
-				// invalidateOptionsMenu();
+				 invalidateOptionsMenu();
 			}
 		};
 
@@ -225,24 +222,6 @@ public class HomeScreenActivity extends ActionBarActivity implements
 		getSupportActionBar().setHomeButtonEnabled(true);
 
 	}
-
-	// private void setupNavigationTabs() {
-	// ActionBar actionBar = getSupportActionBar();
-	// actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-	//
-	// Tab tabHome = actionBar.newTab().setText("Public")
-	// .setTag("HomeTimelineFragment").setTabListener(this);
-	//
-	// Tab tabRecent = actionBar.newTab().setText("In Progress")
-	// .setTag("InProgressHuntsFragment").setTabListener(this);
-	// Tab tabMine = actionBar.newTab().setText("Friends")
-	// .setTag("FriendsHuntsFragment").setTabListener(this);
-	//
-	// actionBar.addTab(tabHome);
-	// actionBar.addTab(tabMine);
-	// actionBar.addTab(tabRecent);
-	// actionBar.selectTab(tabHome);
-	// }
 
 	private class DrawerItemClickListener implements
 			ListView.OnItemClickListener {
@@ -278,27 +257,6 @@ public class HomeScreenActivity extends ActionBarActivity implements
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		startActivity(intent);
 	}
-
-	// /* TabListener Methods */
-	//
-	// @Override
-	// public void onTabReselected(Tab arg0, FragmentTransaction arg1) {
-	// }
-	//
-	// @Override
-	// public void onTabSelected(Tab tab, FragmentTransaction ft) {
-	// if (tab.getTag() == "HomeTimelineFragment") {
-	// ft.replace(R.id.pager, new NewsFeedFragment());
-	// } else if (tab.getTag() == "InProgressHuntsFragment") {
-	// ft.replace(R.id.pager, new InProgressHuntsFragment());
-	// } else {
-	// ft.replace(R.id.pager, new FriendsHuntsFragment());
-	// }
-	// }
-	//
-	// @Override
-	// public void onTabUnselected(Tab arg0, FragmentTransaction arg1) {
-	// }
 
 	@Override
 	public void huntClicked(Hunt hunt) {
