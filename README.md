@@ -2,7 +2,7 @@ Chase
 ========
 
 A geolocation aware android app for playing a fun game of chase ! Challenge friends and family to this fun game around town. Give them hints on the way until they reach their final destination !
-Built as part of the [iOS Android Bootcamp](http://thecodepath.com/androidbootcamp).
+Built as part of the [Android CodePath Bootcamp](http://thecodepath.com/androidbootcamp).
 
 
 ## Technologies
