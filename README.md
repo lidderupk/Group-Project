@@ -16,6 +16,5 @@ Built as part of the [iOS Android Bootcamp](http://thecodepath.com/androidbootca
 
 ![Screenshot](screenshots/screenshot1.png)
 ![Screenshot](screenshots/screenshot2.png)
-![Screenshot](screenshots/screenshot6.png)
-![Screenshot](screenshots/screenshot7.png)
-![Screenshot](screenshots/screenshot10.png)
+![Screenshot](screenshots/screenshot3.png)
+![Screenshot](screenshots/screenshot4.png)
